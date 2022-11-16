@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		952EF7CF2924DB7F00721A35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 952EF7CE2924DB7F00721A35 /* Main.storyboard */; };
 		9544EEEF281EA7630001982F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544EEEA281EA7620001982F /* MainViewController.swift */; };
 		9544EEF0281EA7630001982F /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544EEEB281EA7620001982F /* ReminderViewController.swift */; };
 		9544EEF1281EA7630001982F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9544EEEC281EA7620001982F /* SettingsViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		952EF7CE2924DB7F00721A35 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9544EEEA281EA7620001982F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		9544EEEB281EA7620001982F /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		9544EEEC281EA7620001982F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				9544EEF5281EA78F0001982F /* ViewControllers */,
 				9544EEF4281EA77E0001982F /* Delegates */,
 				95F0F13A281E9E2600B3798D /* Assets.xcassets */,
+				952EF7CE2924DB7F00721A35 /* Main.storyboard */,
 				95F0F13C281E9E2600B3798D /* LaunchScreen.storyboard */,
 				95F0F13F281E9E2600B3798D /* Info.plist */,
 			);
@@ -150,6 +153,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952EF7CF2924DB7F00721A35 /* Main.storyboard in Resources */,
 				95F0F13E281E9E2600B3798D /* LaunchScreen.storyboard in Resources */,
 				95F0F13B281E9E2600B3798D /* Assets.xcassets in Resources */,
 			);
