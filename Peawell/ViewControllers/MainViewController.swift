@@ -29,7 +29,6 @@ class MainViewController: UIViewController {
             nextButton.configuration?.baseForegroundColor = .systemGray5
             nextButton.configuration?.title = "Press me btch"
             nextButton.translatesAutoresizingMaskIntoConstraints = false
-            //nextButton.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
             //Declare layout in an array
             NSLayoutConstraint.activate([
                 nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -39,7 +38,13 @@ class MainViewController: UIViewController {
             ])
             
         }
+        
         //Alert
+        let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
         
     }
     
