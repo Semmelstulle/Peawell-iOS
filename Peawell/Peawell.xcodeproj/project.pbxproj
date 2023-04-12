@@ -11,6 +11,10 @@
 		9505432529E5CAC8005D29B5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9505432429E5CAC8005D29B5 /* ContentView.swift */; };
 		9505432729E5CACB005D29B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9505432629E5CACB005D29B5 /* Assets.xcassets */; };
 		9505432B29E5CACB005D29B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */; };
+		951DCA7229E735D90072E809 /* Activities.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 951DCA7029E735D90072E809 /* Activities.xcdatamodeld */; };
+		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
+		9543A6C029E6E689003046FC /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BF29E6E689003046FC /* AddActivityView.swift */; };
+		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		9505432629E5CACB005D29B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9505432829E5CACB005D29B5 /* Peawell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Peawell.entitlements; sourceTree = "<group>"; };
 		9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		951DCA7129E735D90072E809 /* Activities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Activities.xcdatamodel; sourceTree = "<group>"; };
+		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9543A6BF29E6E689003046FC /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
+		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +60,9 @@
 		9505432129E5CAC8005D29B5 /* Peawell */ = {
 			isa = PBXGroup;
 			children = (
+				951DCA7329E735E60072E809 /* Views */,
 				9505432229E5CAC8005D29B5 /* PeawellApp.swift */,
-				9505432429E5CAC8005D29B5 /* ContentView.swift */,
+				951DCA7029E735D90072E809 /* Activities.xcdatamodeld */,
 				9505432629E5CACB005D29B5 /* Assets.xcassets */,
 				9505432829E5CACB005D29B5 /* Peawell.entitlements */,
 				9505432929E5CACB005D29B5 /* Preview Content */,
@@ -67,6 +76,17 @@
 				9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		951DCA7329E735E60072E809 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9505432429E5CAC8005D29B5 /* ContentView.swift */,
+				9543A6BD29E6E5C3003046FC /* MainView.swift */,
+				9543A6BF29E6E689003046FC /* AddActivityView.swift */,
+				9543A6C129E6E695003046FC /* SettingsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +159,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9543A6C229E6E695003046FC /* SettingsView.swift in Sources */,
 				9505432529E5CAC8005D29B5 /* ContentView.swift in Sources */,
+				9543A6C029E6E689003046FC /* AddActivityView.swift in Sources */,
+				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
+				951DCA7229E735D90072E809 /* Activities.xcdatamodeld in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +221,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This will only add Peawell events to your system calendar. Refuse this if you don't need it.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -249,6 +276,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This will only add Peawell events to your system calendar. Refuse this if you don't need it.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -362,6 +392,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		951DCA7029E735D90072E809 /* Activities.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				951DCA7129E735D90072E809 /* Activities.xcdatamodel */,
+			);
+			currentVersion = 951DCA7129E735D90072E809 /* Activities.xcdatamodel */;
+			path = Activities.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9505431729E5CAC8005D29B5 /* Project object */;
 }
