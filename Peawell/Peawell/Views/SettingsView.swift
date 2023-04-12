@@ -37,7 +37,7 @@ struct SettingsView: View {
                     Link(destination: URL(string: "https://mastodon.social/@semmelstulle")!,
                          label: { Label("Developer on Mastodon", systemImage: "link").foregroundColor(.blue)
                     })
-                    Link(destination: URL(string: "https://mastodon.social/@semmelstulle")!,
+                    Link(destination: URL(string: "https://github.com/SemmelStulle/Peawell_iOS")!,
                          label: { Label("App on GitHub", systemImage: "link").foregroundColor(.blue)
                     })
                     Text("App version: " + (appVersion ?? String("failed to get")))
