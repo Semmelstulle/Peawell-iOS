@@ -34,8 +34,8 @@ struct MainView: View {
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     ZStack() {
-                        Circle()
-                        Text("Hi")
+                        Circle().foregroundColor(.secondary)
+                        Text("Spooky")
                     }
                 }
             }

@@ -8,8 +8,38 @@
 import SwiftUI
 
 struct AddActivityView: View {
+    
+    @State private var medName: String = ""
+    @State private var medAmount: String = ""
+    @State private var actName: String = ""
+    @State private var moodName: String = ""
+    
     var body: some View {
-        Color.gray
+        NavigationView {
+            VStack{
+                Form {
+                    Section(header: Text("Medication")) {
+                        TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
+                        TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
+                        Button(action: {
+                            //action
+                        }, label: {
+                            Label("Add medication", systemImage: "plus")
+                        })
+                        
+                    }
+                    Section(header: Text("Mood")) {
+                        TextField(text: $actName, prompt: Text("What did you do today?")) {Text("Activity name")}
+                        TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
+                        Button(action: {
+                            //action
+                        }, label: {
+                            Label("Add activity", systemImage: "plus")
+                        })
+                    }
+                }
+            }.navigationTitle(addTitle)
+        }
     }
 }
 

@@ -26,7 +26,7 @@ struct SettingsView: View {
                 Section(header: Text("Display"),
                         footer: Text("These settings change the look of this app.")
                 ) {
-                    Toggle(isOn: $settingForceDarkMode, label: {Text("Show medication section")})
+                    Toggle(isOn: $settingForceDarkMode, label: {Text("Force dark mode")})
                     Toggle(isOn: $settingShowMedicationSection, label: {Text("Show medication section")})
                 }
                 Section(header: Text("Access"),
@@ -51,7 +51,10 @@ struct SettingsView: View {
                             //  nothing, action is cancelled
                         }
                         Button("I'm sure", role: .destructive) {
+                            UserDefaults.standard.set(false, forKey: "settingForceDarkMode")
                             UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
+                            UserDefaults.standard.set(false, forKey: "settingSynciCloud")
+                            UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
                         }
                     }
                 }
