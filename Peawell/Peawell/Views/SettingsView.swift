@@ -9,10 +9,12 @@ import SwiftUI
 import CoreHaptics
 
 //  constants declared on top
+//  this only checks the app version from within itself
 let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
 struct SettingsView: View {
     
+    //  settings stored in UserDefaults wrapped with AppStorage
     @AppStorage("settingForceDarkMode") private var settingForceDarkMode = false
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     @AppStorage("settingSynciCloud") private var settingSynciCloud = false
@@ -46,9 +48,11 @@ struct SettingsView: View {
                     })
                     //.onTapGesture(perform: hapticWarning)
                     
+                    //  confirmation alert is designed here
                     .alert("This can not be reverted!\nDo you really want to reset the app?", isPresented: $showingDeleteAlert) {
                         Button("Cancel", role: .cancel) {
-                            //  nothing, action is cancelled
+                            //  nothing here, action is cancelled
+                            //print("canceled deletion")
                         }
                         Button("I'm sure", role: .destructive) {
                             UserDefaults.standard.set(false, forKey: "settingForceDarkMode")
@@ -66,7 +70,12 @@ struct SettingsView: View {
                     Link(destination: URL(string: "https://github.com/SemmelStulle/Peawell_iOS")!,
                          label: { Label("App on GitHub", systemImage: "link").foregroundColor(.blue)
                     })
-                    Text("App version: " + (appVersion ?? String("failed to get")))
+                    //  HStack so not all of it is crammed on the left side
+                    HStack() {
+                        Text("App version").foregroundColor(.secondary)
+                        Spacer()
+                        Text(appVersion ?? String("failed to get")).foregroundColor(.secondary)
+                    }
                 }
             }.navigationTitle(settingsTitle)
         }

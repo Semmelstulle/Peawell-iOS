@@ -19,14 +19,14 @@ struct ContentView: View {
                 .navigationBarTitle(mainTitle)
             AddActivityView()
                 .tabItem {
-                    Image(systemName: "plus.rectangle.fill")
+                    Image(systemName: "plus.rectangle")
                     Text("Add activity")
                 }
                 .navigationBarTitle(addTitle)
                 .tag(1)
             SettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: "gear")
                     Text("Settings")
                 }
                 .navigationBarTitle(settingsTitle)
