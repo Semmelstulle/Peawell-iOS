@@ -51,7 +51,7 @@ struct SettingsView: View {
                             //  nothing, action is cancelled
                         }
                         Button("I'm sure", role: .destructive) {
-                            
+                            UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
                         }
                     }
                 }
