@@ -12,31 +12,38 @@ let dayButtonSize: CGFloat = 40
 
 struct MainView: View {
     
+    @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
+    
     @State var current_date = Date()
     
     var body: some View {
-        VStack() {
+        NavigationView {
             VStack() {
-                HStack(spacing: 10) {
-                    ForEach(0..<7) { index in
-                        DayButtonView(label: "\(index+1)")
-                    }
-                }
-                HStack(spacing: 10) {
-                    ForEach(0..<7) { index in
-                        DayButtonView(label: "\(index+8)")
-                    }
-                }
-            };
-            ScrollView(.vertical) {
                 VStack() {
-                    ForEach(0..<20) {
-                        index in Text("henlo").padding()
+                    HStack(spacing: 10) {
+                        ForEach(0..<7) { index in
+                            DayButtonView(label: "\(index+1)")
+                        }
                     }
-                }.padding()
-            }.padding()
-        }.navigationTitle(mainTitle)
+                    HStack(spacing: 10) {
+                        ForEach(0..<7) { index in
+                            DayButtonView(label: "\(index+8)")
+                        }
+                    }
+                };
+                //  checks UserDefaults if section is active
+                if settingShowMedicationSection == true {
+                    ZStack() {
+                        Circle()
+                        Text("Hi")
+                    }
+                }
+            }
+            .navigationTitle(mainTitle)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        }
     }
+    
     //  prepares the day cell
     struct DayButtonView: View {
         @State var label: String

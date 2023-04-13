@@ -7,15 +7,7 @@
 
 import SwiftUI
 
-//  constants stored on the top
-let mainTitle: String = "Peawell"
-let addTitle: String = "Add entry"
-let settingsTitle: String = "Settings"
-
-
 struct ContentView: View {
-    
-    
     
     var body: some View {
         TabView {
