@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import CoreHaptics
 
 //  constants declared on top
 let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
 struct SettingsView: View {
+    
+    @State private var showingDeleteAlert: Bool = false
+    
     var body: some View {
         NavigationView {
             Form {
-                
                 Section(header: Text("Display"),
                         footer: Text("These settings change the look of this app.")
                 ) {
@@ -30,7 +33,22 @@ struct SettingsView: View {
                 Section(header: Text("Delete files"),
                         footer: Text("This can not be undone!")
                 ) {
-                    Label("Reset all data", systemImage: "trash").foregroundColor(.red)
+                    Button(action: {
+                        self.showingDeleteAlert = true
+                        hapticWarning()
+                    }, label: {
+                        Label("Reset all data", systemImage: "trash").foregroundColor(.red)
+                    })
+                    //.onTapGesture(perform: hapticWarning)
+                    
+                    .alert("This can not be reverted!\nDo you really want to reset the app?", isPresented: $showingDeleteAlert) {
+                        Button("Cancel", role: .cancel) {
+                            //  nothing, action is cancelled
+                        }
+                        Button("I'm sure", role: .destructive) {
+                            
+                        }
+                    }
                 }
                 Section(header: Text("About this project")
                 ) {

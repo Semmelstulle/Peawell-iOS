@@ -14,6 +14,9 @@ let settingsTitle: String = "Settings"
 
 
 struct ContentView: View {
+    
+    
+    
     var body: some View {
         TabView {
             MainView()

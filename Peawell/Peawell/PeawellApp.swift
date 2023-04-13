@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreHaptics
 
 @main
 struct PeawellApp: App {
@@ -14,4 +15,9 @@ struct PeawellApp: App {
             ContentView()
         }
     }
+}
+
+func hapticWarning() {
+    let generator = UINotificationFeedbackGenerator()
+    generator.notificationOccurred(.warning)
 }

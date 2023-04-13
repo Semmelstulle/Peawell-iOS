@@ -34,7 +34,7 @@ struct MainView: View {
                         index in Text("henlo").padding()
                     }
                 }.padding()
-            }
+            }.padding()
         }.navigationTitle(mainTitle)
     }
     //  prepares the day cell
