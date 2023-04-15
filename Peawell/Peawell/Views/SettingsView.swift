@@ -15,24 +15,22 @@ let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? S
 struct SettingsView: View {
     
     //  settings stored in UserDefaults wrapped with AppStorage
-    @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
-    @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    @AppStorage("settingSynciCloud") private var settingSynciCloud = false
-    @AppStorage("settingSyncCalendar") private var settingSyncCalendar = false
+    @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
+    @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
+    @AppStorage("settingSynciCloud") var settingSynciCloud = false
+    @AppStorage("settingSyncCalendar") var settingSyncCalendar = false
     
     @State private var showingDeleteAlert: Bool = false
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Modules"),
-                        footer: Text("These settings toggle the modules of this app.")
+                Section(header: Text("Modules"), footer: Text("These settings toggle the modules of this app.")
                 ) {
                     Toggle(isOn: $settingShowMoodSection, label: {Text("Use mood module")})
                     Toggle(isOn: $settingShowMedicationSection, label: {Text("Use medication module")})
                 }
-                Section(header: Text("Access"),
-                        footer: Text("Here you need to opt in on using features that the app can't provide on it's own.")
+                Section(header: Text("Access"), footer: Text("Here you need to opt in on using features that the app can't provide on it's own.")
                 ) {
                     Toggle(isOn: $settingSynciCloud, label: {Text("Sync to iCloud")})
                     Toggle(isOn: $settingSyncCalendar, label: {Text("Add to local calendar")})
@@ -52,13 +50,9 @@ struct SettingsView: View {
                     .alert("This can not be reverted!\nDo you really want to reset the app?", isPresented: $showingDeleteAlert) {
                         Button("Cancel", role: .cancel) {
                             //  nothing here, action is cancelled
-                            //print("canceled deletion")
                         }
                         Button("I'm sure", role: .destructive) {
-                            UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
-                            UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
-                            UserDefaults.standard.set(false, forKey: "settingSynciCloud")
-                            UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
+                            resetData()
                         }
                     }
                 }

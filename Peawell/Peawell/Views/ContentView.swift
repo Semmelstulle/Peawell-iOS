@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// this is just the navigation bar, not much here besides the three items in it
+
 struct ContentView: View {
     
     var body: some View {
