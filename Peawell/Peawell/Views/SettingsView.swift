@@ -76,6 +76,11 @@ struct SettingsView: View {
                         Spacer()
                         Text(appVersion ?? String("failed to get")).foregroundColor(.secondary)
                     }
+                    HStack() {
+                        Spacer()
+                        Text("Made with love in 🇩🇪").foregroundColor(.secondary)
+                        Spacer()
+                    }
                 }
             }.navigationTitle(settingsTitle)
         }

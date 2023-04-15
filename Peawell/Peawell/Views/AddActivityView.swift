@@ -22,6 +22,7 @@ struct AddActivityView: View {
                 Section(header: Text("Medication")) {
                     TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
                     TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
+                            .keyboardType(.decimalPad)
                     Button(action: {
                         // function here
                     }, label: {

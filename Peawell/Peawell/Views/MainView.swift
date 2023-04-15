@@ -13,9 +13,7 @@ let dayButtonSize: CGFloat = 40
 struct MainView: View {
     
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
-    @State var current_date = Date()
-    
+        
     var body: some View {
         NavigationView {
             VStack() {
@@ -33,10 +31,27 @@ struct MainView: View {
                 };
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
-                    ZStack() {
-                        Circle().foregroundColor(.secondary)
-                        Text("Spooky")
+                    HStack() {
+                        ZStack() {
+                            Text("Medication here").padding()
+                        }
                     }
+                }
+                Form() {
+                    VStack() {
+                        HStack() {
+                            Rectangle()
+                            Rectangle()
+                        }
+                        HStack() {
+                            Rectangle()
+                            Rectangle()
+                        }
+                    }.frame(height: 200)
+                    Label("Test", systemImage: "homekit")
+                    Label("Test", systemImage: "homekit")
+                    Label("Test", systemImage: "homekit")
+                    Label("Test", systemImage: "homekit")
                 }
             }
             .navigationTitle(mainTitle)
