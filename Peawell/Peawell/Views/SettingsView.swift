@@ -15,7 +15,7 @@ let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? S
 struct SettingsView: View {
     
     //  settings stored in UserDefaults wrapped with AppStorage
-    @AppStorage("settingForceDarkMode") private var settingForceDarkMode = false
+    @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     @AppStorage("settingSynciCloud") private var settingSynciCloud = false
     @AppStorage("settingSyncCalendar") private var settingSyncCalendar = false
@@ -28,7 +28,7 @@ struct SettingsView: View {
                 Section(header: Text("Display"),
                         footer: Text("These settings change the look of this app.")
                 ) {
-                    Toggle(isOn: $settingForceDarkMode, label: {Text("Force dark mode")})
+                    Toggle(isOn: $settingShowMoodSection, label: {Text("Show mood section")})
                     Toggle(isOn: $settingShowMedicationSection, label: {Text("Show medication section")})
                 }
                 Section(header: Text("Access"),
@@ -55,7 +55,7 @@ struct SettingsView: View {
                             //print("canceled deletion")
                         }
                         Button("I'm sure", role: .destructive) {
-                            UserDefaults.standard.set(false, forKey: "settingForceDarkMode")
+                            UserDefaults.standard.set(false, forKey: "settingShowMoodSection")
                             UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
                             UserDefaults.standard.set(false, forKey: "settingSynciCloud")
                             UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
@@ -76,11 +76,11 @@ struct SettingsView: View {
                         Spacer()
                         Text(appVersion ?? String("failed to get")).foregroundColor(.secondary)
                     }
-                    HStack() {
-                        Spacer()
-                        Text("Made with love in 🇩🇪").foregroundColor(.secondary)
-                        Spacer()
-                    }
+                }
+                HStack() {
+                    Spacer()
+                    Text("Made with love in 🇩🇪").foregroundColor(.secondary)
+                    Spacer()
                 }
             }.navigationTitle(settingsTitle)
         }

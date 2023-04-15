@@ -11,47 +11,45 @@ import SwiftUI
 let dayButtonSize: CGFloat = 40
 
 struct MainView: View {
-    
+
+    @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
         
     var body: some View {
         NavigationView {
             VStack() {
-                VStack() {
-                    HStack(spacing: 10) {
-                        ForEach(0..<7) { index in
-                            DayButtonView(label: "\(index+1)")
+                if settingShowMoodSection == true {
+                    VStack() {
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+1)")
+                            }
                         }
-                    }
-                    HStack(spacing: 10) {
-                        ForEach(0..<7) { index in
-                            DayButtonView(label: "\(index+8)")
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+8)")
+                            }
                         }
                     }
                 };
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
-                    HStack() {
-                        ZStack() {
-                            Text("Medication here").padding()
-                        }
+                    Form() {
+                        VStack() {
+                            HStack() {
+                                Rectangle()
+                                Rectangle()
+                            }
+                            HStack() {
+                                Rectangle()
+                                Rectangle()
+                            }
+                        }.frame(height: 200)
+                        Label("Test", systemImage: "homekit")
+                        Label("Test", systemImage: "homekit")
+                        Label("Test", systemImage: "homekit")
+                        Label("Test", systemImage: "homekit")
                     }
-                }
-                Form() {
-                    VStack() {
-                        HStack() {
-                            Rectangle()
-                            Rectangle()
-                        }
-                        HStack() {
-                            Rectangle()
-                            Rectangle()
-                        }
-                    }.frame(height: 200)
-                    Label("Test", systemImage: "homekit")
-                    Label("Test", systemImage: "homekit")
-                    Label("Test", systemImage: "homekit")
-                    Label("Test", systemImage: "homekit")
                 }
             }
             .navigationTitle(mainTitle)
