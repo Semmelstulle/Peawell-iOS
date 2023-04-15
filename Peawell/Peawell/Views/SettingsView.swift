@@ -75,7 +75,7 @@ struct SettingsView: View {
                     Spacer()
                     Text("Made with love in 🇩🇪").foregroundColor(.secondary)
                     Spacer()
-                }
+                }.listRowBackground(Color.clear)
             }.navigationTitle(settingsTitle)
         }
     }

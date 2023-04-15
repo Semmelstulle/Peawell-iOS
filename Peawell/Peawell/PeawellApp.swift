@@ -20,16 +20,19 @@ let settingsTitle: String = "Settings"
 struct PeawellApp: App {
     //  sets up CoreData part 1
     let persistenceController = PersistenceController.shared
-    @Environment(\.scenePhase) var scenePhase
+    //@Environment(\.scenePhase) var scenePhase
 
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                //  sets up CoreData part 2
+            //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
+
+    @AppStorage("resetOnLaunch") var resetOnLaunch = false
+    
 }
 
 
@@ -47,8 +50,7 @@ func hapticConfirm() {
 
 //  function to safe added content to CoreData
 func saveMeds() {
-    @Environment(\.managedObjectContext) var viewContext
-
+    let viewContext = PersistenceController.shared.container.viewContext
     @State var medName: String = ""
     @State var medAmount: String = ""
     
@@ -66,8 +68,7 @@ func saveMeds() {
 }
 
 func saveMood() {
-    @Environment(\.managedObjectContext) var viewContext
-
+    let viewContext = PersistenceController.shared.container.viewContext
     @State var actName: String = ""
     @State var moodName: String = ""
 
@@ -92,7 +93,7 @@ func resetData() {
     UserDefaults.standard.set(false, forKey: "settingSynciCloud")
     UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
 
-    @Environment(\.managedObjectContext) var viewContext
+    let viewContext = PersistenceController.shared.container.viewContext
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var moodItems: FetchedResults<Mood>
@@ -111,7 +112,7 @@ func resetData() {
 
 // functions to get data
 func fetchMood() -> [NSManagedObject] {
-    @Environment(\.managedObjectContext) var viewContext
+    let viewContext = PersistenceController.shared.container.viewContext
 
     var fetchedArray: [NSManagedObject] = []
 
@@ -128,7 +129,7 @@ func fetchMood() -> [NSManagedObject] {
 
 
 func fetchMeds() -> [NSManagedObject] {
-    @Environment(\.managedObjectContext) var viewContext
+    let viewContext = PersistenceController.shared.container.viewContext
 
     var fetchedArray: [NSManagedObject] = []
 

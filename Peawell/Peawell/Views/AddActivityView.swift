@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddActivityView: View {
-
+    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
     
@@ -17,7 +17,7 @@ struct AddActivityView: View {
     @State var medAmount: String = ""
     @State var actName: String = ""
     @State var moodName: String = ""
-
+    
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     

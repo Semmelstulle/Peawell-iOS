@@ -12,9 +12,11 @@ let dayButtonSize: CGFloat = 40
 
 struct MainView: View {
 
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
+    var items: FetchedResults<Mood>
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-
+    
     var body: some View {
         NavigationView {
             Form() {
@@ -48,12 +50,15 @@ struct MainView: View {
                                 Rectangle()
                             }
                         }.frame(height: 200)
-
+                        
                     }
                 }
                 Section() {
-                    ForEach(0..<20) {_ in
-                        Label("Test", systemImage: "homekit")
+                    ForEach(items) { item in
+                        HStack() {
+                            Text(item.moodName ?? "Error")
+                            Text(item.activityName ?? "Error")
+                        }
                     }
                 }
             }
