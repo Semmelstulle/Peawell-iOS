@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct AddActivityView: View {
+
+    @Environment(\.managedObjectContext) var viewContext
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
+    var items: FetchedResults<Mood>
+
     
     //  these define the user input field's empty state
     @State private var medName: String = ""
@@ -22,7 +27,7 @@ struct AddActivityView: View {
                 Section(header: Text("Medication")) {
                     TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
                     TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
-                            .keyboardType(.decimalPad)
+                        .keyboardType(.decimalPad)
                     Button(action: {
                         // function here
                     }, label: {
@@ -36,6 +41,22 @@ struct AddActivityView: View {
                     TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
                     Button(action: {
                         // function here
+                        /* needs function to
+                         - check for both fields being filled
+                         - clear the textField
+                         */
+                        let context = viewContext
+                        let mood = Mood(context: context)
+                        mood.activityName = actName
+                        mood.moodName = moodName
+                        do {
+                            try context.save()
+                            hapticConfirm()
+                        } catch {
+                            let saveMedError = error as NSError
+                            fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo) while saving")
+                        }
+
                     }, label: {
                         Label("Add activity", systemImage: "plus")
                     })
