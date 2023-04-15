@@ -55,7 +55,7 @@ struct SettingsView: View {
                             //print("canceled deletion")
                         }
                         Button("I'm sure", role: .destructive) {
-                            UserDefaults.standard.set(false, forKey: "settingShowMoodSection")
+                            UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
                             UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
                             UserDefaults.standard.set(false, forKey: "settingSynciCloud")
                             UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
