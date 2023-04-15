@@ -30,6 +30,21 @@ struct AddActivityView: View {
                         .keyboardType(.decimalPad)
                     Button(action: {
                         // function here
+                        /* needs function to
+                         - check for both fields being filled
+                         - clear the textField
+                         */
+                        let context = viewContext
+                        let meds = Meds(context: context)
+                        meds.medType = medName
+                        meds.medDose = medAmount
+                        do {
+                            try context.save()
+                            hapticConfirm()
+                        } catch {
+                            let saveMedError = error as NSError
+                            fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo) while saving")
+                        }
                     }, label: {
                         Label("Add medication", systemImage: "plus")
                     })
