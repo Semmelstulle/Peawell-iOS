@@ -25,11 +25,11 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Display"),
-                        footer: Text("These settings change the look of this app.")
+                Section(header: Text("Modules"),
+                        footer: Text("These settings toggle the modules of this app.")
                 ) {
-                    Toggle(isOn: $settingShowMoodSection, label: {Text("Show mood section")})
-                    Toggle(isOn: $settingShowMedicationSection, label: {Text("Show medication section")})
+                    Toggle(isOn: $settingShowMoodSection, label: {Text("Use mood module")})
+                    Toggle(isOn: $settingShowMedicationSection, label: {Text("Use medication module")})
                 }
                 Section(header: Text("Access"),
                         footer: Text("Here you need to opt in on using features that the app can't provide on it's own.")
