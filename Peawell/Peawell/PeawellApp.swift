@@ -32,7 +32,12 @@ struct PeawellApp: App {
     }
 
     @AppStorage("resetOnLaunch") var resetOnLaunch = false
-    
+    init() {
+        if self.resetOnLaunch == true {
+            UserDefaults.standard .set(false, forKey: "resetOnLaunch")
+            resetData()
+        }
+    }
 }
 
 
@@ -49,11 +54,8 @@ func hapticConfirm() {
 
 
 //  function to safe added content to CoreData
-func saveMeds() {
+func saveMeds(medName: String, medAmount: String) {
     let viewContext = PersistenceController.shared.container.viewContext
-    @State var medName: String = ""
-    @State var medAmount: String = ""
-    
     let context = viewContext
     let meds = Meds(context: context)
     meds.medType = medName
@@ -67,11 +69,8 @@ func saveMeds() {
     }
 }
 
-func saveMood() {
+func saveMood(actName: String, moodName: String) {
     let viewContext = PersistenceController.shared.container.viewContext
-    @State var actName: String = ""
-    @State var moodName: String = ""
-
     let context = viewContext
     let mood = Mood(context: context)
     mood.activityName = actName
@@ -95,15 +94,10 @@ func resetData() {
 
     let viewContext = PersistenceController.shared.container.viewContext
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var moodItems: FetchedResults<Mood>
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
-    var medsItems: FetchedResults<Meds>
-
-    for object in medsItems {
+    for object in fetchMood() {
         viewContext.delete(object)
     }
-    for object in moodItems {
+    for object in fetchMeds() {
         viewContext.delete(object)
     }
     try? viewContext.save()

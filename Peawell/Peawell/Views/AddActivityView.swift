@@ -31,7 +31,7 @@ struct AddActivityView: View {
                         TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
                             .keyboardType(.decimalPad)
                         Button(action: {
-                            saveMeds()
+                            saveMeds(medName: medName, medAmount: medAmount)
                             /* needs function to
                              - check for both fields being filled
                              - clear the textField
@@ -47,15 +47,14 @@ struct AddActivityView: View {
                         TextField(text: $actName, prompt: Text("What did you do today?")) {Text("Activity name")}
                         TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
                         Button(action: {
-                            saveMood()
+                            saveMood(actName: actName, moodName: moodName)
                             /* needs function to
                              - check for both fields being filled
                              - clear the textField
                              */
                         }, label: {
                             Label("Add activity", systemImage: "plus")
-                        }
-                        )
+                        })
                     }
                 }
                 //sets the title for the NavView
