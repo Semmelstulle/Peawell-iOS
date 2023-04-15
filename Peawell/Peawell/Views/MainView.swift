@@ -14,27 +14,30 @@ struct MainView: View {
 
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-        
+
     var body: some View {
         NavigationView {
-            VStack() {
+            Form() {
+                // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
-                    VStack() {
-                        HStack(spacing: 10) {
-                            ForEach(0..<7) { index in
-                                DayButtonView(label: "\(index+1)")
+                    Section(header: Text("Mood")) {
+                        VStack() {
+                            HStack(spacing: 10) {
+                                ForEach(0..<7) { index in
+                                    DayButtonView(label: "\(index+1)")
+                                }
                             }
-                        }
-                        HStack(spacing: 10) {
-                            ForEach(0..<7) { index in
-                                DayButtonView(label: "\(index+8)")
+                            HStack(spacing: 10) {
+                                ForEach(0..<7) { index in
+                                    DayButtonView(label: "\(index+8)")
+                                }
                             }
                         }
                     }
-                };
+                }
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
-                    Form() {
+                    Section(header: Text("Medication")) {
                         VStack() {
                             HStack() {
                                 Rectangle()
@@ -45,9 +48,11 @@ struct MainView: View {
                                 Rectangle()
                             }
                         }.frame(height: 200)
-                        Label("Test", systemImage: "homekit")
-                        Label("Test", systemImage: "homekit")
-                        Label("Test", systemImage: "homekit")
+
+                    }
+                }
+                Section() {
+                    ForEach(0..<20) {_ in
                         Label("Test", systemImage: "homekit")
                     }
                 }
@@ -67,7 +72,6 @@ struct MainView: View {
             }
         }
     }
-    
 }
 
 struct MainView_Previews: PreviewProvider {
