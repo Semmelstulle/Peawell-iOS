@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  TabBarView.swift
 //  Peawell
 //
 //  Created by Dennis on 11.04.23.
@@ -12,7 +12,7 @@ import SwiftUI
 struct TabBarView: View {
     
     var body: some View {
-        TabView {
+        TabView() {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
@@ -35,7 +35,7 @@ struct TabBarView: View {
     }
 }
 
-struct TabView_Previews: PreviewProvider {
+struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
     }

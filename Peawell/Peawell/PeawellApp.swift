@@ -25,7 +25,7 @@ struct PeawellApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TabView()
+            TabBarView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
