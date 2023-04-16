@@ -17,10 +17,24 @@ struct MainView: View {
     var medsItems: FetchedResults<Meds>
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
+
+    private let medMenu = ContextMenu {
+        Button() {
+            // function plox
+        } label: {
+            Label("Edit medication", systemImage: "pencil")
+        }
+        Button(role: .destructive) {
+            // delete specific item
+        } label: {
+            Label("Delete medication", systemImage: "trash")
+        }
+    }
+
     var body: some View {
         NavigationView {
             ScrollView() {
+
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
                     VStack() {
@@ -41,27 +55,28 @@ struct MainView: View {
                     LazyVGrid(columns: [.init(), .init()]) {
                         ForEach(medsItems) { item in
                             PanelView(
-                            icon:
-                                Image(systemName: "pill")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.gray)
-                                .aspectRatio(1, contentMode: .fill)
-                                .clipShape(Circle()),
-                            bundle: 3,
-                            title: String(item.medType ?? "")
+                                icon:
+                                    Image(systemName: "pill")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.gray)
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .clipShape(Circle()),
+                                bundle: 3,
+                                title: String(item.medType ?? "")
                             )
+                            .contextMenu(medMenu)
                         }
                         PanelView(
-                        icon:
-                            Image(systemName: "plus")
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Color.accentColor)
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Circle()),
-                        bundle: medsItems.count,
-                        title: "Add medication"
+                            icon:
+                                Image(systemName: "plus")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.accentColor)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipShape(Circle()),
+                            bundle: medsItems.count,
+                            title: "Add medication"
                         )
                     }.padding()
                 }
