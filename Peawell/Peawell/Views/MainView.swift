@@ -20,53 +20,62 @@ struct MainView: View {
     
     var body: some View {
         NavigationView {
-            Form() {
+            ScrollView() {
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
-                    Section(header: Text("Mood")) {
-                        VStack() {
-                            HStack(spacing: 10) {
-                                ForEach(0..<7) { index in
-                                    DayButtonView(label: "\(index+1)")
-                                }
-                            }
-                            HStack(spacing: 10) {
-                                ForEach(0..<7) { index in
-                                    DayButtonView(label: "\(index+8)")
-                                }
+                    VStack() {
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+1)")
                             }
                         }
-                    }
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+8)")
+                            }
+                        }
+                    }.padding()
                 }
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
-                    Section(header: Text("Medication")) {
-                        VStack() {
-                            HStack() {
-                                Rectangle()
-                                Rectangle()
-                            }
-                            HStack() {
-                                Rectangle()
-                                Rectangle()
-                            }
-                        }.frame(height: 200)
-                        
-                    }
+                    LazyVGrid(columns: [.init(), .init()]) {
+                        ForEach(medsItems) { item in
+                            PanelView(
+                            icon:
+                                Image(systemName: "ipod")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.gray)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipShape(Circle())
+                            , bundle: 3,  title: "Shit" )
+                        }
+                        PanelView(
+                        icon:
+                            Image(systemName: "plus")
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.accentColor)
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Circle())
+                        ,bundle: medsItems.count,  title: "Add medication" )
+                    }.padding()
                 }
-                Section(header: Text("Meds log")) {
-                    ForEach(medsItems) { item in
-                        HStack() {
-                            Text(item.medType ?? "Error")
-                            Text(item.medDose ?? "Error")
+                Form() {
+                    Section(header: Text("Meds log")) {
+                        ForEach(medsItems) { item in
+                            HStack() {
+                                Text(item.medType ?? "Error")
+                                Text(item.medDose ?? "Error")
+                            }
                         }
                     }
-                }
-                Section(header: Text("Mood log")) {
-                    ForEach(moodItems) { item in
-                        HStack() {
-                            Text(item.activityName ?? "Error")
-                            Text(item.moodName ?? "Error")
+                    Section(header: Text("Mood log")) {
+                        ForEach(moodItems) { item in
+                            HStack() {
+                                Text(item.activityName ?? "Error")
+                                Text(item.moodName ?? "Error")
+                            }
                         }
                     }
                 }
@@ -88,14 +97,14 @@ struct MainView: View {
     }
 
     // prepares the med cell
-    struct MedButtonView: View {
-        @State var label: String
-        var body: some View {
-            ZStack() {
-                
-            }
-        }
-    }
+    /*struct MedButtonView: View {
+     @State var label: String
+     var body: some View {
+     ZStack() {
+
+     }
+     }
+     }*/
 }
 
 struct MainView_Previews: PreviewProvider {

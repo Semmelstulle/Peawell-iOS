@@ -15,6 +15,7 @@
 		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
 		9543A6C029E6E689003046FC /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BF29E6E689003046FC /* AddActivityView.swift */; };
 		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
+		9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9590AF8029EC0F51001A84B8 /* PanelView.swift */; };
 		9590FFC229EAAA16005D6DE3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9590FFC129EAAA16005D6DE3 /* Settings.bundle */; };
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9543A6BF29E6E689003046FC /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
 		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9590AF8029EC0F51001A84B8 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 		9590FFC129EAAA16005D6DE3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +93,7 @@
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
 				9543A6BF29E6E689003046FC /* AddActivityView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
+				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 				9543A6C029E6E689003046FC /* AddActivityView.swift in Sources */,
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
+				9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,
 			);
