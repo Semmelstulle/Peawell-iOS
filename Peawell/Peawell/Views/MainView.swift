@@ -42,13 +42,14 @@ struct MainView: View {
                         ForEach(medsItems) { item in
                             PanelView(
                             icon:
-                                Image(systemName: "ipod")
+                                Image(systemName: "pill")
                                 .foregroundColor(.white)
                                 .padding(10)
                                 .background(Color.gray)
                                 .aspectRatio(1, contentMode: .fill)
-                                .clipShape(Circle())
-                            , bundle: 3,  title: "Shit" )
+                                .clipShape(Circle()),
+                            bundle: 3,
+                            title: String(item.medType ?? "Error"))
                         }
                         PanelView(
                         icon:
@@ -57,8 +58,9 @@ struct MainView: View {
                             .padding(10)
                             .background(Color.accentColor)
                             .aspectRatio(1, contentMode: .fill)
-                            .clipShape(Circle())
-                        ,bundle: medsItems.count,  title: "Add medication" )
+                            .clipShape(Circle()),
+                        bundle: medsItems.count,
+                        title: "Add medication" )
                     }.padding()
                 }
                 Form() {
@@ -95,16 +97,6 @@ struct MainView: View {
             }
         }
     }
-
-    // prepares the med cell
-    /*struct MedButtonView: View {
-     @State var label: String
-     var body: some View {
-     ZStack() {
-
-     }
-     }
-     }*/
 }
 
 struct MainView_Previews: PreviewProvider {

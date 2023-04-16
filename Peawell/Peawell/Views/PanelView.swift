@@ -14,7 +14,7 @@ extension Color {
         Color(uiColor: .systemGray)
 }
 
-struct PanelView<V: View>: View { var icon: V; var bundle: Int; var title: LocalizedStringKey
+struct PanelView<V: View>: View { var icon: V; var bundle: Int; var title: String
     var body: some View {
         VStack {
             HStack {
