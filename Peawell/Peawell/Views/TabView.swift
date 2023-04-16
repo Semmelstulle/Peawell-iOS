@@ -9,10 +9,10 @@ import SwiftUI
 
 // this is just the navigation bar, not much here besides the three items in it
 
-struct ContentView: View {
+struct TabView: View {
     
     var body: some View {
-        TabView {
+        NavigationView {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
@@ -38,6 +38,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        TabView()
     }
 }

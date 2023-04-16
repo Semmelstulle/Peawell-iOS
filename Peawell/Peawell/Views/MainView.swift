@@ -49,7 +49,8 @@ struct MainView: View {
                                 .aspectRatio(1, contentMode: .fill)
                                 .clipShape(Circle()),
                             bundle: 3,
-                            title: String(item.medType ?? "Error"))
+                            title: String(item.medType ?? "")
+                            )
                         }
                         PanelView(
                         icon:
@@ -60,7 +61,8 @@ struct MainView: View {
                             .aspectRatio(1, contentMode: .fill)
                             .clipShape(Circle()),
                         bundle: medsItems.count,
-                        title: "Add medication" )
+                        title: "Add medication"
+                        )
                     }.padding()
                 }
                 Form() {
