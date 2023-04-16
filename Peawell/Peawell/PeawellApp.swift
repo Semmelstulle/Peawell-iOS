@@ -137,3 +137,9 @@ func fetchMeds() -> [NSManagedObject] {
     }
     return fetchedArray
 }
+
+
+// empty function
+func emptyFunc() {
+    print("emptyFunc called")
+}
