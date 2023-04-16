@@ -16,20 +16,20 @@ struct ContentView: View {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
-                    Text("Peawell")
+                    Text(mainTitle)
                 }
                 .navigationBarTitle(mainTitle)
             AddActivityView()
                 .tabItem {
                     Image(systemName: "plus.rectangle")
-                    Text("Add activity")
+                    Text(addTitle)
                 }
                 .navigationBarTitle(addTitle)
                 .tag(1)
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text("Settings")
+                    Text(settingsTitle)
                 }
                 .navigationBarTitle(settingsTitle)
         }

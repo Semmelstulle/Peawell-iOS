@@ -8,12 +8,13 @@
 import SwiftUI
 
 //  constants stored on top
-let dayButtonSize: CGFloat = 40
 
 struct MainView: View {
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var items: FetchedResults<Mood>
+    var moodItems: FetchedResults<Mood>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
+    var medsItems: FetchedResults<Meds>
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
@@ -53,11 +54,19 @@ struct MainView: View {
                         
                     }
                 }
-                Section() {
-                    ForEach(items) { item in
+                Section(header: Text("Meds log")) {
+                    ForEach(medsItems) { item in
                         HStack() {
-                            Text(item.moodName ?? "Error")
+                            Text(item.medType ?? "Error")
+                            Text(item.medDose ?? "Error")
+                        }
+                    }
+                }
+                Section(header: Text("Mood log")) {
+                    ForEach(moodItems) { item in
+                        HStack() {
                             Text(item.activityName ?? "Error")
+                            Text(item.moodName ?? "Error")
                         }
                     }
                 }
@@ -72,8 +81,18 @@ struct MainView: View {
         @State var label: String
         var body: some View {
             ZStack {
-                RoundedRectangle(cornerRadius: 15, style: .continuous).foregroundColor(.accentColor).frame(width: (dayButtonSize), height: (dayButtonSize));
+                RoundedRectangle(cornerRadius: 14, style: .continuous).foregroundColor(.accentColor).aspectRatio(1, contentMode: .fit);
                 Text(label)
+            }
+        }
+    }
+
+    // prepares the med cell
+    struct MedButtonView: View {
+        @State var label: String
+        var body: some View {
+            ZStack() {
+                
             }
         }
     }
