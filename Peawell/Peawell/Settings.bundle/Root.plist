@@ -30,7 +30,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Reset data on next launch (not yet functional)</string>
+			<string>Reset data on next launch</string>
 			<key>Key</key>
 			<string>resetOnLaunch</string>
 			<key>DefaultValue</key>

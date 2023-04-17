@@ -20,19 +20,25 @@ let settingsTitle: String = "Settings"
 struct PeawellApp: App {
     //  sets up CoreData part 1
     let persistenceController = PersistenceController.shared
-    //@Environment(\.scenePhase) var scenePhase
-
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //  initial view that is used on app launch
+            TabBarView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-
-    @AppStorage("resetOnLaunch") var resetOnLaunch = false
     
+    //  adds UserData to local scope
+    @AppStorage("resetOnLaunch") var resetOnLaunch = false
+    init() {
+        if self.resetOnLaunch == true {
+            //  resets toggle and calls reset function
+            UserDefaults.standard .set(false, forKey: "resetOnLaunch")
+            resetData()
+        }
+    }
 }
 
 
@@ -49,17 +55,15 @@ func hapticConfirm() {
 
 
 //  function to safe added content to CoreData
-func saveMeds() {
+func saveMeds(medName: String, medAmount: String) {
+    //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
-    @State var medName: String = ""
-    @State var medAmount: String = ""
-    
-    let context = viewContext
-    let meds = Meds(context: context)
+    let meds = Meds(context: viewContext)
+    //  maps CoreData values to variables
     meds.medType = medName
     meds.medDose = medAmount
     do {
-        try context.save()
+        try viewContext.save()
         hapticConfirm()
     } catch {
         let saveMedError = error as NSError
@@ -67,17 +71,15 @@ func saveMeds() {
     }
 }
 
-func saveMood() {
+func saveMood(actName: String, moodName: String) {
+    //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
-    @State var actName: String = ""
-    @State var moodName: String = ""
-
-    let context = viewContext
-    let mood = Mood(context: context)
+    let mood = Mood(context: viewContext)
+    //  maps CoreData values to variables
     mood.activityName = actName
     mood.moodName = moodName
     do {
-        try context.save()
+        try viewContext.save()
         hapticConfirm()
     } catch {
         let saveMedError = error as NSError
@@ -88,34 +90,52 @@ func saveMood() {
 
 // resets all data to empty and settings to their default
 func resetData() {
+    //  sets UserData to default values (NOT a real reset by deletion!)
     UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
     UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
     UserDefaults.standard.set(false, forKey: "settingSynciCloud")
     UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
-
+    
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var moodItems: FetchedResults<Mood>
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
-    var medsItems: FetchedResults<Meds>
-
-    for object in medsItems {
+    
+    //  runs fetch functions to gather all data and delete them
+    for object in fetchMood() {
         viewContext.delete(object)
     }
-    for object in moodItems {
+    for object in fetchMeds() {
         viewContext.delete(object)
     }
     try? viewContext.save()
 }
 
 
+//  functions to delete specific items
+func trashMeds(objectID: NSManagedObjectID) {
+    //  add CoreData to scope
+    let viewContext = PersistenceController.shared.container.viewContext
+    withAnimation {
+        do {
+            //  checks if object exists and tries to delete if so
+            if let object = try? viewContext.existingObject(with: objectID) {
+                viewContext.delete(object)
+            }
+            try viewContext.save()
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+    }
+}
+
+
 // functions to get data
 func fetchMood() -> [NSManagedObject] {
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
+    
+    //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-
+    
     let fetchRequest: NSFetchRequest<Mood> = Mood.fetchRequest()
     do {
         var results: [Mood]
@@ -129,10 +149,12 @@ func fetchMood() -> [NSManagedObject] {
 
 
 func fetchMeds() -> [NSManagedObject] {
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
+    
+    //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-
+    
     let fetchRequest: NSFetchRequest<Meds> = Meds.fetchRequest()
     do {
         var results: [Meds]

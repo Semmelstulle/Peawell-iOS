@@ -7,57 +7,84 @@
 
 import SwiftUI
 
-//  constants stored on top
-let dayButtonSize: CGFloat = 40
-
 struct MainView: View {
 
+    //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var items: FetchedResults<Mood>
+    var moodItems: FetchedResults<Mood>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
+    var medsItems: FetchedResults<Meds>
+
+    //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
+
     var body: some View {
         NavigationView {
-            Form() {
+            ScrollView() {
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
-                    Section(header: Text("Mood")) {
-                        VStack() {
-                            HStack(spacing: 10) {
-                                ForEach(0..<7) { index in
-                                    DayButtonView(label: "\(index+1)")
-                                }
-                            }
-                            HStack(spacing: 10) {
-                                ForEach(0..<7) { index in
-                                    DayButtonView(label: "\(index+8)")
-                                }
+                    VStack() {
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+1)")
                             }
                         }
-                    }
+                        HStack(spacing: 10) {
+                            ForEach(0..<7) { index in
+                                DayButtonView(label: "\(index+8)")
+                            }
+                        }
+                    }.padding()
                 }
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
-                    Section(header: Text("Medication")) {
-                        VStack() {
-                            HStack() {
-                                Rectangle()
-                                Rectangle()
+                    LazyVGrid(columns: [.init(), .init()]) {
+                        PanelView(
+                            icon:
+                                Image(systemName: "plus")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.accentColor)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipShape(Circle()),
+                            doseAmnt: String(medsItems.count),
+                            doseUnit: "",
+                            title: "Medications"
+                        )
+                        ForEach(medsItems) { item in
+                            PanelView(
+                                icon:
+                                    Image(systemName: "pills")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.gray)
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .clipShape(Circle()),
+                                doseAmnt: String(item.medDose ?? ""),
+                                doseUnit: "mg",
+                                title: String(item.medType ?? "")
+                            )
+                            .contextMenu() {
+                                Button() {
+                                    // either call a sheet or a new view here to edit entry
+                                } label: {
+                                    Label("Edit medication", systemImage: "pencil")
+                                }
+                                Button(role: .destructive) {
+                                    trashMeds(objectID: item.objectID)
+                                } label: {
+                                    Label("Delete medication", systemImage: "trash")
+                                }
                             }
-                            HStack() {
-                                Rectangle()
-                                Rectangle()
-                            }
-                        }.frame(height: 200)
-                        
-                    }
+                        }
+                    }.padding()
                 }
-                Section() {
-                    ForEach(items) { item in
+                Section(header: Text("Mood log")) {
+                    ForEach(moodItems) { item in
                         HStack() {
-                            Text(item.moodName ?? "Error")
                             Text(item.activityName ?? "Error")
+                            Text(item.moodName ?? "Error")
                         }
                     }
                 }
@@ -72,7 +99,7 @@ struct MainView: View {
         @State var label: String
         var body: some View {
             ZStack {
-                RoundedRectangle(cornerRadius: 15, style: .continuous).foregroundColor(.accentColor).frame(width: (dayButtonSize), height: (dayButtonSize));
+                RoundedRectangle(cornerRadius: 14, style: .continuous).foregroundColor(.accentColor).aspectRatio(1, contentMode: .fit);
                 Text(label)
             }
         }

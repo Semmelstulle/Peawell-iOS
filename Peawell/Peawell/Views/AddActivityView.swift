@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddActivityView: View {
-    
+
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
     
@@ -17,7 +17,8 @@ struct AddActivityView: View {
     @State var medAmount: String = ""
     @State var actName: String = ""
     @State var moodName: String = ""
-    
+
+    //  adds relevant UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
@@ -31,11 +32,7 @@ struct AddActivityView: View {
                         TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
                             .keyboardType(.decimalPad)
                         Button(action: {
-                            saveMeds()
-                            /* needs function to
-                             - check for both fields being filled
-                             - clear the textField
-                             */
+                            saveMeds(medName: medName, medAmount: medAmount)
                         }, label: {
                             Label("Add medication", systemImage: "plus")
                         })
@@ -47,15 +44,10 @@ struct AddActivityView: View {
                         TextField(text: $actName, prompt: Text("What did you do today?")) {Text("Activity name")}
                         TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
                         Button(action: {
-                            saveMood()
-                            /* needs function to
-                             - check for both fields being filled
-                             - clear the textField
-                             */
+                            saveMood(actName: actName, moodName: moodName)
                         }, label: {
                             Label("Add activity", systemImage: "plus")
-                        }
-                        )
+                        })
                     }
                 }
                 //sets the title for the NavView
