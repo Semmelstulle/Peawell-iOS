@@ -56,10 +56,22 @@ struct MainView: View {
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     LazyVGrid(columns: [.init(), .init()]) {
+                        PanelView(
+                            icon:
+                                Image(systemName: "plus")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.accentColor)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipShape(Circle()),
+                            doseAmnt: String(medsItems.count),
+                            doseUnit: "",
+                            title: "Medications"
+                        )
                         ForEach(medsItems) { item in
                             PanelView(
                                 icon:
-                                    Image(systemName: "pill")
+                                    Image(systemName: "pills")
                                     .foregroundColor(.white)
                                     .padding(10)
                                     .background(Color.gray)
@@ -83,18 +95,6 @@ struct MainView: View {
                                 }
                             }
                         }
-                        PanelView(
-                            icon:
-                                Image(systemName: "plus")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.accentColor)
-                                .aspectRatio(1, contentMode: .fill)
-                                .clipShape(Circle()),
-                            doseAmnt: String(medsItems.count),
-                            doseUnit: "",
-                            title: "Medications"
-                        )
                     }.padding()
                 }
                 Form() {

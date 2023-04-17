@@ -107,8 +107,9 @@ func trashMeds(objectID: NSManagedObjectID) {
     withAnimation {
         do {
             if let object = try? viewContext.existingObject(with: objectID) {
-                try viewContext.save()
+                viewContext.delete(object)
             }
+            try viewContext.save()
         } catch {
             NSLog(error.localizedDescription)
         }
