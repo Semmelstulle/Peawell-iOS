@@ -18,6 +18,7 @@
 		9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9590AF8029EC0F51001A84B8 /* PanelView.swift */; };
 		9590FFC229EAAA16005D6DE3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9590FFC129EAAA16005D6DE3 /* Settings.bundle */; };
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
+		95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		9590AF8029EC0F51001A84B8 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 		9590FFC129EAAA16005D6DE3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,13 +91,22 @@
 		951DCA7329E735E60072E809 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				95943E2D29ED85D10096CE6B /* CustomViews */,
 				9505432429E5CAC8005D29B5 /* TabBarView.swift */,
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
 				9543A6BF29E6E689003046FC /* AddActivityView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
-				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		95943E2D29ED85D10096CE6B /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
+				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +186,7 @@
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
 				9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */,
+				95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,
 			);

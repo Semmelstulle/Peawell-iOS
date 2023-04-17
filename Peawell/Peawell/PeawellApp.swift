@@ -121,6 +121,7 @@ func trashMeds(objectID: NSManagedObjectID) {
                 viewContext.delete(object)
             }
             try viewContext.save()
+            hapticConfirm()
         } catch {
             NSLog(error.localizedDescription)
         }

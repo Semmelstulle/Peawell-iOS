@@ -22,27 +22,30 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView() {
+                VStack() {
+                    HStack(spacing: 10) {
+                        ForEach(0..<7) { index in
+                            DayButtonView(label: "\(index+1)")
+                        }
+                    }
+                    HStack(spacing: 10) {
+                        ForEach(0..<7) { index in
+                            DayButtonView(label: "\(index+8)")
+                        }
+                    }
+                }.padding()
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
-                    VStack() {
-                        HStack(spacing: 10) {
-                            ForEach(0..<7) { index in
-                                DayButtonView(label: "\(index+1)")
-                            }
-                        }
-                        HStack(spacing: 10) {
-                            ForEach(0..<7) { index in
-                                DayButtonView(label: "\(index+8)")
-                            }
-                        }
-                    }.padding()
+                    Section(header: Text("Mood log")) {
+                        MoodPickerView()
+                    }
                 }
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     LazyVGrid(columns: [.init(), .init()]) {
                         PanelView(
                             icon:
-                                Image(systemName: "plus")
+                                Image("plus")
                                 .foregroundColor(.white)
                                 .padding(10)
                                 .background(Color.accentColor)
@@ -55,7 +58,7 @@ struct MainView: View {
                         ForEach(medsItems) { item in
                             PanelView(
                                 icon:
-                                    Image(systemName: "pills")
+                                    Image("pillLong")
                                     .foregroundColor(.white)
                                     .padding(10)
                                     .background(Color.gray)
@@ -80,28 +83,20 @@ struct MainView: View {
                         }
                     }.padding()
                 }
-                Section(header: Text("Mood log")) {
-                    ForEach(moodItems) { item in
-                        HStack() {
-                            Text(item.activityName ?? "Error")
-                            Text(item.moodName ?? "Error")
-                        }
-                    }
-                }
             }
             .navigationTitle(mainTitle)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
     }
-    
-    //  prepares the day cell
-    struct DayButtonView: View {
-        @State var label: String
-        var body: some View {
-            ZStack {
-                RoundedRectangle(cornerRadius: 14, style: .continuous).foregroundColor(.accentColor).aspectRatio(1, contentMode: .fit);
-                Text(label)
-            }
+}
+
+//  prepares the day cell
+struct DayButtonView: View {
+    @State var label: String
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 14, style: .continuous).foregroundColor(.accentColor).aspectRatio(1, contentMode: .fit);
+            Text(label)
         }
     }
 }
