@@ -25,6 +25,7 @@ struct MainView: View {
             Label("Edit medication", systemImage: "pencil")
         }
         Button(role: .destructive) {
+            trashMeds()
             // delete specific item
         } label: {
             Label("Delete medication", systemImage: "trash")
@@ -62,7 +63,8 @@ struct MainView: View {
                                     .background(Color.gray)
                                     .aspectRatio(1, contentMode: .fill)
                                     .clipShape(Circle()),
-                                bundle: 3,
+                                doseAmnt: String(item.medDose ?? ""),
+                                doseUnit: "mg",
                                 title: String(item.medType ?? "")
                             )
                             .contextMenu(medMenu)
@@ -75,8 +77,9 @@ struct MainView: View {
                                 .background(Color.accentColor)
                                 .aspectRatio(1, contentMode: .fill)
                                 .clipShape(Circle()),
-                            bundle: medsItems.count,
-                            title: "Add medication"
+                            doseAmnt: String(medsItems.count),
+                            doseUnit: "",
+                            title: "Medications"
                         )
                     }.padding()
                 }

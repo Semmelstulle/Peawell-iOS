@@ -56,12 +56,11 @@ func hapticConfirm() {
 //  function to safe added content to CoreData
 func saveMeds(medName: String, medAmount: String) {
     let viewContext = PersistenceController.shared.container.viewContext
-    let context = viewContext
-    let meds = Meds(context: context)
+    let meds = Meds(context: viewContext)
     meds.medType = medName
     meds.medDose = medAmount
     do {
-        try context.save()
+        try viewContext.save()
         hapticConfirm()
     } catch {
         let saveMedError = error as NSError
@@ -101,6 +100,18 @@ func resetData() {
         viewContext.delete(object)
     }
     try? viewContext.save()
+}
+
+private func trashMeds(offsets: IndexSet) {
+    let viewContext = PersistenceController.shared.container.viewContext
+    withAnimation {
+        offsets.map{ items [$0] }.forEach(viewContext.delete())
+        do {
+            try viewContext.save()
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+    }
 }
 
 

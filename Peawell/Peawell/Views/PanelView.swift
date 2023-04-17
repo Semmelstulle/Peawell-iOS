@@ -14,18 +14,21 @@ extension Color {
         Color(uiColor: .systemGray)
 }
 
-struct PanelView<V: View>: View { var icon: V; var bundle: Int; var title: String
+struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String
     var body: some View {
         VStack {
             HStack {
-                icon
+                Text(doseAmnt)
+                    .font(.title3)
+                    .foregroundColor(Color.secondary)
+                Text(doseUnit)
+                    .font(.title3)
+                    .foregroundColor(Color.secondary)
                 Spacer()
-                Text(bundle, format: .number)
-                    .font(.title)
+                icon
             }
             Text(title)
                 .font(.title3)
-                .foregroundColor(Color.systemFill)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
