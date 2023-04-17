@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddActivityView: View {
-    
+
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
     
@@ -17,7 +17,8 @@ struct AddActivityView: View {
     @State var medAmount: String = ""
     @State var actName: String = ""
     @State var moodName: String = ""
-    
+
+    //  adds relevant UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
@@ -32,10 +33,6 @@ struct AddActivityView: View {
                             .keyboardType(.decimalPad)
                         Button(action: {
                             saveMeds(medName: medName, medAmount: medAmount)
-                            /* needs function to
-                             - check for both fields being filled
-                             - clear the textField
-                             */
                         }, label: {
                             Label("Add medication", systemImage: "plus")
                         })
@@ -48,10 +45,6 @@ struct AddActivityView: View {
                         TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
                         Button(action: {
                             saveMood(actName: actName, moodName: moodName)
-                            /* needs function to
-                             - check for both fields being filled
-                             - clear the textField
-                             */
                         }, label: {
                             Label("Add activity", systemImage: "plus")
                         })

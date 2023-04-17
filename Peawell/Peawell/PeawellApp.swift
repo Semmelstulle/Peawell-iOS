@@ -20,20 +20,21 @@ let settingsTitle: String = "Settings"
 struct PeawellApp: App {
     //  sets up CoreData part 1
     let persistenceController = PersistenceController.shared
-    //@Environment(\.scenePhase) var scenePhase
-
     
     var body: some Scene {
         WindowGroup {
+            //  initial view that is used on app launch
             TabBarView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-
+    
+    //  adds UserData to local scope
     @AppStorage("resetOnLaunch") var resetOnLaunch = false
     init() {
         if self.resetOnLaunch == true {
+            //  resets toggle and calls reset function
             UserDefaults.standard .set(false, forKey: "resetOnLaunch")
             resetData()
         }
@@ -55,8 +56,10 @@ func hapticConfirm() {
 
 //  function to safe added content to CoreData
 func saveMeds(medName: String, medAmount: String) {
+    //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
     let meds = Meds(context: viewContext)
+    //  maps CoreData values to variables
     meds.medType = medName
     meds.medDose = medAmount
     do {
@@ -69,13 +72,14 @@ func saveMeds(medName: String, medAmount: String) {
 }
 
 func saveMood(actName: String, moodName: String) {
+    //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
-    let context = viewContext
-    let mood = Mood(context: context)
+    let mood = Mood(context: viewContext)
+    //  maps CoreData values to variables
     mood.activityName = actName
     mood.moodName = moodName
     do {
-        try context.save()
+        try viewContext.save()
         hapticConfirm()
     } catch {
         let saveMedError = error as NSError
@@ -86,13 +90,16 @@ func saveMood(actName: String, moodName: String) {
 
 // resets all data to empty and settings to their default
 func resetData() {
+    //  sets UserData to default values (NOT a real reset by deletion!)
     UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
     UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
     UserDefaults.standard.set(false, forKey: "settingSynciCloud")
     UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
-
+    
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
+    
+    //  runs fetch functions to gather all data and delete them
     for object in fetchMood() {
         viewContext.delete(object)
     }
@@ -102,10 +109,14 @@ func resetData() {
     try? viewContext.save()
 }
 
+
+//  functions to delete specific items
 func trashMeds(objectID: NSManagedObjectID) {
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     withAnimation {
         do {
+            //  checks if object exists and tries to delete if so
             if let object = try? viewContext.existingObject(with: objectID) {
                 viewContext.delete(object)
             }
@@ -119,10 +130,12 @@ func trashMeds(objectID: NSManagedObjectID) {
 
 // functions to get data
 func fetchMood() -> [NSManagedObject] {
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
+    
+    //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-
+    
     let fetchRequest: NSFetchRequest<Mood> = Mood.fetchRequest()
     do {
         var results: [Mood]
@@ -136,10 +149,12 @@ func fetchMood() -> [NSManagedObject] {
 
 
 func fetchMeds() -> [NSManagedObject] {
+    //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-
+    
+    //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-
+    
     let fetchRequest: NSFetchRequest<Meds> = Meds.fetchRequest()
     do {
         var results: [Meds]
@@ -149,10 +164,4 @@ func fetchMeds() -> [NSManagedObject] {
         NSLog(error.localizedDescription)
     }
     return fetchedArray
-}
-
-
-// empty function
-func emptyFunc() {
-    print("emptyFunc called")
 }

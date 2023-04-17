@@ -7,37 +7,21 @@
 
 import SwiftUI
 
-//  constants stored on top
-
 struct MainView: View {
 
+    //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var moodItems: FetchedResults<Mood>
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+
+    //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-
-    /*
-    private let medMenu = ContextMenu {
-        Button() {
-            // function plox
-        } label: {
-            Label("Edit medication", systemImage: "pencil")
-        }
-        Button(role: .destructive) {
-            trashMeds(objectID: item.objectID)
-            // delete specific item
-        } label: {
-            Label("Delete medication", systemImage: "trash")
-        }
-    }
-     */
 
     var body: some View {
         NavigationView {
             ScrollView() {
-
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
                     VStack() {
@@ -83,13 +67,12 @@ struct MainView: View {
                             )
                             .contextMenu() {
                                 Button() {
-                                    // function plox
+                                    // either call a sheet or a new view here to edit entry
                                 } label: {
                                     Label("Edit medication", systemImage: "pencil")
                                 }
                                 Button(role: .destructive) {
                                     trashMeds(objectID: item.objectID)
-                                    // delete specific item
                                 } label: {
                                     Label("Delete medication", systemImage: "trash")
                                 }
@@ -97,21 +80,11 @@ struct MainView: View {
                         }
                     }.padding()
                 }
-                Form() {
-                    Section(header: Text("Meds log")) {
-                        ForEach(medsItems) { item in
-                            HStack() {
-                                Text(item.medType ?? "Error")
-                                Text(item.medDose ?? "Error")
-                            }
-                        }
-                    }
-                    Section(header: Text("Mood log")) {
-                        ForEach(moodItems) { item in
-                            HStack() {
-                                Text(item.activityName ?? "Error")
-                                Text(item.moodName ?? "Error")
-                            }
+                Section(header: Text("Mood log")) {
+                    ForEach(moodItems) { item in
+                        HStack() {
+                            Text(item.activityName ?? "Error")
+                            Text(item.moodName ?? "Error")
                         }
                     }
                 }

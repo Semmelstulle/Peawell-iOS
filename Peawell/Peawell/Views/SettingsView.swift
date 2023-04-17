@@ -19,7 +19,8 @@ struct SettingsView: View {
     @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
     @AppStorage("settingSynciCloud") var settingSynciCloud = false
     @AppStorage("settingSyncCalendar") var settingSyncCalendar = false
-    
+
+    //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
     
     var body: some View {
@@ -56,6 +57,7 @@ struct SettingsView: View {
                         }
                     }
                 }
+                //  links to project and dev
                 Section(header: Text("About this project")
                 ) {
                     Link(destination: URL(string: "https://mastodon.social/@semmelstulle")!,
@@ -72,6 +74,7 @@ struct SettingsView: View {
                     }
                 }
                 HStack() {
+                    //  oh, hello there!
                     Spacer()
                     Text("Made with love in 🇩🇪").foregroundColor(.secondary)
                     Spacer()
