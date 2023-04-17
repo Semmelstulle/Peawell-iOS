@@ -43,37 +43,41 @@ struct MainView: View {
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     LazyVGrid(columns: [.init(), .init()]) {
-                        PanelView(
-                            icon:
-                                Image("plus")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.accentColor)
-                                .aspectRatio(1, contentMode: .fill)
-                                .clipShape(Circle()),
-                            doseAmnt: String(medsItems.count),
-                            doseUnit: "",
-                            title: "Medications"
-                        )
-                        ForEach(medsItems) { item in
+                        NavigationLink(destination: MedDetailsView().navigationTitle("Add medication")) {
                             PanelView(
                                 icon:
-                                    Image("pillLong")
+                                    Image("plus")
                                     .foregroundColor(.white)
                                     .padding(10)
-                                    .background(Color.gray)
+                                    .background(Color.accentColor)
                                     .aspectRatio(1, contentMode: .fill)
                                     .clipShape(Circle()),
-                                doseAmnt: String(item.medDose ?? ""),
-                                doseUnit: "mg",
-                                title: String(item.medType ?? "")
+                                doseAmnt: String(medsItems.count),
+                                doseUnit: "",
+                                title: "Medications"
                             )
+                        }
+                        ForEach(medsItems) { item in
+                            NavigationLink(destination: MedDetailsView().navigationTitle(item.medType ?? "")) {
+                                PanelView(
+                                    icon:
+                                        Image("pillLong")
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color.gray)
+                                        .aspectRatio(1, contentMode: .fill)
+                                        .clipShape(Circle()),
+                                    doseAmnt: String(item.medDose ?? ""),
+                                    doseUnit: "mg",
+                                    title: String(item.medType ?? "")
+                                )
+                            }
                             .contextMenu() {
-                                Button() {
-                                    // either call a sheet or a new view here to edit entry
-                                } label: {
-                                    Label("Edit medication", systemImage: "pencil")
-                                }
+                                    Button() {
+                                        // either call a sheet or a new view here to edit entry
+                                    } label: {
+                                        Label("Edit medication", systemImage: "pencil")
+                                    }
                                 Button(role: .destructive) {
                                     trashMeds(objectID: item.objectID)
                                 } label: {

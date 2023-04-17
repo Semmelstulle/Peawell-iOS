@@ -31,6 +31,7 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
             }
             Text(title)
                 .font(.title3)
+                .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
