@@ -102,12 +102,13 @@ func resetData() {
     try? viewContext.save()
 }
 
-private func trashMeds(offsets: IndexSet) {
+func trashMeds(objectID: NSManagedObjectID) {
     let viewContext = PersistenceController.shared.container.viewContext
     withAnimation {
-        offsets.map{ items [$0] }.forEach(viewContext.delete())
         do {
-            try viewContext.save()
+            if let object = try? viewContext.existingObject(with: objectID) {
+                try viewContext.save()
+            }
         } catch {
             NSLog(error.localizedDescription)
         }

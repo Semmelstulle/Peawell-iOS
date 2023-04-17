@@ -18,6 +18,7 @@ struct MainView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
 
+    /*
     private let medMenu = ContextMenu {
         Button() {
             // function plox
@@ -25,12 +26,13 @@ struct MainView: View {
             Label("Edit medication", systemImage: "pencil")
         }
         Button(role: .destructive) {
-            trashMeds()
+            trashMeds(objectID: item.objectID)
             // delete specific item
         } label: {
             Label("Delete medication", systemImage: "trash")
         }
     }
+     */
 
     var body: some View {
         NavigationView {
@@ -67,7 +69,19 @@ struct MainView: View {
                                 doseUnit: "mg",
                                 title: String(item.medType ?? "")
                             )
-                            .contextMenu(medMenu)
+                            .contextMenu() {
+                                Button() {
+                                    // function plox
+                                } label: {
+                                    Label("Edit medication", systemImage: "pencil")
+                                }
+                                Button(role: .destructive) {
+                                    trashMeds(objectID: item.objectID)
+                                    // delete specific item
+                                } label: {
+                                    Label("Delete medication", systemImage: "trash")
+                                }
+                            }
                         }
                         PanelView(
                             icon:
