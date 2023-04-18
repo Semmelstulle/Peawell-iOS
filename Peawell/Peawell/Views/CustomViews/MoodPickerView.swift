@@ -69,6 +69,7 @@ struct MoodPickerView: View {
                     })
                     Button(action: {
                         moodName = ""
+                        actName = ""
                         showMoodField = false
                     }, label: {
                         Label("Cancel", systemImage: "xmark.circle")
