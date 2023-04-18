@@ -83,8 +83,9 @@ struct MainView: View {
                     Section(header: Text("Mood log")) {
                         ForEach(moodItems) { item in
                             HStack() {
-                                Text(item.activityName ?? "Error")
                                 Text(item.moodName ?? "Error")
+                                Text(" - ")
+                                Text(item.activityName ?? "Error")
                             }
                         }
                     }
