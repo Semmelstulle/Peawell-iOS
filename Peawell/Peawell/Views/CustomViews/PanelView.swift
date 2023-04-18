@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-//  needs to piggyback on UIKit to get system colours
-extension Color {
-    static let secondarySystemBackground =
-    Color(uiColor: .secondarySystemBackground)
-}
-
 //  the whole view is the medication cell part
 struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String
     var body: some View {

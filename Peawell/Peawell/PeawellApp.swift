@@ -9,6 +9,13 @@ import SwiftUI
 import CoreHaptics
 import CoreData
 
+//  needs to piggyback on UIKit to get system colours
+extension Color {
+    static let secondarySystemBackground =
+    Color(uiColor: .secondarySystemBackground)
+    static let tertiarySystemBackground =
+    Color(uiColor: .tertiarySystemBackground)
+}
 
 //  constants stored on the top
 let mainTitle: String = "Peawell"
