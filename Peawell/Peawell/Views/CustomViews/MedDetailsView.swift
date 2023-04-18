@@ -19,22 +19,25 @@ struct MedDetailsView: View { var detailTitle: Text
     @State var moodName: String = ""
 
     var body: some View {
-        Form() {
+        ScrollView() {
             detailTitle
                 .font(.title)
                 .listRowBackground(Color.clear)
-            Section() {
-                TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
-                TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
-                    .keyboardType(.decimalPad)
-                Button(action: {
-                    saveMeds(medName: medName, medAmount: medAmount)
-                }, label: {
-                    Label("Add medication", systemImage: "plus")
-                })
-
-            }
-        }
+            TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
+            TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
+                .keyboardType(.decimalPad)
+            Spacer()
+            Button(action: {
+                saveMeds(medName: medName, medAmount: medAmount)
+            }, label: {
+                Label("Add medication", systemImage: "plus")
+            })
+            .padding()
+            .foregroundColor(Color.white)
+            .background(Color.accentColor)
+            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .frame(maxHeight: .infinity, alignment: .bottom)
+        }.padding()
     }
 }
 

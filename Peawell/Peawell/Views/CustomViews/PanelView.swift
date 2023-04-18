@@ -36,7 +36,7 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
         }
         .padding()
         .background(Color.secondarySystemBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
