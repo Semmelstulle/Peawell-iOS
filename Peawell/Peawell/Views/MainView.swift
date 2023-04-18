@@ -19,6 +19,8 @@ struct MainView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
 
+    @State private var showMedDetailsSheet: Bool = false
+
     var body: some View {
         NavigationView {
             ScrollView() {
@@ -43,41 +45,40 @@ struct MainView: View {
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     LazyVGrid(columns: [.init(), .init()]) {
-                        NavigationLink(destination: MedDetailsView().navigationTitle("Add medication")) {
-                            PanelView(
-                                icon:
-                                    Image("plus")
-                                    .foregroundColor(.white)
-                                    .padding(10)
-                                    .background(Color.accentColor)
-                                    .aspectRatio(1, contentMode: .fill)
-                                    .clipShape(Circle()),
-                                doseAmnt: String(medsItems.count),
-                                doseUnit: "",
-                                title: "Medications"
-                            )
+                        PanelView(
+                            icon:
+                                Image("plus")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Color.accentColor)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipShape(Circle()),
+                            doseAmnt: String(medsItems.count),
+                            doseUnit: "",
+                            title: "Medications"
+                        )
+                        .onTapGesture {
+                            showMedDetailsSheet = true
                         }
                         ForEach(medsItems) { item in
-                            NavigationLink(destination: MedDetailsView().navigationTitle(item.medType ?? "")) {
-                                PanelView(
-                                    icon:
-                                        Image("pillLong")
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color.gray)
-                                        .aspectRatio(1, contentMode: .fill)
-                                        .clipShape(Circle()),
-                                    doseAmnt: String(item.medDose ?? ""),
-                                    doseUnit: "mg",
-                                    title: String(item.medType ?? "")
-                                )
-                            }
+                            PanelView(
+                                icon:
+                                    Image("pillLong")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .background(Color.gray)
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .clipShape(Circle()),
+                                doseAmnt: String(item.medDose ?? ""),
+                                doseUnit: "mg",
+                                title: String(item.medType ?? "")
+                            )
                             .contextMenu() {
-                                    Button() {
-                                        // either call a sheet or a new view here to edit entry
-                                    } label: {
-                                        Label("Edit medication", systemImage: "pencil")
-                                    }
+                                Button() {
+                                    showMedDetailsSheet = true
+                                } label: {
+                                    Label("Edit medication", systemImage: "pencil")
+                                }
                                 Button(role: .destructive) {
                                     trashMeds(objectID: item.objectID)
                                 } label: {
@@ -85,7 +86,20 @@ struct MainView: View {
                                 }
                             }
                         }
-                    }.padding()
+                    }
+                    .sheet(isPresented: $showMedDetailsSheet) {
+                        if #available(iOS 16.0, *) {
+                            MedDetailsView(
+                                detailTitle: Text("Add medication")
+                            )
+                                .presentationDetents([.medium, .large])
+                        } else {
+                            MedDetailsView(
+                                detailTitle: Text("Add medication")
+                            )
+                        }
+                    }
+                    .padding()
                 }
             }
             .navigationTitle(mainTitle)
