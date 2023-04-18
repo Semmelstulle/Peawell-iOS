@@ -87,7 +87,9 @@ struct MainView: View {
                             }
                         }
                     }
+                    //  sheet must be at top level of desired element
                     .sheet(isPresented: $showMedDetailsSheet) {
+
                         if #available(iOS 16.0, *) {
                             MedDetailsView(
                                 detailTitle: Text("Add medication")

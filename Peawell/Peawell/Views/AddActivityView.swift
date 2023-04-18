@@ -25,19 +25,6 @@ struct AddActivityView: View {
     var body: some View {
         NavigationView {
             Form {
-                //  section for meds
-                if settingShowMedicationSection == true {
-                    Section(header: Text("Medication")) {
-                        TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
-                        TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
-                            .keyboardType(.decimalPad)
-                        Button(action: {
-                            saveMeds(medName: medName, medAmount: medAmount)
-                        }, label: {
-                            Label("Add medication", systemImage: "plus")
-                        })
-                    }
-                }
                 //  section for mood
                 if settingShowMoodSection == true {
                     Section(header: Text("Mood")) {
