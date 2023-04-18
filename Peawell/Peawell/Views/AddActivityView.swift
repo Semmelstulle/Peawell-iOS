@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddActivityView: View {
-
+    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
     
@@ -17,42 +17,39 @@ struct AddActivityView: View {
     @State var medAmount: String = ""
     @State var actName: String = ""
     @State var moodName: String = ""
-
+    
     //  adds relevant UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
     var body: some View {
-        NavigationView {
-            Form {
-                //  section for meds
-                if settingShowMedicationSection == true {
-                    Section(header: Text("Medication")) {
-                        TextField(text: $medName, prompt: Text("Name of medication goes here")) {Text("Medication name")}
-                        TextField(text: $medAmount, prompt: Text("Dose needed in mg goes here")) {Text("Medicaton dose")}
-                            .keyboardType(.decimalPad)
-                        Button(action: {
-                            saveMeds(medName: medName, medAmount: medAmount)
-                        }, label: {
-                            Label("Add medication", systemImage: "plus")
-                        })
-                    }
+        Form {
+            //  section for mood
+            if settingShowMedicationSection == true {
+                Section(header: Text("Medication")) {
+                    TextField(text: $medName, prompt: Text("What is your medication called?")) {Text("Activity name")}
+                    TextField(text: $medAmount, prompt: Text("Dose here")) {Text("Your mood")}
+                    Button(action: {
+                        saveMeds(medName: medName, medAmount: medAmount)
+                    }, label: {
+                        Label("Add activity", systemImage: "plus")
+                    })
                 }
-                //  section for mood
-                if settingShowMoodSection == true {
-                    Section(header: Text("Mood")) {
-                        TextField(text: $actName, prompt: Text("What did you do today?")) {Text("Activity name")}
-                        TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
-                        Button(action: {
-                            saveMood(actName: actName, moodName: moodName)
-                        }, label: {
-                            Label("Add activity", systemImage: "plus")
-                        })
-                    }
+            }
+            //  section for mood
+            if settingShowMoodSection == true {
+                Section(header: Text("Mood")) {
+                    TextField(text: $actName, prompt: Text("What did you do today?")) {Text("Activity name")}
+                    TextField(text: $moodName, prompt: Text("How did you feel today?")) {Text("Your mood")}
+                    Button(action: {
+                        saveMood(actName: actName, moodName: moodName)
+                    }, label: {
+                        Label("Add activity", systemImage: "plus")
+                    })
                 }
-                //sets the title for the NavView
-            }.navigationTitle(addTitle)
-        }
+            }
+            //sets the title for the NavView
+        }.navigationTitle(addTitle)
     }
 }
 

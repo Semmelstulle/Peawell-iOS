@@ -9,6 +9,13 @@ import SwiftUI
 import CoreHaptics
 import CoreData
 
+//  needs to piggyback on UIKit to get system colours
+extension Color {
+    static let secondarySystemBackground =
+    Color(uiColor: .secondarySystemBackground)
+    static let tertiarySystemBackground =
+    Color(uiColor: .tertiarySystemBackground)
+}
 
 //  constants stored on the top
 let mainTitle: String = "Peawell"
@@ -24,7 +31,7 @@ struct PeawellApp: App {
     var body: some Scene {
         WindowGroup {
             //  initial view that is used on app launch
-            TabBarView()
+            MainView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
@@ -121,6 +128,7 @@ func trashMeds(objectID: NSManagedObjectID) {
                 viewContext.delete(object)
             }
             try viewContext.save()
+            hapticConfirm()
         } catch {
             NSLog(error.localizedDescription)
         }

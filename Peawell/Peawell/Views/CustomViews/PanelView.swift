@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-//  needs to piggyback on UIKit to get system colours
-extension Color {
-    static let secondarySystemBackground =
-    Color(uiColor: .secondarySystemBackground)
-    static let systemFill =
-    Color(uiColor: .systemGray)
-}
-
 //  the whole view is the medication cell part
 struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String
     var body: some View {
@@ -31,11 +23,12 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
             }
             Text(title)
                 .font(.title3)
+                .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
         .background(Color.secondarySystemBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
