@@ -11,8 +11,6 @@ import SwiftUI
 extension Color {
     static let secondarySystemBackground =
     Color(uiColor: .secondarySystemBackground)
-    static let systemFill =
-    Color(uiColor: .systemGray)
 }
 
 //  the whole view is the medication cell part

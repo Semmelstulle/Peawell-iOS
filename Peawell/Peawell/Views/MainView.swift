@@ -19,28 +19,17 @@ struct MainView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
 
-    @State private var showMedDetailsSheet: Bool = false
+    @State private var showSettingsSheet: Bool = false
 
     var body: some View {
         NavigationView {
             ScrollView() {
-                VStack() {
-                    HStack(spacing: 10) {
-                        ForEach(0..<7) { index in
-                            DayButtonView(label: "\(index+1)")
-                        }
-                    }
-                    HStack(spacing: 10) {
-                        ForEach(0..<7) { index in
-                            DayButtonView(label: "\(index+8)")
-                        }
-                    }
-                }.padding()
+                CalendarView()
+                    .padding()
                 // checks UserDefaults if section is active
                 if settingShowMoodSection == true {
-                    Section(header: Text("Mood log")) {
-                        MoodPickerView()
-                    }
+                    MoodPickerView()
+                        .padding()
                 }
                 //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
@@ -58,7 +47,7 @@ struct MainView: View {
                             title: "Medications"
                         )
                         .onTapGesture {
-                            showMedDetailsSheet = true
+                            // sheet here
                         }
                         ForEach(medsItems) { item in
                             PanelView(
@@ -75,7 +64,7 @@ struct MainView: View {
                             )
                             .contextMenu() {
                                 Button() {
-                                    showMedDetailsSheet = true
+                                    // bla
                                 } label: {
                                     Label("Edit medication", systemImage: "pencil")
                                 }
@@ -87,36 +76,33 @@ struct MainView: View {
                             }
                         }
                     }
-                    //  sheet must be at top level of desired element
-                    .sheet(isPresented: $showMedDetailsSheet) {
-
-                        if #available(iOS 16.0, *) {
-                            MedDetailsView(
-                                detailTitle: Text("Add medication")
-                            )
-                                .presentationDetents([.medium, .large])
-                        } else {
-                            MedDetailsView(
-                                detailTitle: Text("Add medication")
-                            )
-                        }
-                    }
                     .padding()
                 }
             }
             .navigationTitle(mainTitle)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        }
-    }
-}
-
-//  prepares the day cell
-struct DayButtonView: View {
-    @State var label: String
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 14, style: .continuous).foregroundColor(.accentColor).aspectRatio(1, contentMode: .fit);
-            Text(label)
+            .toolbar() {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image(systemName: "gear")
+                        .onTapGesture() {
+                            showSettingsSheet = true
+                        }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Image(systemName: "chart.bar")
+                        .onTapGesture {
+                            //  function
+                        }
+                }
+            }
+            .sheet(isPresented: $showSettingsSheet) {
+                if #available (iOS 16.0, *) {
+                    SettingsView().presentationDetents(
+                        [.medium, .large])
+                } else {
+                    SettingsView()
+                }
+            }
         }
     }
 }
