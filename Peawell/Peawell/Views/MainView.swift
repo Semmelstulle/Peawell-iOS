@@ -78,6 +78,18 @@ struct MainView: View {
                     }
                     .padding()
                 }
+                // checks UserDefaults if section is active
+                if settingShowMoodSection == true {
+                    Section(header: Text("Mood log")) {
+                        ForEach(moodItems) { item in
+                            HStack() {
+                                Text(item.activityName ?? "Error")
+                                Text(item.moodName ?? "Error")
+                            }
+                        }
+                    }
+                }
+
             }
             .navigationTitle(mainTitle)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -89,10 +101,9 @@ struct MainView: View {
                         }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "chart.bar")
-                        .onTapGesture {
-                            //  function
-                        }
+                    NavigationLink(destination: AddActivityView()) {
+                        Image(systemName: "plus")
+                    }
                 }
             }
             .sheet(isPresented: $showSettingsSheet) {
