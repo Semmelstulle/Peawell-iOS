@@ -12,6 +12,7 @@ struct MoodPickerView: View {
     //  parsed moods
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
+
     //  state of the variables that will be updated by code
     @State var moodName: String = ""
     @State var actName: String = ""
@@ -19,31 +20,42 @@ struct MoodPickerView: View {
 
     var body: some View {
         VStack {
+            Text("How's your average mood today?")
             HStack {
-                MoodButtonView(panelColor: Color.red, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.red, moodImage: "moodHorrible")
                     .onTapGesture {
                         moodName = "Horrible"
-                        showMoodField = true
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = true
+                        }
                     }
-                MoodButtonView(panelColor: Color.orange, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.orange, moodImage: "moodBad")
                     .onTapGesture {
                         moodName = "Bad"
-                        showMoodField = true
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = true
+                        }
                     }
-                MoodButtonView(panelColor: Color.gray, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.yellow, moodImage: "moodNeutral")
                     .onTapGesture {
                         moodName = "Neutral"
-                        showMoodField = true
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = true
+                        }
                     }
-                MoodButtonView(panelColor: Color.yellow, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.green, moodImage: "moodGood")
                     .onTapGesture {
                         moodName = "Good"
-                        showMoodField = true
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = true
+                        }
                     }
-                MoodButtonView(panelColor: Color.green, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.mint, moodImage: "moodAwesome")
                     .onTapGesture {
                         moodName = "Awesome"
-                        showMoodField = true
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = true
+                        }
                     }
             }
             if showMoodField == true {
@@ -59,7 +71,9 @@ struct MoodPickerView: View {
                 HStack {
                     Button(action: {
                         saveMood(actName: actName, moodName: moodName)
-                        showMoodField = false
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = false
+                        }
                     }, label: {
                         Label("Add activity", systemImage: "plus")
                             .padding()
@@ -70,12 +84,14 @@ struct MoodPickerView: View {
                     Button(action: {
                         moodName = ""
                         actName = ""
-                        showMoodField = false
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            showMoodField = false
+                        }
                     }, label: {
                         Label("Cancel", systemImage: "xmark.circle")
                             .padding()
                             .background(Color.tertiarySystemBackground)
-                            .foregroundColor(Color.white)
+                            //.foregroundColor(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                     })
                 }

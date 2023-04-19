@@ -1,41 +1,37 @@
 //
-//  TabView.swift
+//  TabBarView.swift
 //  Peawell
 //
-//  Created by Dennis on 11.04.23.
+//  Created by Dennis on 19.04.23.
 //
 
 import SwiftUI
 
-// this is just the navigation bar, not much here besides the three items in it
-
 struct TabBarView: View {
-    
     var body: some View {
-        TabView {
+
+        //  this is literally just the tabs on the bottom
+        TabView() {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
                     Text(mainTitle)
                 }
-                .navigationBarTitle(mainTitle)
-            AddActivityView()
+            OverView()
                 .tabItem {
-                    Image(systemName: "plus.rectangle")
-                    Text(addTitle)
+                    Image(systemName: "list.bullet")
+                    Text(overviewTitle)
                 }
-                .navigationBarTitle(addTitle)
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
                     Text(settingsTitle)
                 }
-                .navigationBarTitle(settingsTitle)
         }
     }
 }
 
-struct TabView_Previews: PreviewProvider {
+struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
     }

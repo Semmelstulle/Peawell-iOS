@@ -9,6 +9,8 @@ import SwiftUI
 import CoreHaptics
 import CoreData
 
+//  the whole logic lives here
+
 //  needs to piggyback on UIKit to get system colours
 extension Color {
     static let secondarySystemBackground =
@@ -19,7 +21,7 @@ extension Color {
 
 //  constants stored on the top
 let mainTitle: String = "Peawell"
-let addTitle: String = "Add entry"
+let overviewTitle: String = "Overview"
 let settingsTitle: String = "Settings"
 
 
@@ -31,7 +33,7 @@ struct PeawellApp: App {
     var body: some Scene {
         WindowGroup {
             //  initial view that is used on app launch
-            MainView()
+            TabBarView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
