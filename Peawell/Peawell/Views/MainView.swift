@@ -9,29 +9,26 @@ import SwiftUI
 
 struct MainView: View {
 
-    //  adds fetched data to scope
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var moodItems: FetchedResults<Mood>
-
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-
-    @State private var showMedsSheet: Bool = false
 
     var body: some View {
         NavigationView {
             ScrollView() {
                 CalendarView()
                     .padding()
-                // checks UserDefaults if section is active
+                // the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
                         .padding()
                 }
-                //  checks UserDefaults if section is active
                 if settingShowMedicationSection == true {
                     MedsView()
+                        .padding()
+                }
+                if settingShowMedicationSection == false && settingShowMoodSection == false {
+                    Text("All modules disabled")
                         .padding()
                 }
             }

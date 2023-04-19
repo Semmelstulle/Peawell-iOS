@@ -11,47 +11,65 @@ struct MedsView: View {
 
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+    //  these define the user input field's empty state
+    @State var medName: String = ""
+    @State var medAmount: String = ""
+
+    @State var showAddMedSheet = false
 
     var body: some View {
-        LazyVGrid(columns: [.init(), .init()]) {
-            PanelView(
-                icon:
-                    Image("plus")
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .background(Color.accentColor)
-                    .aspectRatio(1, contentMode: .fill)
-                    .clipShape(Circle()),
-                doseAmnt: String(medsItems.count),
-                doseUnit: "",
-                title: "Medications"
-            )
-            .onTapGesture {
-                //  bla
-            }
-            ForEach(medsItems) { item in
+        ZStack {
+            LazyVGrid(columns: [.init(), .init()]) {
                 PanelView(
                     icon:
-                        Image("pillLong")
+                        Image("plus")
                         .foregroundColor(.white)
                         .padding(10)
-                        .background(Color.gray)
+                        .background(Color.accentColor)
                         .aspectRatio(1, contentMode: .fill)
                         .clipShape(Circle()),
-                    doseAmnt: String(item.medDose ?? ""),
-                    doseUnit: "mg",
-                    title: String(item.medType ?? "")
+                    doseAmnt: String(medsItems.count),
+                    doseUnit: "",
+                    title: "Medications"
                 )
-                .contextMenu() {
-                    Button() {
-                        //  bla
-                    } label: {
-                        Label("Edit medication", systemImage: "pencil")
+                .onTapGesture {
+                    showAddMedSheet = true
+                }
+                .sheet(isPresented: $showAddMedSheet) {
+                    if #available(iOS 16.0, *) {
+                        AddMedsSheetView()
+                            .presentationDetents([.medium, .large])
+                    } else {
+                        AddMedsSheetView()
                     }
-                    Button(role: .destructive) {
-                        trashMeds(objectID: item.objectID)
-                    } label: {
-                        Label("Delete medication", systemImage: "trash")
+                }
+                ForEach(medsItems) { item in
+                    PanelView(
+                        icon:
+                            Image("pillLong")
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.gray)
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipShape(Circle()),
+                        doseAmnt: String(item.medDose ?? ""),
+                        doseUnit: "mg",
+                        title: String(item.medType ?? "")
+                    )
+                    .contextMenu() {
+                        NavigationLink(
+                            destination: EditMedsView().navigationTitle(String(item.medType ?? ""))
+                        ) {
+                            Button() {
+                            } label: {
+                                Label("Edit medication", systemImage: "pencil")
+                            }
+                        }
+                        Button(role: .destructive) {
+                            trashMeds(objectID: item.objectID)
+                        } label: {
+                            Label("Delete medication", systemImage: "trash")
+                        }
                     }
                 }
             }

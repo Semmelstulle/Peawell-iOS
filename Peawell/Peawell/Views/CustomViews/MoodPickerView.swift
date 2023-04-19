@@ -91,7 +91,7 @@ struct MoodPickerView: View {
                         Label("Cancel", systemImage: "xmark.circle")
                             .padding()
                             .background(Color.tertiarySystemBackground)
-                            .foregroundColor(Color.white)
+                            //.foregroundColor(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                     })
                 }
