@@ -19,6 +19,7 @@
 		9590FFC229EAAA16005D6DE3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9590FFC129EAAA16005D6DE3 /* Settings.bundle */; };
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
 		95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */; };
+		95ECE1BB29EFD5B2001A19B6 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		9590FFC129EAAA16005D6DE3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPickerView.swift; sourceTree = "<group>"; };
+		95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
 				952B207629EF109000884166 /* AddActivityView.swift */,
+				95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */,
 				952B207729EF109000884166 /* AddActivityView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,
+				95ECE1BB29EFD5B2001A19B6 /* TabBarView.swift in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,27 +20,27 @@ struct MoodPickerView: View {
     var body: some View {
         VStack {
             HStack {
-                MoodButtonView(panelColor: Color.red, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.red, moodImage: "moodHorrible")
                     .onTapGesture {
                         moodName = "Horrible"
                         showMoodField = true
                     }
-                MoodButtonView(panelColor: Color.orange, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.orange, moodImage: "moodBad")
                     .onTapGesture {
                         moodName = "Bad"
                         showMoodField = true
                     }
-                MoodButtonView(panelColor: Color.gray, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.yellow, moodImage: "moodNeutral")
                     .onTapGesture {
                         moodName = "Neutral"
                         showMoodField = true
                     }
-                MoodButtonView(panelColor: Color.yellow, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.green, moodImage: "moodGood")
                     .onTapGesture {
                         moodName = "Good"
                         showMoodField = true
                     }
-                MoodButtonView(panelColor: Color.green, moodImage: "pipette")
+                MoodButtonView(panelColor: Color.mint, moodImage: "moodAwesome")
                     .onTapGesture {
                         moodName = "Awesome"
                         showMoodField = true

@@ -94,19 +94,6 @@ struct MainView: View {
             }
             .navigationTitle(mainTitle)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .toolbar() {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Image(systemName: "gear")
-                        .onTapGesture() {
-                            showSettingsSheet = true
-                        }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: AddActivityView()) {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
             .sheet(isPresented: $showSettingsSheet) {
                 if #available (iOS 16.0, *) {
                     SettingsView().presentationDetents(
