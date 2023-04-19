@@ -20,7 +20,7 @@
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
 		95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */; };
 		95ECE1BB29EFD5B2001A19B6 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */; };
-		95ECE1BD29EFE1AE001A19B6 /* MedsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */; };
+		95ECE1BD29EFE1AE001A19B6 /* MedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,7 @@
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPickerView.swift; sourceTree = "<group>"; };
 		95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedsSheetView.swift; sourceTree = "<group>"; };
+		95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +110,7 @@
 				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
 				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
 				952B207429EEF64D00884166 /* CalendarView.swift */,
-				95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */,
+				95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95ECE1BD29EFE1AE001A19B6 /* MedsSheetView.swift in Sources */,
+				95ECE1BD29EFE1AE001A19B6 /* MedsView.swift in Sources */,
 				952B207529EEF64D00884166 /* CalendarView.swift in Sources */,
 				9543A6C229E6E695003046FC /* SettingsView.swift in Sources */,
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
