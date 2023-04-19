@@ -12,6 +12,7 @@ struct MoodPickerView: View {
     //  parsed moods
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
+
     //  state of the variables that will be updated by code
     @State var moodName: String = ""
     @State var actName: String = ""
@@ -19,7 +20,7 @@ struct MoodPickerView: View {
 
     var body: some View {
         VStack {
-            Text("How's your mood today?")
+            Text("How's your average mood today?")
             HStack {
                 MoodButtonView(panelColor: Color.red, moodImage: "moodHorrible")
                     .onTapGesture {
