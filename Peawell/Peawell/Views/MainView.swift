@@ -19,7 +19,11 @@ struct MainView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
 
-    @State private var showSettingsSheet: Bool = false
+    @State private var showMedsSheet: Bool = false
+    @State var medSheetTitle: String = ""
+    @State var medSheetDose: String = ""
+    //@State var medSheetUnit: String = ""
+    //@State var medSheetReminders: String = ""
 
     var body: some View {
         NavigationView {
@@ -47,7 +51,9 @@ struct MainView: View {
                             title: "Medications"
                         )
                         .onTapGesture {
-                            // sheet here
+                            showMedsSheet = true
+                            medSheetTitle = "Add Medication"
+                            medSheetDose = ""
                         }
                         ForEach(medsItems) { item in
                             PanelView(
@@ -64,7 +70,9 @@ struct MainView: View {
                             )
                             .contextMenu() {
                                 Button() {
-                                    // bla
+                                    showMedsSheet = true
+                                    medSheetTitle = String(item.medType ?? "")
+                                    medSheetDose = String(item.medDose ?? "")
                                 } label: {
                                     Label("Edit medication", systemImage: "pencil")
                                 }
@@ -78,28 +86,20 @@ struct MainView: View {
                     }
                     .padding()
                 }
-                // checks UserDefaults if section is active
-                if settingShowMoodSection == true {
-                    Section(header: Text("Mood log")) {
-                        ForEach(moodItems) { item in
-                            HStack() {
-                                Text(item.moodName ?? "Error")
-                                Text(" - ")
-                                Text(item.activityName ?? "Error")
-                            }
-                        }
-                    }
-                }
-
             }
             .navigationTitle(mainTitle)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .sheet(isPresented: $showSettingsSheet) {
+            .sheet(isPresented: $showMedsSheet) {
                 if #available (iOS 16.0, *) {
-                    SettingsView().presentationDetents(
+                    MedsSheetView(medsSheetTitle: medSheetTitle
+                                  //, medsSheetDose: medSheetDose
+                    )
+                    .presentationDetents(
                         [.medium, .large])
                 } else {
-                    SettingsView()
+                    MedsSheetView(medsSheetTitle: medSheetTitle
+                                  //, medsSheetDose: medSheetDose
+                    )
                 }
             }
         }

@@ -15,10 +15,10 @@ struct TabBarView: View {
                     Image(systemName: "calendar")
                     Text(mainTitle)
                 }
-            AddActivityView()
+            OverView()
                 .tabItem {
-                    Image(systemName: "plus")
-                    Text(addTitle)
+                    Image(systemName: "list.bullet")
+                    Text(overviewTitle)
                 }
             SettingsView()
                 .tabItem {

@@ -12,7 +12,7 @@
 		9505432B29E5CACB005D29B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */; };
 		951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 951DCA7029E735D90072E809 /* Main.xcdatamodeld */; };
 		952B207529EEF64D00884166 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207429EEF64D00884166 /* CalendarView.swift */; };
-		952B207729EF109000884166 /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207629EF109000884166 /* AddActivityView.swift */; };
+		952B207729EF109000884166 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207629EF109000884166 /* OverView.swift */; };
 		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
 		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
 		9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9590AF8029EC0F51001A84B8 /* PanelView.swift */; };
@@ -20,6 +20,7 @@
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
 		95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */; };
 		95ECE1BB29EFD5B2001A19B6 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */; };
+		95ECE1BD29EFE1AE001A19B6 /* MedsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +31,7 @@
 		9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		951DCA7129E735D90072E809 /* Activities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Activities.xcdatamodel; sourceTree = "<group>"; };
 		952B207429EEF64D00884166 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		952B207629EF109000884166 /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
+		952B207629EF109000884166 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9590AF8029EC0F51001A84B8 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPickerView.swift; sourceTree = "<group>"; };
 		95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedsSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +98,7 @@
 				95943E2D29ED85D10096CE6B /* CustomViews */,
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
-				952B207629EF109000884166 /* AddActivityView.swift */,
+				952B207629EF109000884166 /* OverView.swift */,
 				95ECE1BA29EFD5B2001A19B6 /* TabBarView.swift */,
 			);
 			path = Views;
@@ -108,6 +110,7 @@
 				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
 				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
 				952B207429EEF64D00884166 /* CalendarView.swift */,
+				95ECE1BC29EFE1AE001A19B6 /* MedsSheetView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -183,13 +186,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95ECE1BD29EFE1AE001A19B6 /* MedsSheetView.swift in Sources */,
 				952B207529EEF64D00884166 /* CalendarView.swift in Sources */,
 				9543A6C229E6E695003046FC /* SettingsView.swift in Sources */,
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
 				9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */,
 				95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */,
-				952B207729EF109000884166 /* AddActivityView.swift in Sources */,
+				952B207729EF109000884166 /* OverView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,
 				95ECE1BB29EFD5B2001A19B6 /* TabBarView.swift in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,

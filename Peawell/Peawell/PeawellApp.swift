@@ -19,7 +19,7 @@ extension Color {
 
 //  constants stored on the top
 let mainTitle: String = "Peawell"
-let addTitle: String = "Add entry"
+let overviewTitle: String = "Overview"
 let settingsTitle: String = "Settings"
 
 
