@@ -121,7 +121,7 @@ func resetData() {
 
 
 //  functions to delete specific items
-func trashMeds(objectID: NSManagedObjectID) {
+func trashItem(objectID: NSManagedObjectID) {
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     withAnimation {

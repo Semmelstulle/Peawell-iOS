@@ -67,7 +67,7 @@ struct MedsView: View {
                             }
                         }
                         Button(role: .destructive) {
-                            trashMeds(objectID: item.objectID)
+                            trashItem(objectID: item.objectID)
                         } label: {
                             Label("Delete medication", systemImage: "trash")
                         }
@@ -76,43 +76,6 @@ struct MedsView: View {
             }
         }
     }
-
-/*
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var items: FetchedResults<Mood>
-
-    //  these define the user input field's empty state
-    @State var medName: String = ""
-    @State var medAmount: String = ""
-
-    var body: some View {
-        NavigationView() {
-            Form() {
-                TextField(
-                    text: $medName,
-                    prompt: Text("What is your medication called?")
-                ) {
-                    Text("Activity name")
-                }
-                .padding()
-                TextField(
-                    text: $medAmount,
-                    prompt: Text("Dose here")
-                ) {
-                    Text("Your mood")
-                }
-                .padding()
-                Button(
-                    action: {
-                        saveMeds(medName: medName, medAmount: medAmount)
-                    }, label: {
-                        Label("Add medication", systemImage: "plus")
-                    }
-                )
-            }
-            .navigationTitle(medsSheetTitle)
-        }
-    }*/
 }
 
 struct MedsView_Previews: PreviewProvider {

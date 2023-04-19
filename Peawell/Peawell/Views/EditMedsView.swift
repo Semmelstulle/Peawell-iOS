@@ -9,9 +9,6 @@ import SwiftUI
 
 struct EditMedsView: View {
 
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
-    var items: FetchedResults<Mood>
-
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
