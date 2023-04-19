@@ -3,6 +3,7 @@
     <entity name="Meds" representedClassName="Meds" syncable="YES" codeGenerationType="class">
         <attribute name="medDose" optional="YES" attributeType="String"/>
         <attribute name="medType" optional="YES" attributeType="String"/>
+        <attribute name="medUnit" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Mood" representedClassName="Mood" syncable="YES" codeGenerationType="class">
         <attribute name="activityName" optional="YES" attributeType="String"/>

@@ -14,6 +14,7 @@ struct MedsView: View {
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
+    @State var medUnit: String = ""
 
     @State var showAddMedSheet = false
 
@@ -53,7 +54,7 @@ struct MedsView: View {
                             .aspectRatio(1, contentMode: .fill)
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
-                        doseUnit: "mg",
+                        doseUnit: String(item.medUnit ?? ""),
                         title: String(item.medType ?? "")
                     )
                     .contextMenu() {
