@@ -16,44 +16,56 @@ struct AddMedsSheetView: View {
     @State var medAmount: String = ""
     @State var medUnit = "mg"
     @State var availableUnits = ["mg", "µg"]
+    @State var medReminders = Date()
+    @State var showReminderPicker: Bool = false
 
     var body: some View {
         NavigationView() {
-            ScrollView() {
-                VStack() {
+            Form {
+                Section(header: Text("Basic info")) {
                     TextField(
                         "Medication name",
                         text: $medName,
                         prompt: Text("What is your medication called?")
                     )
-                    .padding()
-                    .background(Color.secondarySystemBackground)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    HStack() {
+                    HStack {
                         TextField(
                             "Medication dose",
                             text: $medAmount,
-                            prompt: Text("Dose here")
+                            prompt: Text("How much should you take?")
                         )
-                        .padding()
-                        .background(Color.secondarySystemBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
                         .keyboardType(.decimalPad)
                         Picker(
-                            "Select unit type",
+                            "",
+                            //"Pick the unit of your medication",
                             selection: $medUnit
                         ) {
                             ForEach(availableUnits, id: \.self) { item in
                                 Text(item)
                             }
                         }
-                            .padding(10)
-                            .pickerStyle(MenuPickerStyle())
-                            .background(Color.secondarySystemBackground)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .labelsHidden()
                     }
                 }
-                .padding()
+                Section(header: Text("Reminders")) {
+                    Button(
+                        action: {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                showReminderPicker = true
+                            }
+                        }, label: {
+                            Text("Add reminder time")
+                        }
+
+                    )
+                    if showReminderPicker == true {
+                        DatePicker(
+                            "When do you want to be reminded?",
+                            selection: $medReminders,
+                            displayedComponents: .hourAndMinute
+                        )
+                    }
+                }
                 Button(
                     action: {
                         if medName != "" && medAmount != "" {
@@ -66,10 +78,6 @@ struct AddMedsSheetView: View {
                         Label("Add medication", systemImage: "plus")
                     }
                 )
-                .padding()
-                .background(Color.secondarySystemBackground)
-                .foregroundColor(Color.accentColor)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
             }
             .navigationTitle("Add medication")
         }
