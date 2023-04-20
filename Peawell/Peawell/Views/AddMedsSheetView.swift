@@ -56,10 +56,12 @@ struct AddMedsSheetView: View {
                 .padding()
                 Button(
                     action: {
-                        saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit)
-                        medName = ""
-                        medAmount = ""
-                        hapticConfirm()
+                        if medName != "" && medAmount != "" {
+                            saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit)
+                            medName = ""
+                            medAmount = ""
+                            hapticConfirm()
+                        }
                     }, label: {
                         Label("Add medication", systemImage: "plus")
                     }

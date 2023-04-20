@@ -84,7 +84,7 @@ struct MoodPickerView: View {
                         hapticConfirm()
                     }, label: {
                         Label("Add activity", systemImage: "plus")
-                            .padding(10)
+                            .padding()
                             .background(Color.tertiarySystemBackground)
                             .foregroundColor(Color.primary)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -95,10 +95,9 @@ struct MoodPickerView: View {
                         withAnimation(.easeOut(duration: 0.2)) {
                             showMoodField = false
                         }
-                        hapticConfirm()
                     }, label: {
                         Label("Cancel", systemImage: "xmark.circle")
-                            .padding(10)
+                            .padding()
                             .background(Color.tertiarySystemBackground)
                             .foregroundColor(Color.red)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
