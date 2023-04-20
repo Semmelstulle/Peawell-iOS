@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditMedsView: View {
+struct EditMedsView: View { var navTitle: String
 
     //  these define the user input field's empty state
     @State var medName: String = ""
@@ -38,13 +38,13 @@ struct EditMedsView: View {
                         Label("Add medication", systemImage: "plus")
                     }
                 )
-            }.navigationTitle("MedHere")
+            }.navigationTitle(navTitle)
         }
     }
 }
 
 struct EditMedsView_Previews: PreviewProvider {
     static var previews: some View {
-        EditMedsView()
+        EditMedsView(navTitle: "Test")
     }
 }

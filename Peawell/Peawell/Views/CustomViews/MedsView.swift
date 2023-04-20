@@ -58,15 +58,9 @@ struct MedsView: View {
                         title: String(item.medType ?? "")
                     )
                     .contextMenu() {
-                        NavigationLink(
-                            destination: EditMedsView().navigationTitle(String(item.medType ?? ""))
+                        Button(
+                            role: .destructive
                         ) {
-                            Button() {
-                            } label: {
-                                Label("Edit medication", systemImage: "pencil")
-                            }
-                        }
-                        Button(role: .destructive) {
                             trashItem(objectID: item.objectID)
                         } label: {
                             Label("Delete medication", systemImage: "trash")
