@@ -66,6 +66,7 @@ struct MoodPickerView: View {
                     }
             }
             if showMoodField == true {
+                Text("So you're feeling \(moodName.lowercased()). You can note why or what you did today below.")
                 TextField(
                     text: $actName,
                     prompt: Text("What did you do today?")
@@ -76,32 +77,38 @@ struct MoodPickerView: View {
                 .background(Color.tertiarySystemBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 HStack {
-                    Button(action: {
-                        saveMood(actName: actName, moodName: moodName)
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            showMoodField = false
+                    Button(
+                        action: {
+                            saveMood(actName: actName, moodName: moodName)
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                showMoodField = false
+                            }
+                            hapticConfirm()
+                        },
+                        label: {
+                            Label("Add activity", systemImage: "plus")
+                                .padding()
+                                .background(Color.tertiarySystemBackground)
+                                .foregroundColor(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
-                        hapticConfirm()
-                    }, label: {
-                        Label("Add activity", systemImage: "plus")
-                            .padding()
-                            .background(Color.tertiarySystemBackground)
-                            .foregroundColor(Color.primary)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    })
-                    Button(action: {
-                        moodName = ""
-                        actName = ""
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            showMoodField = false
+                    )
+                    Button(
+                        action: {
+                            moodName = ""
+                            actName = ""
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                showMoodField = false
+                            }
+                        },
+                        label: {
+                            Label("Cancel", systemImage: "xmark.circle")
+                                .padding()
+                                .background(Color.tertiarySystemBackground)
+                                .foregroundColor(Color.primary)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
-                    }, label: {
-                        Label("Cancel", systemImage: "xmark.circle")
-                            .padding()
-                            .background(Color.tertiarySystemBackground)
-                            .foregroundColor(Color.red)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    })
+                    )
                 }
             }
 
