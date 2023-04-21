@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     var body: some View {
-
+        
         //  this is literally just the tabs on the bottom
         TabView() {
             MainView()

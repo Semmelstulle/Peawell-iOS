@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-
+    
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-
+    
     var body: some View {
         NavigationView {
             ScrollView() {

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EditMedsView: View { var navTitle: String
-
+    
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
-
+    
     var body: some View {
         NavigationView() {
             Form() {

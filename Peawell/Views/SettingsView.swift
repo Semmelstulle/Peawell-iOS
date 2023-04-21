@@ -18,8 +18,7 @@ struct SettingsView: View {
     @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
     @AppStorage("settingSynciCloud") var settingSynciCloud = false
-    //@AppStorage("settingSyncCalendar") var settingSyncCalendar = false
-
+    
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
     
@@ -34,7 +33,6 @@ struct SettingsView: View {
                 Section(header: Text("Access"), footer: Text("Here you need to opt in on using features that the app can't provide on it's own.")
                 ) {
                     Toggle(isOn: $settingSynciCloud, label: {Text("Sync to iCloud")})
-                    //Toggle(isOn: $settingSyncCalendar, label: {Text("Add to local calendar")})
                 }
                 Section(header: Text("Delete files"),
                         footer: Text("This can not be undone!")

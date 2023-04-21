@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct MoodPickerView: View {
-
+    
     //  parsed moods
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
-
+    
     //  state of the variables that will be updated by code
     @State var moodName: String = ""
     @State var actName: String = ""
     @State var showMoodField: Bool = false
-
+    
     //  prepares colors
     var bgColorHorrible: Color = Color.red
     var bgColorBad: Color = Color.orange
     var bgColorNeutral: Color = Color.yellow
     var bgColorGood: Color = Color.green
     var bgColorAwesome: Color = Color.mint
-
+    
     var body: some View {
         VStack {
             Text("How's your average mood today?")
@@ -68,7 +68,7 @@ struct MoodPickerView: View {
             if showMoodField == true {
                 Text(
                     String(format: NSLocalizedString("So you're feeling ", comment: "prefix of activity field")) +
-                    String(format: NSLocalizedString(moodName, comment: "name of mood")) + 
+                    String(format: NSLocalizedString(moodName, comment: "name of mood")) +
                     String(format: NSLocalizedString(". You can note why or what you did today below.", comment: "suffix of activity field"))
                 )
                 TextField(
@@ -115,7 +115,7 @@ struct MoodPickerView: View {
                     )
                 }
             }
-
+            
         }
         .padding()
         .background(Color.secondarySystemBackground)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddMedsSheetView: View {
-
+    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
     //  these define the user input field's empty state
@@ -18,7 +18,7 @@ struct AddMedsSheetView: View {
     @State var availableUnits = ["mg", "µg"]
     @State var medReminders = Date()
     @State var showReminderPicker: Bool = false
-
+    
     var body: some View {
         NavigationView() {
             Form {
@@ -56,7 +56,7 @@ struct AddMedsSheetView: View {
                         }, label: {
                             Text("Add reminder")
                         }
-
+                        
                     )
                     if showReminderPicker == true {
                         DatePicker(
