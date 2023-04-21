@@ -19,12 +19,6 @@ extension Color {
     Color(uiColor: .tertiarySystemBackground)
 }
 
-//  constants stored on the top
-let mainTitle: String = "Peawell"
-let overviewTitle: String = "Overview"
-let settingsTitle: String = "Settings"
-
-
 @main
 struct PeawellApp: App {
     //  sets up CoreData part 1
@@ -64,13 +58,14 @@ func hapticConfirm() {
 
 
 //  function to safe added content to CoreData
-func saveMeds(medName: String, medAmount: String) {
+func saveMeds(medName: String, medAmount: String, medUnit: String) {
     //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
     let meds = Meds(context: viewContext)
     //  maps CoreData values to variables
     meds.medType = medName
     meds.medDose = medAmount
+    meds.medUnit = medUnit
     do {
         try viewContext.save()
         hapticConfirm()
@@ -120,7 +115,7 @@ func resetData() {
 
 
 //  functions to delete specific items
-func trashMeds(objectID: NSManagedObjectID) {
+func trashItem(objectID: NSManagedObjectID) {
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     withAnimation {

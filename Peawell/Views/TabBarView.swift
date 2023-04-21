@@ -9,23 +9,23 @@ import SwiftUI
 
 struct TabBarView: View {
     var body: some View {
-
+        
         //  this is literally just the tabs on the bottom
         TabView() {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
-                    Text(mainTitle)
+                    Text("Peawell")
                 }
             OverView()
                 .tabItem {
                     Image(systemName: "list.bullet")
-                    Text(overviewTitle)
+                    Text("Overview")
                 }
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text(settingsTitle)
+                    Text("Settings")
                 }
         }
     }

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-
+    
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-
+    
     var body: some View {
         NavigationView {
             ScrollView() {
@@ -32,7 +32,7 @@ struct MainView: View {
                         .padding()
                 }
             }
-            .navigationTitle(mainTitle)
+            .navigationTitle("Peawell")
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
     }

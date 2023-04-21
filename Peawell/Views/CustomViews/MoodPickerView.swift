@@ -8,49 +8,56 @@
 import SwiftUI
 
 struct MoodPickerView: View {
-
+    
     //  parsed moods
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
-
+    
     //  state of the variables that will be updated by code
     @State var moodName: String = ""
     @State var actName: String = ""
     @State var showMoodField: Bool = false
-
+    
+    //  prepares colors
+    var bgColorHorrible: Color = Color.red
+    var bgColorBad: Color = Color.orange
+    var bgColorNeutral: Color = Color.yellow
+    var bgColorGood: Color = Color.green
+    var bgColorAwesome: Color = Color.mint
+    
     var body: some View {
         VStack {
             Text("How's your average mood today?")
             HStack {
-                MoodButtonView(panelColor: Color.red, moodImage: "moodHorrible")
+                MoodButtonView(panelColor: bgColorHorrible, moodImage: "moodHorrible")
                     .onTapGesture {
                         moodName = "Horrible"
                         withAnimation(.easeOut(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
-                MoodButtonView(panelColor: Color.orange, moodImage: "moodBad")
+                MoodButtonView(panelColor: bgColorBad, moodImage: "moodBad")
                     .onTapGesture {
                         moodName = "Bad"
                         withAnimation(.easeOut(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
-                MoodButtonView(panelColor: Color.yellow, moodImage: "moodNeutral")
+                MoodButtonView(panelColor: bgColorNeutral, moodImage: "moodNeutral")
                     .onTapGesture {
                         moodName = "Neutral"
                         withAnimation(.easeOut(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
-                MoodButtonView(panelColor: Color.green, moodImage: "moodGood")
+                MoodButtonView(panelColor: bgColorGood, moodImage: "moodGood")
                     .onTapGesture {
                         moodName = "Good"
                         withAnimation(.easeOut(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
-                MoodButtonView(panelColor: Color.mint, moodImage: "moodAwesome")
+                MoodButtonView(panelColor: bgColorAwesome, moodImage: "moodAwesome")
                     .onTapGesture {
                         moodName = "Awesome"
                         withAnimation(.easeOut(duration: 0.2)) {
@@ -59,6 +66,11 @@ struct MoodPickerView: View {
                     }
             }
             if showMoodField == true {
+                Text(
+                    String(format: NSLocalizedString("So you're feeling ", comment: "prefix of activity field")) +
+                    String(format: NSLocalizedString(moodName, comment: "name of mood")) +
+                    String(format: NSLocalizedString(". You can note why or what you did today below.", comment: "suffix of activity field"))
+                )
                 TextField(
                     text: $actName,
                     prompt: Text("What did you do today?")
@@ -69,34 +81,41 @@ struct MoodPickerView: View {
                 .background(Color.tertiarySystemBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 HStack {
-                    Button(action: {
-                        saveMood(actName: actName, moodName: moodName)
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            showMoodField = false
+                    Button(
+                        action: {
+                            saveMood(actName: actName, moodName: moodName)
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                showMoodField = false
+                            }
+                            hapticConfirm()
+                        },
+                        label: {
+                            Label("Add activity", systemImage: "plus")
+                                .padding()
+                                .background(Color.tertiarySystemBackground)
+                                .foregroundColor(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
-                    }, label: {
-                        Label("Add activity", systemImage: "plus")
-                            .padding()
-                            .background(Color.accentColor)
-                            .foregroundColor(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    })
-                    Button(action: {
-                        moodName = ""
-                        actName = ""
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            showMoodField = false
+                    )
+                    Button(
+                        action: {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                showMoodField = false
+                            }
+                            moodName = ""
+                            actName = ""
+                        },
+                        label: {
+                            Label("Cancel", systemImage: "xmark.circle")
+                                .padding()
+                                .background(Color.tertiarySystemBackground)
+                                .foregroundColor(Color.primary)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
-                    }, label: {
-                        Label("Cancel", systemImage: "xmark.circle")
-                            .padding()
-                            .background(Color.tertiarySystemBackground)
-                            //.foregroundColor(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                    })
+                    )
                 }
             }
-
+            
         }
         .padding()
         .background(Color.secondarySystemBackground)

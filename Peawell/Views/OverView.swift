@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct OverView: View {
-
+    
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var moodItems: FetchedResults<Mood>
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
-
+    
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
@@ -42,11 +42,12 @@ struct OverView: View {
                                 Text(item.medType ?? "Error")
                                 Text(" - ")
                                 Text(item.medDose ?? "Error")
+                                Text(item.medUnit ?? "mg")
                             }
                         }
                     }
                 }
-            }.navigationTitle(overviewTitle)
+            }.navigationTitle("Overview")
         }
     }
 }
