@@ -8,6 +8,12 @@
 	<array>
 		<dict>
 			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Modules</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>Use mood module</string>
@@ -28,11 +34,17 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Access</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Reset data on next launch</string>
+			<string>Sync to iCloud</string>
 			<key>Key</key>
-			<string>resetOnLaunch</string>
+			<string>settingSynciCloud</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -40,15 +52,17 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string></string>
+			<string>Delete data</string>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>App Version</string>
+			<string>Reset data on next launch</string>
 			<key>Key</key>
-			<string>$appVersion</string>
+			<string>resetOnLaunch</string>
+			<key>DefaultValue</key>
+			<false/>
 		</dict>
 	</array>
 </dict>

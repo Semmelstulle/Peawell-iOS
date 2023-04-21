@@ -47,7 +47,7 @@ struct OverView: View {
                         }
                     }
                 }
-            }.navigationTitle(overviewTitle)
+            }.navigationTitle("Overview")
         }
     }
 }

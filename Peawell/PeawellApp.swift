@@ -19,12 +19,6 @@ extension Color {
     Color(uiColor: .tertiarySystemBackground)
 }
 
-//  constants stored on the top
-let mainTitle: String = "Peawell"
-let overviewTitle: String = "Overview"
-let settingsTitle: String = "Settings"
-
-
 @main
 struct PeawellApp: App {
     //  sets up CoreData part 1

@@ -1,0 +1,13 @@
+/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
+
+"Group" = "Gruppe";
+"Name" = "Name";
+"none given" = "nicht gegeben";
+"Enabled" = "Aktiviert";
+"Modules" = "Module";
+"Use mood module" = "Abschnitt Launen benutzen";
+"Use medication module" = "Abschnitt Medikation benutzen";
+"Access" = "Zugriff";
+"Sync to iCloud" = "Zu iCloud synchronisieren";
+"Delete data" = "Daten löschen";
+"Reset data on next launch" = "Beim nächsten Start die App zurücksetzen";

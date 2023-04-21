@@ -15,17 +15,17 @@ struct TabBarView: View {
             MainView()
                 .tabItem {
                     Image(systemName: "calendar")
-                    Text(mainTitle)
+                    Text("Peawell")
                 }
             OverView()
                 .tabItem {
                     Image(systemName: "list.bullet")
-                    Text(overviewTitle)
+                    Text("Overview")
                 }
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text(settingsTitle)
+                    Text("Settings")
                 }
         }
     }

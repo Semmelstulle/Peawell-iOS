@@ -1,0 +1,72 @@
+/*
+  Localizable.strings
+  Peawell
+
+  Created by Dennis on 21.04.23.
+
+*/
+
+//  MoodPickerView
+"How's your average mood today?" = "Wie hast du dich heute gefühlt?";
+"Horrible" = "Schrecklich";
+"Bad" = "Schlecht";
+"Neutral" = "Neutral";
+"Good" = "Gut";
+"Awesome" = "Super";
+"So you're feeling " = "Du fühlst dich also ";
+". You can note why or what you did today below." = ". Warum oder was du gemacht hast kannst du nun notieren.";
+"What did you do today?" = "Was hast du heute gemacht?";
+"Add activity" = "Hinzuügen";
+"Cancel" = "Abbrechen";
+
+//  MedsView
+"New" = "Hinzufügen";
+"Delete medication" = "Medikation löschen";
+
+//  MainView
+"All modules disabled" = "Keine Module aktiv";
+
+// TabBar
+"Overview" = "Übersicht";
+"Settings" = "Einstellungen";
+
+//  OverView
+"Mood log" = "Launentagebuch";
+"Medication log" = "Medikationstagebuch";
+"Error" = "Fehler";
+
+//  Settings
+"Modules" = "Module";
+"These settings toggle the modules of this app." = "Diese Einstellungen blenden die Module der App ein oder aus.";
+"Use mood module" = "Abschnitt Launen benutzen";
+"Use medication module" = "Abschnitt Medikation benutzen";
+"Access" = "Zugriffe";
+"Here you need to opt in on using features that the app can't provide on it's own." = "Hier musst du Zugriff zu Dingen gewähren, die die App selbst nicht tun kann.";
+"Sync to iCloud" = "Zu iCloud synchronisieren";
+"Add to local calendar" = "Zum Kalender hinzufügen";
+"Delete files" = "Daten löschen";
+"This can not be undone!" = "Das kann nicht ungeschenen gemacht werden!";
+"Reset data" = "Daten zurücksetzen";
+"This can not be reverted!\nDo you really want to reset the app?" = "Das kann nicht rückgängig gemacht werden!\nWillst du wirklich die App zurücksetzen?";
+"I'm sure" = "Ja, sicher";
+"About this project" = "Über dieses Projekt";
+"Developer on Mastodon" = "Der Entwickler auf Mastodon";
+"App on GitHub" = "Die App auf GitHub";
+"App version" = "App Version";
+"Couldn't get version" = "Konte Version nicht lesen";
+"Made with love in 🇩🇪" = "Mit Liebe in 🇩🇪 gemacht";
+
+//  AddMeds
+"Necessary info" = "Benötigte Infos";
+"Medication name" = "Name der Medikation";
+"What is your medication called?" = "Wie heißt dein Medikament?";
+"Medication dose" = "Menge";
+"How much should you take?" = "Wieviel sollst du einnehmen?";
+"Reminders" = "Erinnerungen";
+"Add reminder" = "Erinnerung hinzufügen";
+"When do you want to be reminded?" = "Wann sollst du erinnert werden?";
+"Add medication" = "Medikation hinzufügen";
+
+//  EditMeds
+"Activity name" = "Name der Aktivität";
+"Dose here" = "Menge hier";

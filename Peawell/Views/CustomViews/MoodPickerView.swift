@@ -25,6 +25,9 @@ struct MoodPickerView: View {
     var bgColorGood: Color = Color.green
     var bgColorAwesome: Color = Color.mint
 
+    var text1: String = "So you're feeling "
+    var text2: String = ". You can note why or what you did today below."
+
     var body: some View {
         VStack {
             Text("How's your average mood today?")
@@ -66,7 +69,7 @@ struct MoodPickerView: View {
                     }
             }
             if showMoodField == true {
-                Text("So you're feeling \(moodName.lowercased()). You can note why or what you did today below.")
+                Text(text1 + moodName.lowercased() + text2)
                 TextField(
                     text: $actName,
                     prompt: Text("What did you do today?")
@@ -95,11 +98,11 @@ struct MoodPickerView: View {
                     )
                     Button(
                         action: {
-                            moodName = ""
-                            actName = ""
                             withAnimation(.easeOut(duration: 0.2)) {
                                 showMoodField = false
                             }
+                            moodName = ""
+                            actName = ""
                         },
                         label: {
                             Label("Cancel", systemImage: "xmark.circle")

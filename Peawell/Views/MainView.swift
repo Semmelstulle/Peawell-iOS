@@ -32,7 +32,7 @@ struct MainView: View {
                         .padding()
                 }
             }
-            .navigationTitle(mainTitle)
+            .navigationTitle("Peawell")
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
     }

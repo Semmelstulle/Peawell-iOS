@@ -22,7 +22,7 @@ struct AddMedsSheetView: View {
     var body: some View {
         NavigationView() {
             Form {
-                Section(header: Text("Basic info")) {
+                Section(header: Text("Necessary info")) {
                     TextField(
                         "Medication name",
                         text: $medName,
@@ -54,7 +54,7 @@ struct AddMedsSheetView: View {
                                 showReminderPicker = true
                             }
                         }, label: {
-                            Text("Add reminder time")
+                            Text("Add reminder")
                         }
 
                     )

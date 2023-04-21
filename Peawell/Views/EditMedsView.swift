@@ -28,7 +28,7 @@ struct EditMedsView: View { var navTitle: String
                     text: $medAmount,
                     prompt: Text("Dose here")
                 ) {
-                    Text("Your mood")
+                    Text("")
                 }
                 .padding()
                 Button(
