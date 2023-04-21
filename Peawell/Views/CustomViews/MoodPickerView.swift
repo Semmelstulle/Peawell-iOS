@@ -25,9 +25,6 @@ struct MoodPickerView: View {
     var bgColorGood: Color = Color.green
     var bgColorAwesome: Color = Color.mint
 
-    var text1: String = "So you're feeling "
-    var text2: String = ". You can note why or what you did today below."
-
     var body: some View {
         VStack {
             Text("How's your average mood today?")
@@ -69,7 +66,11 @@ struct MoodPickerView: View {
                     }
             }
             if showMoodField == true {
-                Text(text1 + moodName.lowercased() + text2)
+                Text(
+                    String(format: NSLocalizedString("So you're feeling ", comment: "prefix of activity field")) +
+                    String(format: NSLocalizedString(moodName, comment: "name of mood")) + 
+                    String(format: NSLocalizedString(". You can note why or what you did today below.", comment: "suffix of activity field"))
+                )
                 TextField(
                     text: $actName,
                     prompt: Text("What did you do today?")

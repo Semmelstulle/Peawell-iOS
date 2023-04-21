@@ -15,7 +15,6 @@ struct MedsView: View {
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
-    var tileTitle = "New"
 
     @State var showAddMedSheet = false
 
@@ -32,7 +31,7 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: tileTitle
+                    title: String(format: NSLocalizedString("New", comment: "tile that adds new med"))
                 )
                 .onTapGesture {
                     showAddMedSheet = true
