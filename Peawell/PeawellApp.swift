@@ -58,7 +58,7 @@ func hapticConfirm() {
 
 
 //  function to safe added content to CoreData
-func saveMeds(medName: String, medAmount: String, medUnit: String) {
+func saveMeds(medName: String, medAmount: String, medUnit: String, medKind: String) {
     //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
     let meds = Meds(context: viewContext)
@@ -66,6 +66,7 @@ func saveMeds(medName: String, medAmount: String, medUnit: String) {
     meds.medType = medName
     meds.medDose = medAmount
     meds.medUnit = medUnit
+    meds.medKind = medKind
     do {
         try viewContext.save()
         hapticConfirm()

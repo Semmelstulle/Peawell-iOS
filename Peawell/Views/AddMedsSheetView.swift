@@ -16,6 +16,8 @@ struct AddMedsSheetView: View {
     @State var medAmount: String = ""
     @State var medUnit = "mg"
     @State var availableUnits = ["mg", "µg"]
+    @State var medKind = "Long pill"
+    @State var availableKinds = ["Long pill", "Round pill", "Drops"]
     @State var medReminders = Date()
     @State var showReminderPicker: Bool = false
     
@@ -46,6 +48,14 @@ struct AddMedsSheetView: View {
                         }
                         .labelsHidden()
                     }
+                    Picker(
+                        "Which kind of medication is it?",
+                        selection: $medKind
+                    ) {
+                        ForEach(availableKinds, id: \.self) { item in
+                            Text(item)
+                        }
+                    }
                 }
                 Section(header: Text("Reminders")) {
                     Button(
@@ -68,8 +78,8 @@ struct AddMedsSheetView: View {
                 }
                 Button(
                     action: {
-                        if medName != "" && medAmount != "" {
-                            saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit)
+                        if medName != "" && medAmount != "" && medKind != "" {
+                            saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit, medKind: medKind)
                             medName = ""
                             medAmount = ""
                             hapticConfirm()

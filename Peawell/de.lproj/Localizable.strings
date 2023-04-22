@@ -66,6 +66,10 @@
 "Add reminder" = "Erinnerung hinzufügen";
 "When do you want to be reminded?" = "Wann sollst du erinnert werden?";
 "Add medication" = "Medikation hinzufügen";
+"Which kind of medication is it?" = "Which kind of medication is it?";
+"Long pill" = "Long pill";
+"Round pill" = "Round pill";
+"Drops" = "Drops";
 
 //  EditMeds
 "Activity name" = "Name der Aktivität";

@@ -43,6 +43,7 @@ struct OverView: View {
                                 Text(" - ")
                                 Text(item.medDose ?? "Error")
                                 Text(item.medUnit ?? "mg")
+                                Text(item.medKind ?? "")
                             }
                         }
                     }

@@ -15,7 +15,13 @@ struct MedsView: View {
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
-    
+    var asset = "Long pill"
+    /*if medsItems.medKind == "Round pill"{
+        asset = "Round pill"
+    } else if medsItems.medKind == "Drops"{
+        asset = "Drops"
+    }*/
+
     @State var showAddMedSheet = false
     
     var body: some View {
@@ -47,7 +53,7 @@ struct MedsView: View {
                 ForEach(medsItems) { item in
                     PanelView(
                         icon:
-                            Image("pillLong")
+                            Image("Long pill")
                             .foregroundColor(.white)
                             .padding(10)
                             .background(Color.gray)
