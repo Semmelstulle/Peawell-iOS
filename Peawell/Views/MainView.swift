@@ -16,8 +16,17 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView() {
-                CalendarView()
-                    .padding()
+                ZStack() {
+                    Text("Motivational quote needed here. Maybe there's a public api?\nPlus this needs a fixed height at some point.")
+                        .padding()
+                        .foregroundColor(Color.secondarySystemBackground)
+                        .background(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 15)
+                        )
+                        .aspectRatio(2.2, contentMode: .fit)
+                        .padding()
+                }
                 // the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
