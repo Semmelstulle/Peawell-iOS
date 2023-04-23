@@ -7,7 +7,7 @@
 */
 
 //  MoodPickerView
-"How's your average mood today?" = "How's your average mood today?";
+"ask average mood" = "How's your average mood today?";
 "Horrible" = "Horrible";
 "Bad" = "Bad";
 "Neutral" = "Neutral";
@@ -15,25 +15,25 @@
 "Awesome" = "Awesome";
 "So you're feeling " = "So you're feeling ";
 ". You can note why or what you did today below." = ". You can note why or what you did today below.";
-"What did you do today?" = "What did you do today?";
-"Add activity" = "Add activity";
-"Cancel" = "Cancel";
+"what did you do" = "What did you do today?";
+"save mood" = "Save mood";
+"cancel button" = "Cancel";
 
 //  MedsView
-"New" = "Medications";
-"Delete medication" = "Delete medication";
+"new" = "Medications";
+"delete medication" = "Delete medication";
 
 //  MainView
-"All modules disabled" = "All modules disabled";
+"motivational quote" = "You successfully managed to survive every one of your days on earth. That's a very good track record!";
+"empty view" = "All modules disabled";
 
 // TabBar
 "Overview" = "Overview";
 "Settings" = "Settings";
 
 //  OverView
-"Mood log" = "Mood log";
-"Medication log" = "Medication log";
-"Error" = "Error";
+"mood section" = "Mood log";
+"meds section" = "Medication log";
 "Long pill" = "Long pill";
 "Round pill" = "Round pill";
 "Drops" = "Drops";

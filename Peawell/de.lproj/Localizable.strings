@@ -7,7 +7,7 @@
 */
 
 //  MoodPickerView
-"How's your average mood today?" = "Wie hast du dich heute gefühlt?";
+"ask average mood" = "Wie hast du dich heute gefühlt?";
 "Horrible" = "Schrecklich";
 "Bad" = "Schlecht";
 "Neutral" = "Neutral";
@@ -15,25 +15,25 @@
 "Awesome" = "Super";
 "So you're feeling " = "Du fühlst dich also ";
 ". You can note why or what you did today below." = ". Warum oder was du gemacht hast kannst du nun notieren.";
-"What did you do today?" = "Was hast du heute gemacht?";
-"Add activity" = "Hinzuügen";
-"Cancel" = "Abbrechen";
+"what did you do" = "Was hast du heute gemacht?";
+"save mood" = "Speichern";
+"cancel button" = "Abbrechen";
 
 //  MedsView
-"New" = "Medikationen";
-"Delete medication" = "Medikation löschen";
+"new" = "Medikationen";
+"delete medication" = "Medikation löschen";
 
 //  MainView
-"All modules disabled" = "Keine Module aktiv";
+"motivational quote" = "Du hast bisher alle deiner schlimmsten Tage überstanden. Das ist wirklich große Stärke!";
+"empty view" = "Alle Module sind ausgeschaltet.";
 
 // TabBar
 "Overview" = "Übersicht";
 "Settings" = "Einstellungen";
 
 //  OverView
-"Mood log" = "Launentagebuch";
-"Medication log" = "Medikationstagebuch";
-"Error" = "Fehler";
+"mood section" = "Launentagebuch";
+"meds section" = "Medikationstagebuch";
 "Long pill" = "lange Pille";
 "Round pill" = "Runde Pille";
 "Drops" = "Tropfen";

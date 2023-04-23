@@ -28,7 +28,7 @@ struct MoodPickerView: View {
     
     var body: some View {
         VStack {
-            Text("How's your average mood today?")
+            Text(NSLocalizedString("ask average mood", comment: "ask for the daily, AVERAGE mood"))
             HStack {
                 MoodButtonView(panelColor: bgColorHorrible, moodImage: "moodHorrible")
                     .onTapGesture {
@@ -74,7 +74,7 @@ struct MoodPickerView: View {
                 )
                 TextField(
                     text: $actName,
-                    prompt: Text("What did you do today?")
+                    prompt: Text(NSLocalizedString("what did you do", comment: "ask what the person did today and what made them feel this way"))
                 ) {
                     Text("Activity name")
                 }
@@ -91,7 +91,7 @@ struct MoodPickerView: View {
                             hapticConfirm()
                         },
                         label: {
-                            Label("Add activity", systemImage: "plus")
+                            Label(NSLocalizedString("save mood", comment: "tell the person this is the button to save the daily mood"), systemImage: "plus")
                                 .padding()
                                 .background(Color.tertiarySystemBackground)
                                 .foregroundColor(Color.accentColor)
@@ -107,7 +107,7 @@ struct MoodPickerView: View {
                             actName = ""
                         },
                         label: {
-                            Label("Cancel", systemImage: "xmark.circle")
+                            Label(NSLocalizedString("cancel button", comment: "tell the person this button cancels the action"), systemImage: "xmark.circle")
                                 .padding()
                                 .background(Color.tertiarySystemBackground)
                                 .foregroundColor(Color.primary)

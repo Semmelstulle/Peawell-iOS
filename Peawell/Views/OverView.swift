@@ -18,16 +18,16 @@ struct OverView: View {
     var body: some View {
         NavigationView() {
             Form() {
-                Section(header: Text("Mood log")) {
+                Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
                     ForEach(moodItems) { item in
                         HStack() {
-                            Text(item.moodName ?? "Error")
+                            Text(item.moodName ?? "")
                             Text(" - ")
-                            Text(item.activityName ?? "Error")
+                            Text(item.activityName ?? "")
                         }
                     }
                 }
-                Section(header: Text("Medication log")) {
+                Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
                             Text(item.medType ?? "")

@@ -17,16 +17,15 @@ struct MainView: View {
         NavigationView {
             ScrollView() {
                 ZStack() {
-                    Text("Motivational quote needed here. Maybe there's a public api?\nPlus this needs a fixed height at some point.")
-                        .padding()
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .aspectRatio(2.2, contentMode: .fit)
+                    Text(NSLocalizedString("motivational quote", comment: "a quote to motivate the person"))
                         .foregroundColor(Color.secondarySystemBackground)
-                        .background(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 15)
-                        )
                         .aspectRatio(2.2, contentMode: .fit)
                         .padding()
                 }
+                .padding()
                 // the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
@@ -37,7 +36,7 @@ struct MainView: View {
                         .padding()
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
-                    Text("All modules disabled")
+                    Text(NSLocalizedString("empty view", comment: "tell the person that all modules are disabled thus there is nothing here."))
                         .padding()
                 }
             }
