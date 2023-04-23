@@ -1,5 +1,15 @@
 # Peawell-iOS
 
+## The ideologies
+* No tracking
+* No ads
+* No need for money to use the whole app
+* Modern technlogies
+* Regular best practices
+* Native code
+* Native design
+* Native features
+
 ## The idea
 This project serves a few different purposes:
 * a show off project for my resume
@@ -40,7 +50,7 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
 late future or maybe never:
 - Android version
 
-If you want to to the Android version yourself, please tell me so I can link the project and can export my project files from Affinity Designer so you can use them.
+If you want to create the Android version yourself, feel free to contact me so we can cooperate. 
 
 
 ## Kudos
