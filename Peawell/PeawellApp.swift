@@ -76,7 +76,7 @@ func saveMeds(medName: String, medAmount: String, medUnit: String, medKind: Stri
     }
 }
 
-func saveMood(actName: String, moodName: String) {
+func saveMood(actName: String, moodName: String, moodLogDate: Date) {
     //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
     let mood = Mood(context: viewContext)

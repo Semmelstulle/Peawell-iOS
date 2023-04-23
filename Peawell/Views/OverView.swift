@@ -10,7 +10,7 @@ import SwiftUI
 struct OverView: View {
     
     //  adds fetched data to scope
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: true)], animation: .default)
     var moodItems: FetchedResults<Mood>
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
@@ -30,10 +30,10 @@ struct OverView: View {
                 Section(header: Text("Medication log")) {
                     ForEach(medsItems) { item in
                         HStack() {
-                            Text(item.medType ?? "Error")
+                            Text(item.medType ?? "")
                             Text(" - ")
-                            Text(item.medDose ?? "Error")
-                            Text(item.medUnit ?? "mg")
+                            Text(item.medDose ?? "")
+                            Text(item.medUnit ?? "")
                             Text(item.medKind ?? "")
                         }
                     }

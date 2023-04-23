@@ -16,6 +16,7 @@ struct MoodPickerView: View {
     //  state of the variables that will be updated by code
     @State var moodName: String = ""
     @State var actName: String = ""
+    @State var moodLogDate: Date = Date()
     @State var showMoodField: Bool = false
     
     //  prepares colors
@@ -83,7 +84,7 @@ struct MoodPickerView: View {
                 HStack {
                     Button(
                         action: {
-                            saveMood(actName: actName, moodName: moodName)
+                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
                             withAnimation(.easeOut(duration: 0.2)) {
                                 showMoodField = false
                             }

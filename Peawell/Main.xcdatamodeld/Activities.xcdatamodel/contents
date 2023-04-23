@@ -9,6 +9,7 @@
     </entity>
     <entity name="Mood" representedClassName="Mood" syncable="YES" codeGenerationType="class">
         <attribute name="activityName" optional="YES" attributeType="String"/>
+        <attribute name="logDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="moodName" optional="YES" attributeType="String"/>
     </entity>
 </model>

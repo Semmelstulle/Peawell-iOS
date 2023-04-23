@@ -34,6 +34,9 @@
 "Mood log" = "Launentagebuch";
 "Medication log" = "Medikationstagebuch";
 "Error" = "Fehler";
+"Long pill" = "lange Pille";
+"Round pill" = "Runde Pille";
+"Drops" = "Tropfen";
 
 //  Settings
 "Modules" = "Module";
