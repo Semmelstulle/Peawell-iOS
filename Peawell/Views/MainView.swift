@@ -16,8 +16,16 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView() {
-                CalendarView()
-                    .padding()
+                ZStack() {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .aspectRatio(2.2, contentMode: .fit)
+                    Text(NSLocalizedString("motivational quote", comment: "a quote to motivate the person"))
+                        .foregroundColor(Color.secondarySystemBackground)
+                        .aspectRatio(2.2, contentMode: .fit)
+                        .padding()
+                }
+                .padding()
                 // the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
@@ -28,7 +36,7 @@ struct MainView: View {
                         .padding()
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
-                    Text("All modules disabled")
+                    Text(NSLocalizedString("empty view", comment: "tell the person that all modules are disabled thus there is nothing here."))
                         .padding()
                 }
             }

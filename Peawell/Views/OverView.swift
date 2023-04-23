@@ -10,40 +10,31 @@ import SwiftUI
 struct OverView: View {
     
     //  adds fetched data to scope
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: true)], animation: .default)
     var moodItems: FetchedResults<Mood>
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
     
-    //  adds UserDefaults to scope
-    @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
-    @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
     var body: some View {
         NavigationView() {
             Form() {
-                // checks UserDefaults if section is active
-                if settingShowMoodSection == true {
-                    Section(header: Text("Mood log")) {
-                        ForEach(moodItems) { item in
-                            HStack() {
-                                Text(item.moodName ?? "Error")
-                                Text(" - ")
-                                Text(item.activityName ?? "Error")
-                            }
+                Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
+                    ForEach(moodItems) { item in
+                        HStack() {
+                            Text(item.moodName ?? "")
+                            Text(" - ")
+                            Text(item.activityName ?? "")
                         }
                     }
                 }
-                // checks UserDefaults if section is active
-                if settingShowMedicationSection == true {
-                    Section(header: Text("Medication log")) {
-                        ForEach(medsItems) { item in
-                            HStack() {
-                                Text(item.medType ?? "Error")
-                                Text(" - ")
-                                Text(item.medDose ?? "Error")
-                                Text(item.medUnit ?? "mg")
-                            }
+                Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
+                    ForEach(medsItems) { item in
+                        HStack() {
+                            Text(item.medType ?? "")
+                            Text(" - ")
+                            Text(item.medDose ?? "")
+                            Text(item.medUnit ?? "")
+                            Text(item.medKind ?? "")
                         }
                     }
                 }

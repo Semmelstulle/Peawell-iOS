@@ -14,12 +14,16 @@ struct TabBarView: View {
         TabView() {
             MainView()
                 .tabItem {
-                    Image(systemName: "calendar")
+                    Image("peaGlyph")
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
                     Text("Peawell")
                 }
             OverView()
                 .tabItem {
-                    Image(systemName: "list.bullet")
+                    Image("overviewGlyph")
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
                     Text("Overview")
                 }
             SettingsView()

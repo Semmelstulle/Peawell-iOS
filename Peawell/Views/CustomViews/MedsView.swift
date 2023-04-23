@@ -15,7 +15,7 @@ struct MedsView: View {
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
-    
+
     @State var showAddMedSheet = false
     
     var body: some View {
@@ -31,7 +31,7 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: String(format: NSLocalizedString("New", comment: "tile that adds new med"))
+                    title: String(format: NSLocalizedString("new", comment: "tile that adds new med"))
                 )
                 .onTapGesture {
                     showAddMedSheet = true
@@ -47,7 +47,7 @@ struct MedsView: View {
                 ForEach(medsItems) { item in
                     PanelView(
                         icon:
-                            Image("pillLong")
+                            Image(item.medKind ?? "Long pill")
                             .foregroundColor(.white)
                             .padding(10)
                             .background(Color.gray)
@@ -63,7 +63,7 @@ struct MedsView: View {
                         ) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label("Delete medication", systemImage: "trash")
+                            Label(NSLocalizedString("delete medication", comment: "tell the person this button deletes the medication"), systemImage: "trash")
                         }
                     }
                 }

@@ -13,6 +13,7 @@ struct EditMedsView: View { var navTitle: String
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
+    @State var medKind = "Long pill"
     
     var body: some View {
         NavigationView() {
@@ -33,7 +34,7 @@ struct EditMedsView: View { var navTitle: String
                 .padding()
                 Button(
                     action: {
-                        saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit)
+                        saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit, medKind: medKind)
                     }, label: {
                         Label("Add medication", systemImage: "plus")
                     }
