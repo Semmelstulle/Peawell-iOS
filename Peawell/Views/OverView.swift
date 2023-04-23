@@ -15,36 +15,26 @@ struct OverView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
     
-    //  adds UserDefaults to scope
-    @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
-    @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
     var body: some View {
         NavigationView() {
             Form() {
-                // checks UserDefaults if section is active
-                if settingShowMoodSection == true {
-                    Section(header: Text("Mood log")) {
-                        ForEach(moodItems) { item in
-                            HStack() {
-                                Text(item.moodName ?? "Error")
-                                Text(" - ")
-                                Text(item.activityName ?? "Error")
-                            }
+                Section(header: Text("Mood log")) {
+                    ForEach(moodItems) { item in
+                        HStack() {
+                            Text(item.moodName ?? "Error")
+                            Text(" - ")
+                            Text(item.activityName ?? "Error")
                         }
                     }
                 }
-                // checks UserDefaults if section is active
-                if settingShowMedicationSection == true {
-                    Section(header: Text("Medication log")) {
-                        ForEach(medsItems) { item in
-                            HStack() {
-                                Text(item.medType ?? "Error")
-                                Text(" - ")
-                                Text(item.medDose ?? "Error")
-                                Text(item.medUnit ?? "mg")
-                                Text(item.medKind ?? "")
-                            }
+                Section(header: Text("Medication log")) {
+                    ForEach(medsItems) { item in
+                        HStack() {
+                            Text(item.medType ?? "Error")
+                            Text(" - ")
+                            Text(item.medDose ?? "Error")
+                            Text(item.medUnit ?? "mg")
+                            Text(item.medKind ?? "")
                         }
                     }
                 }
