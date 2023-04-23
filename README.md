@@ -37,6 +37,11 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
     - [ ] Widget
     - [ ] watchOS App (just logging)
 
+late future or maybe never:
+- Android version
+
+If you want to to the Android version yourself, please tell me so I can link the project and can export my project files from Affinity Designer so you can use them.
+
 
 ## Kudos
 
