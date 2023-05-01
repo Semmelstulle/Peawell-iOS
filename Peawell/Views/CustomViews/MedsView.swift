@@ -50,7 +50,7 @@ struct MedsView: View {
                             Image(item.medKind ?? "Long pill")
                             .foregroundColor(.white)
                             .padding(10)
-                            .background(Color.gray)
+                            .background(Color.accentColor)
                             .aspectRatio(1, contentMode: .fill)
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
