@@ -22,6 +22,12 @@ This is how I can try to be a part of the change I want to see in the world. I h
 Peawell aims to remain ad free, free of charge but with the option to donate.
 
 
+## Preview
+
+![working App](./Resources/PeawellDemo.mov)
+![iOS native settings](./Resources/PeawelliOSSettings.mov)
+
+
 ## Roadmap
 
 - [x] Readme
