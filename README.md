@@ -24,8 +24,9 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
 
 ## Preview
 
-![working App](./Resources/PeawellDemo.mov)
-![iOS native settings](./Resources/PeawelliOSSettings.mov)
+![main page](./Resources/PeawellPreview01.PNG)
+![overview](./Resources/PeawellPreview02.PNG)
+![in app settings](./Resources/PeawellPreview03.PNG)
 
 
 ## Roadmap
