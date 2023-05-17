@@ -70,9 +70,9 @@
 "When do you want to be reminded?" = "Wann sollst du erinnert werden?";
 "Add medication" = "Medikation hinzufügen";
 "Which kind of medication is it?" = "Which kind of medication is it?";
-"Long pill" = "Long pill";
-"Round pill" = "Round pill";
-"Drops" = "Drops";
+"Long pill" = "Lange Pille";
+"Round pill" = "Runde Pille";
+"Drops" = "Tropfen";
 
 //  EditMeds
 "Activity name" = "Name der Aktivität";
