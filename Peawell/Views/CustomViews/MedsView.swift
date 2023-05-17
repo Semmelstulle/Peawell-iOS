@@ -21,29 +21,6 @@ struct MedsView: View {
     var body: some View {
         ZStack {
             LazyVGrid(columns: [.init(), .init()]) {
-                PanelView(
-                    icon:
-                        Image("plus")
-                        .foregroundColor(.white)
-                        .padding(10)
-                        .background(Color.accentColor)
-                        .aspectRatio(1, contentMode: .fill)
-                        .clipShape(Circle()),
-                    doseAmnt: String(medsItems.count),
-                    doseUnit: "",
-                    title: String(format: NSLocalizedString("new", comment: "tile that adds new med"))
-                )
-                .onTapGesture {
-                    showAddMedSheet = true
-                }
-                .sheet(isPresented: $showAddMedSheet) {
-                    if #available(iOS 16.0, *) {
-                        AddMedsSheetView()
-                            .presentationDetents([.medium, .large])
-                    } else {
-                        AddMedsSheetView()
-                    }
-                }
                 ForEach(medsItems) { item in
                     PanelView(
                         icon:
@@ -65,6 +42,29 @@ struct MedsView: View {
                         } label: {
                             Label(NSLocalizedString("delete medication", comment: "tell the person this button deletes the medication"), systemImage: "trash")
                         }
+                    }
+                }
+                PanelView(
+                    icon:
+                        Image("plus")
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color.accentColor)
+                        .aspectRatio(1, contentMode: .fill)
+                        .clipShape(Circle()),
+                    doseAmnt: String(medsItems.count),
+                    doseUnit: "",
+                    title: String(format: NSLocalizedString("new", comment: "tile that adds new med"))
+                )
+                .onTapGesture {
+                    showAddMedSheet = true
+                }
+                .sheet(isPresented: $showAddMedSheet) {
+                    if #available(iOS 16.0, *) {
+                        AddMedsSheetView()
+                            .presentationDetents([.medium, .large])
+                    } else {
+                        AddMedsSheetView()
                     }
                 }
             }
