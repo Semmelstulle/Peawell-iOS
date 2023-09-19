@@ -40,7 +40,6 @@ struct OverView: View {
                         }*/
                     }
                 }
-				.onDelete(perform: deleteItems)
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
@@ -52,7 +51,6 @@ struct OverView: View {
                         }
                     }
                 }
-				.onDelete(perform: deleteItems)
             }
 			.navigationTitle("Overview")
 			.toolbar {
