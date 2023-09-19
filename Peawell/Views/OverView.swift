@@ -16,17 +16,31 @@ struct OverView: View {
     var medsItems: FetchedResults<Meds>
     
     var body: some View {
-        NavigationView() {
-            Form() {
+        NavigationView {
+            List {
                 Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
                     ForEach(moodItems) { item in
-                        HStack() {
+						NavigationLink {
+							HStack() {
+								Text(item.moodName ?? "")
+								Text(" - ")
+								Text(item.activityName ?? "")
+							}
+						} label: {
+							HStack() {
+								Text(item.moodName ?? "")
+								Text(" - ")
+								Text(item.activityName ?? "")
+							}
+						}
+						/*HStack() {
                             Text(item.moodName ?? "")
                             Text(" - ")
                             Text(item.activityName ?? "")
-                        }
+                        }*/
                     }
                 }
+				.onDelete(perform: deleteItems)
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
@@ -38,7 +52,14 @@ struct OverView: View {
                         }
                     }
                 }
-            }.navigationTitle("Overview")
+				.onDelete(perform: deleteItems)
+            }
+			.navigationTitle("Overview")
+			.toolbar {
+				ToolbarItem(placement: .navigationBarTrailing) {
+					EditButton()
+				}
+			}
         }
     }
 }
