@@ -21,17 +21,9 @@ struct OverView: View {
                 Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
                     ForEach(moodItems) { item in
 						NavigationLink {
-							HStack() {
-								Text(item.moodName ?? "")
-								Text(" - ")
-								Text(item.activityName ?? "")
-							}
-						} label: {
-							HStack() {
-								Text(item.moodName ?? "")
-								Text(" - ")
-								Text(item.activityName ?? "")
-							}
+                            Text(item.activityName ?? "")
+                                .navigationTitle(item.moodName ?? "Mood missing")
+						} label: {                            Text("Date here  -  " + (item.moodName ?? ""))
 						}
 						/*HStack() {
                             Text(item.moodName ?? "")
