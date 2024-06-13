@@ -33,35 +33,35 @@ struct MoodPickerView: View {
                 MoodButtonView(panelColor: bgColorHorrible, moodImage: "moodHorrible")
                     .onTapGesture {
                         moodName = "Horrible"
-                        withAnimation(.easeOut(duration: 0.2)) {
+                        withAnimation(.bouncy(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
                 MoodButtonView(panelColor: bgColorBad, moodImage: "moodBad")
                     .onTapGesture {
                         moodName = "Bad"
-                        withAnimation(.easeOut(duration: 0.2)) {
+                        withAnimation(.bouncy(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
                 MoodButtonView(panelColor: bgColorNeutral, moodImage: "moodNeutral")
                     .onTapGesture {
                         moodName = "Neutral"
-                        withAnimation(.easeOut(duration: 0.2)) {
+                        withAnimation(.bouncy(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
                 MoodButtonView(panelColor: bgColorGood, moodImage: "moodGood")
                     .onTapGesture {
                         moodName = "Good"
-                        withAnimation(.easeOut(duration: 0.2)) {
+                        withAnimation(.bouncy(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
                 MoodButtonView(panelColor: bgColorAwesome, moodImage: "moodAwesome")
                     .onTapGesture {
                         moodName = "Awesome"
-                        withAnimation(.easeOut(duration: 0.2)) {
+                        withAnimation(.bouncy(duration: 0.2)) {
                             showMoodField = true
                         }
                     }
@@ -72,12 +72,16 @@ struct MoodPickerView: View {
                     String(format: NSLocalizedString(moodName, comment: "name of mood")) +
                     String(format: NSLocalizedString(". You can note why or what you did today below.", comment: "suffix of activity field"))
                 )
-                TextField(
+                TextEditor(text: $actName)
+                    .frame(minHeight: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    /*.border(Color.gray, width: 1)
+                TextEditor(
                     text: $actName,
                     prompt: Text(NSLocalizedString("what did you do", comment: "ask what the person did today and what made them feel this way"))
                 ) {
                     Text("Activity name")
-                }
+                }*/
                 .padding()
                 .background(Color.tertiarySystemBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -85,7 +89,7 @@ struct MoodPickerView: View {
                     Button(
                         action: {
                             saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                            withAnimation(.easeOut(duration: 0.2)) {
+                            withAnimation(.bouncy(duration: 0.2)) {
                                 showMoodField = false
                             }
                             hapticConfirm()
@@ -100,11 +104,12 @@ struct MoodPickerView: View {
                     )
                     Button(
                         action: {
-                            withAnimation(.easeOut(duration: 0.2)) {
+                            withAnimation(.bouncy(duration: 0.2)) {
                                 showMoodField = false
                             }
                             moodName = ""
                             actName = ""
+                            moodLogDate = Date.now
                         },
                         label: {
                             Label(NSLocalizedString("cancel button", comment: "tell the person this button cancels the action"), systemImage: "xmark.circle")

@@ -83,6 +83,7 @@ func saveMood(actName: String, moodName: String, moodLogDate: Date) {
     //  maps CoreData values to variables
     mood.activityName = actName
     mood.moodName = moodName
+    mood.logDate = moodLogDate
     do {
         try viewContext.save()
         hapticConfirm()

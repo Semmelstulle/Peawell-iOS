@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+//  prepares colors
+var bgColorHorrible: Color = Color.red
+var bgColorBad: Color = Color.orange
+var bgColorNeutral: Color = Color.yellow
+var bgColorGood: Color = Color.green
+var bgColorAwesome: Color = Color.mint
+
 struct OverView: View {
     
     //  adds fetched data to scope
@@ -18,20 +25,6 @@ struct OverView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
-                    ForEach(moodItems) { item in
-						NavigationLink {
-                            Text(item.activityName ?? "")
-                                .navigationTitle(item.moodName ?? "Mood missing")
-						} label: {                            Text("Date here  -  " + (item.moodName ?? ""))
-						}
-						/*HStack() {
-                            Text(item.moodName ?? "")
-                            Text(" - ")
-                            Text(item.activityName ?? "")
-                        }*/
-                    }
-                }
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
@@ -41,6 +34,29 @@ struct OverView: View {
                             Text(item.medUnit ?? "")
                             Text(item.medKind ?? "")
                         }
+                    }
+                }
+                Section(header: Text(NSLocalizedString("mood section", comment: "tell the person this is the section containing their logged moods"))) {
+                    ForEach(moodItems) { item in
+						NavigationLink {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color.accentColor)
+                                    .frame(maxWidth: .infinity, maxHeight: 50)
+                                    .padding()
+                                Image("mood\(item.moodName ?? "Neutral")")
+                            }
+                            //Text(item.moodName ?? "Mood missing")
+                            Text(item.activityName ?? "Text missing")
+                                .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } label: {
+                            HStack() {
+                                Text(item.logDate ?? Date.now, style: .date)
+                                Text(" - ")
+                                Text(item.moodName ?? "Mood missing")
+                            }
+						}
                     }
                 }
             }
