@@ -17,7 +17,7 @@ struct TabBarView: View {
                     Image("peaGlyph")
                         .renderingMode(.template)
                         .foregroundColor(.white)
-                    Text("Peawell")
+                    Text("Startseite")
                 }
             OverView()
                 .tabItem {

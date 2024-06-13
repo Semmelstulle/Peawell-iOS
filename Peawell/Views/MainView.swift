@@ -42,6 +42,17 @@ struct MainView: View {
             }
             .navigationTitle("Peawell")
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .toolbar {
+                ToolbarItem {
+                    Menu {
+                        Toggle(isOn: $settingShowMedicationSection, label: {Text("Use medication module")})
+                        Toggle(isOn: $settingShowMoodSection, label: {Text("Use mood module")})
+                    } label: {
+                        Label("Menu", systemImage: "ellipsis.circle")
+                    }
+                }
+
+            }
         }
     }
 }
