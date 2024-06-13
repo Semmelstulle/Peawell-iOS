@@ -28,11 +28,13 @@ struct OverView: View {
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
+                            Image(item.medKind ?? "")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(6)
+                                .background(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                             Text(item.medType ?? "")
-                            Text(" - ")
-                            Text(item.medDose ?? "")
-                            Text(item.medUnit ?? "")
-                            Text(item.medKind ?? "")
                         }
                     }
                 }
@@ -50,16 +52,9 @@ struct OverView: View {
                                 Text(item.activityName ?? "Text missing")
                                     .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
                                     .frame(maxWidth: .infinity, alignment: .topLeading)
-                                /*.background(Color.secondarySystemBackground)
-                                 .clipShape(RoundedRectangle(cornerRadius: 10))*/
                                     .padding()
                             }
                         } label: {
-                            /*HStack() {
-                                Text(item.logDate ?? Date.now, style: .date)
-                                Text(" - ")
-                                Text(item.moodName ?? "Mood missing")
-                            }*/
                             HStack() {
 
                                 Image("mood\(item.moodName ?? "Neutral")")
@@ -68,24 +63,7 @@ struct OverView: View {
                                     .padding(6)
                                     .background(Color.accentColor)
                                 /*
-                                if item.moodName == "Horrible" {
-                                    .background(Color.bgColorHorrible)
-                                }
-                                if item.moodName == "Bad" {
-                                    .background(Color.bgColorBad)
-                                }
-                                if item.moodName == "Neutral" {
-                                    .background(Color.bgColorNeutral)
-                                }
-                                if item.moodName == "Good" {
-                                    .background(Color.bgColorGood)
-                                }
-                                if item.moodName == "Awesome" {
-                                    .background(Color.bgColorAwesome)
-                                }
-                                */
-                                /*
-                                switch item.moodName ?? "Neutral" {
+                                switch item.moodName {
                                 case "Horrible":
                                         .background(Color.bgColorHorrible)
                                 case "Bad":

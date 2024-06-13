@@ -22,7 +22,7 @@ struct MainView: View {
                         .aspectRatio(2.2, contentMode: .fit)
                     Text(NSLocalizedString("motivational quote", comment: "a quote to motivate the person"))
                         .foregroundColor(Color.secondarySystemBackground)
-                        .aspectRatio(2.2, contentMode: .fit)
+                        .aspectRatio(2.2, contentMode: .fill)
                         .padding()
                 }
                 .padding()
