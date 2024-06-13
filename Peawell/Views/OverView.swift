@@ -28,11 +28,27 @@ struct OverView: View {
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
+                            Image(item.medKind ?? "")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(6)
+                                .background(Color.accentColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                             Text(item.medType ?? "")
-                            Text(" - ")
+                            Spacer()
                             Text(item.medDose ?? "")
+                                .opacity(0.4)
                             Text(item.medUnit ?? "")
-                            Text(item.medKind ?? "")
+                                .opacity(0.4)
+                        }
+                        .swipeActions(allowsFullSwipe: true) {
+                            Button(
+                                role: .destructive
+                            ) {
+                                trashItem(objectID: item.objectID)
+                            } label: {
+                                Label(NSLocalizedString("delete diary", comment: "tell the person this button deletes the diary"), systemImage: "trash")
+                            }
                         }
                     }
                 }
@@ -42,7 +58,7 @@ struct OverView: View {
                             ScrollView () {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color.accentColor)
+                                        .foregroundColor(getMoodColor(item.moodName))
                                         .frame(maxWidth: .infinity, idealHeight: 50)
                                         .padding()
                                     Image("mood\(item.moodName ?? "Neutral")")
@@ -63,15 +79,19 @@ struct OverView: View {
                                 Text(item.logDate ?? Date.now, style: .date)
                             }
                         }
+                        .swipeActions(allowsFullSwipe: true) {
+                            Button(
+                                role: .destructive
+                            ) {
+                                trashItem(objectID: item.objectID)
+                            } label: {
+                                Label(NSLocalizedString("delete diary", comment: "tell the person this button deletes the diary"), systemImage: "trash")
+                            }
+                        }
                     }
                 }
             }
             .navigationTitle("Overview")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-            }
         }
     }
     
@@ -91,6 +111,16 @@ struct OverView: View {
         default:
             return bgColorNeutral
         }
+    }
+
+    func deleteMood() {
+        let viewContext = PersistenceController.shared.container.viewContext
+
+        //  runs fetch functions to gather all data and delete them
+        for object in fetchMood() {
+            viewContext.delete(object)
+        }
+        try? viewContext.save()
     }
 }
 
