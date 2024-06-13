@@ -15,26 +15,24 @@ var bgColorGood: Color = Color.green
 var bgColorAwesome: Color = Color.mint
 
 struct OverView: View {
-    
+
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
     var moodItems: FetchedResults<Mood>
-    
+
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
                     ForEach(medsItems) { item in
                         HStack() {
-                            Image(item.medKind ?? "")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .padding(6)
-                                .background(Color.accentColor)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
                             Text(item.medType ?? "")
+                            Text(" - ")
+                            Text(item.medDose ?? "")
+                            Text(item.medUnit ?? "")
+                            Text(item.medKind ?? "")
                         }
                     }
                 }
@@ -52,18 +50,26 @@ struct OverView: View {
                                 Text(item.activityName ?? "Text missing")
                                     .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
                                     .frame(maxWidth: .infinity, alignment: .topLeading)
+                                /*.background(Color.secondarySystemBackground)
+                                 .clipShape(RoundedRectangle(cornerRadius: 10))*/
                                     .padding()
                             }
                         } label: {
+                            /*HStack() {
+                                Text(item.logDate ?? Date.now, style: .date)
+                                Text(" - ")
+                                Text(item.moodName ?? "Mood missing")
+                            }*/
                             HStack() {
 
                                 Image("mood\(item.moodName ?? "Neutral")")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .padding(6)
-                                    .background(Color.accentColor)
+                                    .background(getMoodColor(item.moodName))
+
                                 /*
-                                switch item.moodName {
+                                switch item.moodName ?? "Neutral" {
                                 case "Horrible":
                                         .background(Color.bgColorHorrible)
                                 case "Bad":
@@ -81,16 +87,33 @@ struct OverView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                                 Text(item.logDate ?? Date.now, style: .date)
                             }
-						}
+                        }
                     }
                 }
             }
-			.navigationTitle("Overview")
-			.toolbar {
-				ToolbarItem(placement: .navigationBarTrailing) {
-					EditButton()
-				}
-			}
+            .navigationTitle("Overview")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
+        }
+    }
+
+    func getMoodColor(_ moodName: String?) -> Color {
+        switch moodName {
+        case "Horrible":
+            return bgColorHorrible
+        case "Bad":
+            return bgColorBad
+        case "Neutral":
+            return bgColorNeutral
+        case "Good":
+            return bgColorGood
+        case "Awesome":
+            return bgColorAwesome
+        default:
+            return bgColorNeutral
         }
     }
 }
