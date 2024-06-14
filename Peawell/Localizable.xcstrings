@@ -1,0 +1,726 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    " mood.picker.prompt.suffix" : {
+      "comment" : "suffix, asks in natural language for what happened today",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ". Schreibe doch gleich etwas über deinen Tag auf."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " today. Take some time to write things down."
+          }
+        }
+      }
+    },
+    "add.meds.header" : {
+      "comment" : "tells the user fields below are neccessary",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte angeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please fill out"
+          }
+        }
+      }
+    },
+    "add.meds.medDose" : {
+      "comment" : "ask for medication dose",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dosis des Medikaments"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's the amount?"
+          }
+        }
+      }
+    },
+    "add.meds.medKind" : {
+      "comment" : "ask for medication type",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Art des Medikaments"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's the type?"
+          }
+        }
+      }
+    },
+    "add.meds.medName" : {
+      "comment" : "ask for medication name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name des Medikaments"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's the name?"
+          }
+        }
+      }
+    },
+    "global.menu" : {
+      "comment" : "just here for accessibility, tells screen reader that this is an expanding menu",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menü"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu"
+          }
+        }
+      }
+    },
+    "global.trash.item" : {
+      "comment" : "tells screen reader that action deletes item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintrag löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete item"
+          }
+        }
+      }
+    },
+    "main.empty.hint" : {
+      "comment" : "tell the person that all modules are disabled thus there is nothing here.",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Module wurden deaktiviert!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All modules are disabled!"
+          }
+        }
+      }
+    },
+    "main.motivational.quote" : {
+      "comment" : "a quote to motivate the person on the main page",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du hast es durch all deine schwersten Tage geschafft, das ist wahre Stärke!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You already made it through all of your days. This is some serious strength!"
+          }
+        }
+      }
+    },
+    "med.add.item" : {
+      "comment" : "tells user that button adds item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add medication"
+          }
+        }
+      }
+    },
+    "med.trash.item" : {
+      "comment" : "tells user that action trashes medication",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikation entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove medication"
+          }
+        }
+      }
+    },
+    "Medication dose" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "Medication name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "menu.toggle.module.med" : {
+      "comment" : "menu item that toggles med module",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschnitt Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication section"
+          }
+        }
+      }
+    },
+    "menu.toggle.module.mood" : {
+      "comment" : "menu item that toggles mood module",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschnitt Stimmung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood section"
+          }
+        }
+      }
+    },
+    "module.add.meds" : {
+      "comment" : "tells the user this screen is for adding meds",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikation hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add medication"
+          }
+        }
+      }
+    },
+    "module.med" : {
+      "comment" : "just says medication log\nmodule name for meds",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication"
+          }
+        }
+      }
+    },
+    "module.moods" : {
+      "comment" : "just says mood diary\nmodule name for moods",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stimmungstagebuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood"
+          }
+        }
+      }
+    },
+    "module.settings" : {
+      "comment" : "should just say settings to tell the user where it navigates to",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "mood.picker.cancel" : {
+      "comment" : "tells the user this button cancels input",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "mood.picker.prompt" : {
+      "comment" : "ask for the daily, AVERAGE mood",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie hast du dich heute insgesamt gefühlt?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What was your average mood today?"
+          }
+        }
+      }
+    },
+    "mood.picker.prompt.prefix " : {
+      "comment" : "prefix, asks in natural language for what happened today",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du fühlst dich also "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So you're feeling "
+          }
+        }
+      }
+    },
+    "mood.picker.save" : {
+      "comment" : "tells the user this button saves entry",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Peawell" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "settings.access.footer" : {
+      "comment" : "tells that the user can control here what the app gets access to",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lege fest, welche Zugriffe die App haben darf."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control what the app is allowed to access"
+          }
+        }
+      }
+    },
+    "settings.access.header" : {
+      "comment" : "just says access in things the app can access",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriffe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access"
+          }
+        }
+      }
+    },
+    "settings.button.reset" : {
+      "comment" : "just should say delete",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Daten löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erase all data"
+          }
+        }
+      }
+    },
+    "settings.button.reset.alert" : {
+      "comment" : "dialog that again tells deletion can not be undone",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganz sicher? Der Vorgang wird alles unwiderruflich löschen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure?\\nThis will erase all data and can not be undone!"
+          }
+        }
+      }
+    },
+    "settings.button.reset.alert.cancel" : {
+      "comment" : "just should say cancel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "settings.button.reset.alert.confirm" : {
+      "comment" : "reassures the user really want to clear data",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestätigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        }
+      }
+    },
+    "settings.footer" : {
+      "comment" : "greets international users from germany with a german flag ",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Liebe in 🇩🇪 gemacht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made with love in 🇩🇪"
+          }
+        }
+      }
+    },
+    "settings.modules.footer" : {
+      "comment" : "short description to tell user what the toggles do",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige oder verstecke Abschnitte."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "These toggles will show or hide specific modules"
+          }
+        }
+      }
+    },
+    "settings.modules.header" : {
+      "comment" : "tells the user this section is for managing modules of the app",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Module"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage app modules"
+          }
+        }
+      }
+    },
+    "settings.section.about" : {
+      "comment" : "says 'about this project'",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über diese App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About this project"
+          }
+        }
+      }
+    },
+    "settings.socials.github" : {
+      "comment" : "says that this is the app's GitHub page",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App auf GitHub"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app on GitHub"
+          }
+        }
+      }
+    },
+    "settings.socials.mastodon" : {
+      "comment" : "says that this is the dev's Mastodon page",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Entwickler auf Mastodon"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Developer on Mastodon"
+          }
+        }
+      }
+    },
+    "settings.toggle.CloudKit" : {
+      "comment" : "tells the user that data will be stored to iCloud when on",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu iCloud synchronisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync to iCloud"
+          }
+        }
+      }
+    },
+    "settings.toggle.module.med" : {
+      "comment" : "short hint that med module is toggled",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschnitt Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication section"
+          }
+        }
+      }
+    },
+    "settings.toggle.module.mood" : {
+      "comment" : "short hint that mood module is toggled",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschnitt Stimmung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood section"
+          }
+        }
+      }
+    },
+    "settings.toggle.reset.footer" : {
+      "comment" : "makes clear to user that erasing is irreversible",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorsicht! Gelöschte Daten können nicht wiederhergestellt werden!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Be careful, deleted data can not be restored!"
+          }
+        }
+      }
+    },
+    "settings.toggle.reset.header" : {
+      "comment" : "hints that below data will be erased",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erase data"
+          }
+        }
+      }
+    },
+    "settings.version.info" : {
+      "comment" : "says 'app version'",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Version"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App version"
+          }
+        }
+      }
+    },
+    "settings.version.release" : {
+      "comment" : "says version missing",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version fehlt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "version missing"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

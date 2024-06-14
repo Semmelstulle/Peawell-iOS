@@ -54,12 +54,12 @@ struct MoodLogView: View {
                     ) {
                         trashItem(objectID: item.objectID)
                     } label: {
-                        Label(NSLocalizedString("delete diary", comment: "tell the person this button deletes the diary"), systemImage: "trash")
+                        Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
                     }
                 }
             }
         }
-        .navigationTitle("Mood Log")
+        .navigationTitle(NSLocalizedString("module.moods", comment: "module name for moods"))
     }
 }
 

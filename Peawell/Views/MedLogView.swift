@@ -15,35 +15,33 @@ struct MedLogView: View {
 
     var body: some View {
         List {
-            Section(header: Text(NSLocalizedString("meds section", comment: "tell the person this is the section containing their logged medication"))) {
-                ForEach(medsItems) { item in
-                    HStack() {
-                        Image(item.medKind ?? "")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding(6)
-                            .background(Color.accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                        Text(item.medType ?? "")
-                        Spacer()
-                        Text(item.medDose ?? "")
-                            .opacity(0.4)
-                        Text(item.medUnit ?? "")
-                            .opacity(0.4)
-                    }
-                    .swipeActions(allowsFullSwipe: true) {
-                        Button(
-                            role: .destructive
-                        ) {
-                            trashItem(objectID: item.objectID)
-                        } label: {
-                            Label(NSLocalizedString("delete diary", comment: "tell the person this button deletes the diary"), systemImage: "trash")
-                        }
+            ForEach(medsItems) { item in
+                HStack() {
+                    Image(item.medKind ?? "")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(6)
+                        .background(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text(item.medType ?? "")
+                    Spacer()
+                    Text(item.medDose ?? "")
+                        .opacity(0.4)
+                    Text(item.medUnit ?? "")
+                        .opacity(0.4)
+                }
+                .swipeActions(allowsFullSwipe: true) {
+                    Button(
+                        role: .destructive
+                    ) {
+                        trashItem(objectID: item.objectID)
+                    } label: {
+                        Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
                     }
                 }
             }
         }
-        .navigationTitle("Overview")
+        .navigationTitle(NSLocalizedString("module.med", comment: "module name for meds"))
     }
 }
 

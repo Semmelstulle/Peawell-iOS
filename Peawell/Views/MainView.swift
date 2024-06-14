@@ -21,10 +21,10 @@ struct MainView: View {
                 ZStack() {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .aspectRatio(2.2, contentMode: .fit)
-                    Text(NSLocalizedString("motivational quote", comment: "a quote to motivate the person"))
+                        .aspectRatio(2.4, contentMode: .fit)
+                    Text(NSLocalizedString("main.motivational.quote", comment: "a quote to motivate the person on the main page"))
                         .foregroundColor(Color.secondarySystemBackground)
-                        .aspectRatio(2.2, contentMode: .fill)
+                        .aspectRatio(2.4, contentMode: .fill)
                         .padding()
                 }
                 .padding()
@@ -38,7 +38,7 @@ struct MainView: View {
                         .padding()
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
-                    Text(NSLocalizedString("empty view", comment: "tell the person that all modules are disabled thus there is nothing here."))
+                    Text(NSLocalizedString("main.empty.hint", comment: "tell the person that all modules are disabled thus there is nothing here."))
                         .padding()
                 }
                 VStack {
@@ -53,7 +53,7 @@ struct MainView: View {
                             .padding(.bottom, 6)
                             .padding(.leading, 16)
                             .padding(.trailing, 6)
-                        Text("Mood log")
+                        Text(NSLocalizedString("module.moods", comment: "just says mood diary"))
                             .foregroundStyle(Color.primary)
                         Spacer()
                         Image(systemName: "chevron.forward")
@@ -74,7 +74,7 @@ struct MainView: View {
                             .padding(.bottom, 6)
                             .padding(.leading, 16)
                             .padding(.trailing, 6)
-                        Text("Medication log")
+                        Text(NSLocalizedString("module.med", comment: "just says medication log"))
                             .foregroundStyle(Color.primary)
                         Spacer()
                         Image(systemName: "chevron.forward")
@@ -92,16 +92,16 @@ struct MainView: View {
             .toolbar {
                 ToolbarItem {
                     Menu {
-                        Toggle(isOn: $settingShowMedicationSection, label: {Text("Medication module")})
-                        Toggle(isOn: $settingShowMoodSection, label: {Text("Mood module")})
+                        Toggle(isOn: $settingShowMoodSection, label: {Text(NSLocalizedString("menu.toggle.module.mood", comment: "menu item that toggles mood module"))})
+                        Toggle(isOn: $settingShowMedicationSection, label: {Text(NSLocalizedString("menu.toggle.module.med", comment: "menu item that toggles med module"))})
                         Divider()
                         Button(action: {
                             showSettingsSheet = true
                         }) {
-                            Label("Settings", systemImage: "gear")
+                            Label(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"), systemImage: "gear")
                         }
                     } label: {
-                        Label("Menu", systemImage: "ellipsis.circle")
+                        Label(NSLocalizedString("global.menu", comment: "just here for accessibility, tells screen reader that this is an expanding menu"), systemImage: "ellipsis.circle")
                     }
                 }
 

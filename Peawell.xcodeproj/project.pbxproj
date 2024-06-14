@@ -15,13 +15,13 @@
 		952B207729EF109000884166 /* MoodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207629EF109000884166 /* MoodLogView.swift */; };
 		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
 		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
-		958DA07029F2BFCF000CB5E0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 958DA07229F2BFCF000CB5E0 /* Localizable.strings */; };
 		9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9590AF8029EC0F51001A84B8 /* PanelView.swift */; };
 		9590FFC229EAAA16005D6DE3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9590FFC129EAAA16005D6DE3 /* Settings.bundle */; };
 		9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B97829E877D800DC2487 /* PersistenceController.swift */; };
 		95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */; };
 		95ECE1BD29EFE1AE001A19B6 /* MedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */; };
 		95EE54F22C1C402C00F34D53 /* MedLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EE54F12C1C402C00F34D53 /* MedLogView.swift */; };
+		95EE550B2C1C6AAE00F34D53 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,14 +35,13 @@
 		952B207629EF109000884166 /* MoodLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLogView.swift; sourceTree = "<group>"; };
 		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		958DA07129F2BFCF000CB5E0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		958DA07329F2BFD1000CB5E0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9590AF8029EC0F51001A84B8 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 		9590FFC129EAAA16005D6DE3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9592B97829E877D800DC2487 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPickerView.swift; sourceTree = "<group>"; };
 		95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedsView.swift; sourceTree = "<group>"; };
 		95EE54F12C1C402C00F34D53 /* MedLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedLogView.swift; sourceTree = "<group>"; };
+		95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +79,8 @@
 				9592B97829E877D800DC2487 /* PersistenceController.swift */,
 				951DCA7029E735D90072E809 /* Main.xcdatamodeld */,
 				9505432629E5CACB005D29B5 /* Assets.xcassets */,
+				95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */,
 				9505432829E5CACB005D29B5 /* Peawell.entitlements */,
-				958DA07229F2BFCF000CB5E0 /* Localizable.strings */,
 				9590FFC129EAAA16005D6DE3 /* Settings.bundle */,
 				9505432929E5CACB005D29B5 /* Preview Content */,
 			);
@@ -160,7 +159,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				de,
 			);
 			mainGroup = 9505431629E5CAC8005D29B5;
@@ -179,8 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9505432B29E5CACB005D29B5 /* Preview Assets.xcassets in Resources */,
-				958DA07029F2BFCF000CB5E0 /* Localizable.strings in Resources */,
 				9590FFC229EAAA16005D6DE3 /* Settings.bundle in Resources */,
+				95EE550B2C1C6AAE00F34D53 /* Localizable.xcstrings in Resources */,
 				9505432729E5CACB005D29B5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,18 +205,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		958DA07229F2BFCF000CB5E0 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				958DA07129F2BFCF000CB5E0 /* en */,
-				958DA07329F2BFD1000CB5E0 /* de */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9505432C29E5CACB005D29B5 /* Debug */ = {
@@ -359,6 +345,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Peawell;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This will only add Peawell events to your system calendar. Refuse this if you don't need it.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -402,6 +390,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Peawell;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "This will only add Peawell events to your system calendar. Refuse this if you don't need it.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

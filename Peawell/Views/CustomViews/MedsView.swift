@@ -40,7 +40,7 @@ struct MedsView: View {
                         ) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label(NSLocalizedString("delete medication", comment: "tell the person this button deletes the medication"), systemImage: "trash")
+                            Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
                         }
                     }
                 }
@@ -54,7 +54,7 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: String(format: NSLocalizedString("new", comment: "tile that adds new med"))
+                    title: String(format: NSLocalizedString("med.add.item", comment: "tells user that button adds item"))
                 )
                 .onTapGesture {
                     showAddMedSheet = true

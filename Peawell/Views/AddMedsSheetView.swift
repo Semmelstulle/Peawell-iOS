@@ -24,17 +24,17 @@ struct AddMedsSheetView: View {
     var body: some View {
         NavigationView() {
             Form {
-                Section(header: Text("Necessary info")) {
+                Section(header: Text(NSLocalizedString("add.meds.header", comment: "tells the user fields below are neccessary"))) {
                     TextField(
                         "Medication name",
                         text: $medName,
-                        prompt: Text("What is your medication called?")
+                        prompt: Text(NSLocalizedString("add.meds.medName", comment: "ask for medication name"))
                     )
                     HStack {
                         TextField(
                             "Medication dose",
                             text: $medAmount,
-                            prompt: Text("How much should you take?")
+                            prompt: Text(NSLocalizedString("add.meds.medDose", comment: "ask for medication dose"))
                         )
                         .keyboardType(.decimalPad)
                         Picker(
@@ -49,7 +49,7 @@ struct AddMedsSheetView: View {
                         .labelsHidden()
                     }
                     Picker(
-                        "Which kind of medication is it?",
+                        NSLocalizedString("add.meds.medKind", comment: "ask for medication type"),
                         selection: $medKind
                     ) {
                         ForEach(availableKinds, id: \.self) { item in
@@ -57,7 +57,7 @@ struct AddMedsSheetView: View {
                         }
                     }
                 }
-                Section(header: Text("Reminders")) {
+                /*Section(header: Text("Reminders")) {
                     Button(
                         action: {
                             withAnimation(.easeOut(duration: 0.2)) {
@@ -75,7 +75,7 @@ struct AddMedsSheetView: View {
                             displayedComponents: .hourAndMinute
                         )
                     }
-                }
+                }*/
                 Button(
                     action: {
                         if medName != "" && medAmount != "" && medKind != "" {
@@ -85,11 +85,11 @@ struct AddMedsSheetView: View {
                             hapticConfirm()
                         }
                     }, label: {
-                        Label("Add medication", systemImage: "plus")
+                        Label(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"), systemImage: "plus")
                     }
                 )
             }
-            .navigationTitle("Add medication")
+            .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
         }
     }
 }

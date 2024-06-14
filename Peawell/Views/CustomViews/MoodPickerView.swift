@@ -28,7 +28,7 @@ struct MoodPickerView: View {
     
     var body: some View {
         VStack {
-            Text(NSLocalizedString("ask average mood", comment: "ask for the daily, AVERAGE mood"))
+            Text(NSLocalizedString("mood.picker.prompt", comment: "ask for the daily, AVERAGE mood"))
             HStack {
                 MoodButtonView(panelColor: bgColorHorrible, moodImage: "moodHorrible")
                     .onTapGesture {
@@ -68,20 +68,13 @@ struct MoodPickerView: View {
             }
             if showMoodField == true {
                 Text(
-                    String(format: NSLocalizedString("So you're feeling ", comment: "prefix of activity field")) +
+                    String(format: NSLocalizedString("mood.picker.prompt.prefix ", comment: "prefix, asks in natural language for what happened today")) +
                     String(format: NSLocalizedString(moodName, comment: "name of mood")) +
-                    String(format: NSLocalizedString(". You can note why or what you did today below.", comment: "suffix of activity field"))
+                    String(format: NSLocalizedString(" mood.picker.prompt.suffix", comment: "suffix, asks in natural language for what happened today"))
                 )
                 TextEditor(text: $actName)
                     .frame(minHeight: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    /*.border(Color.gray, width: 1)
-                TextEditor(
-                    text: $actName,
-                    prompt: Text(NSLocalizedString("what did you do", comment: "ask what the person did today and what made them feel this way"))
-                ) {
-                    Text("Activity name")
-                }*/
                 .padding()
                 .background(Color.tertiarySystemBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -95,7 +88,7 @@ struct MoodPickerView: View {
                             hapticConfirm()
                         },
                         label: {
-                            Label(NSLocalizedString("save mood", comment: "tell the person this is the button to save the daily mood"), systemImage: "plus")
+                            Label(NSLocalizedString("mood.picker.save", comment: "tells the user this button saves entry"), systemImage: "plus")
                                 .padding()
                                 .background(Color.tertiarySystemBackground)
                                 .foregroundColor(Color.accentColor)
@@ -112,7 +105,7 @@ struct MoodPickerView: View {
                             moodLogDate = Date.now
                         },
                         label: {
-                            Label(NSLocalizedString("cancel button", comment: "tell the person this button cancels the action"), systemImage: "xmark.circle")
+                            Label(NSLocalizedString("mood.picker.cancel", comment: "tells the user this button cancels input"), systemImage: "xmark.circle")
                                 .padding()
                                 .background(Color.tertiarySystemBackground)
                                 .foregroundColor(Color.primary)
