@@ -10,10 +10,8 @@
 		9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9505432229E5CAC8005D29B5 /* PeawellApp.swift */; };
 		9505432729E5CACB005D29B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9505432629E5CACB005D29B5 /* Assets.xcassets */; };
 		9505432B29E5CACB005D29B5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */; };
-		9514AC4E29F01C4A009F44D1 /* EditMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514AC4D29F01C4A009F44D1 /* EditMedsView.swift */; };
 		9514AC5029F02555009F44D1 /* AddMedsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514AC4F29F02555009F44D1 /* AddMedsSheetView.swift */; };
 		951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 951DCA7029E735D90072E809 /* Main.xcdatamodeld */; };
-		952B207529EEF64D00884166 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207429EEF64D00884166 /* CalendarView.swift */; };
 		952B207729EF109000884166 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207629EF109000884166 /* OverView.swift */; };
 		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
 		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
@@ -31,10 +29,8 @@
 		9505432629E5CACB005D29B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9505432829E5CACB005D29B5 /* Peawell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Peawell.entitlements; sourceTree = "<group>"; };
 		9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9514AC4D29F01C4A009F44D1 /* EditMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMedsView.swift; sourceTree = "<group>"; };
 		9514AC4F29F02555009F44D1 /* AddMedsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMedsSheetView.swift; sourceTree = "<group>"; };
 		951DCA7129E735D90072E809 /* Activities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Activities.xcdatamodel; sourceTree = "<group>"; };
-		952B207429EEF64D00884166 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		952B207629EF109000884166 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
 		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -103,7 +99,6 @@
 			children = (
 				95943E2D29ED85D10096CE6B /* CustomViews */,
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
-				9514AC4D29F01C4A009F44D1 /* EditMedsView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
 				952B207629EF109000884166 /* OverView.swift */,
 				9514AC4F29F02555009F44D1 /* AddMedsSheetView.swift */,
@@ -116,7 +111,6 @@
 			children = (
 				9590AF8029EC0F51001A84B8 /* PanelView.swift */,
 				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
-				952B207429EEF64D00884166 /* CalendarView.swift */,
 				95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */,
 			);
 			path = CustomViews;
@@ -196,14 +190,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				95ECE1BD29EFE1AE001A19B6 /* MedsView.swift in Sources */,
-				952B207529EEF64D00884166 /* CalendarView.swift in Sources */,
 				9543A6C229E6E695003046FC /* SettingsView.swift in Sources */,
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
 				9514AC5029F02555009F44D1 /* AddMedsSheetView.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
 				9590AF8129EC0F51001A84B8 /* PanelView.swift in Sources */,
 				95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */,
-				9514AC4E29F01C4A009F44D1 /* EditMedsView.swift in Sources */,
 				952B207729EF109000884166 /* OverView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,
 				9505432329E5CAC8005D29B5 /* PeawellApp.swift in Sources */,

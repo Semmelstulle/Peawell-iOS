@@ -41,6 +41,40 @@ struct MainView: View {
                     Text(NSLocalizedString("empty view", comment: "tell the person that all modules are disabled thus there is nothing here."))
                         .padding()
                 }
+                NavigationLink(destination: OverView()) {
+                    Image("moodAwesome")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(6)
+                        .background(Color.mint)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.top, 6)
+                        .padding(.bottom, 6)
+                        .padding(.leading, 16)
+                        .padding(.trailing, 6)
+                    Text("Mood log")
+                    Spacer()
+                }
+                .background(Color.secondarySystemBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                NavigationLink(destination: OverView()) {
+                    Image("Long pill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(6)
+                        .background(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.top, 6)
+                        .padding(.bottom, 6)
+                        .padding(.leading, 16)
+                        .padding(.trailing, 6)
+                    Text("Medication log")
+                    Spacer()
+                }
+                .background(Color.secondarySystemBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+
             }
             .navigationTitle("Peawell")
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
