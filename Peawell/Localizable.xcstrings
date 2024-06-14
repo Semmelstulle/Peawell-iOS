@@ -96,6 +96,42 @@
         }
       }
     },
+    "Awesome" : {
+      "comment" : "mood awesome",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "super"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "awesome"
+          }
+        }
+      }
+    },
+    "Bad" : {
+      "comment" : "mood bad",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schlecht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bad"
+          }
+        }
+      }
+    },
     "global.menu" : {
       "comment" : "just here for accessibility, tells screen reader that this is an expanding menu",
       "localizations" : {
@@ -126,6 +162,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete item"
+          }
+        }
+      }
+    },
+    "Good" : {
+      "comment" : "mood good",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gut"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "good"
+          }
+        }
+      }
+    },
+    "Horrible" : {
+      "comment" : "mood horrible",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schrecklich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "horrible"
           }
         }
       }
@@ -384,6 +456,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
+          }
+        }
+      }
+    },
+    "Neutral" : {
+      "comment" : "mood neutral",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "neutral"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "neutral"
           }
         }
       }
