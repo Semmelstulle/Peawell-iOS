@@ -20,7 +20,7 @@ struct MedsView: View {
     
     var body: some View {
         ZStack {
-            LazyVGrid(columns: [.init(), .init()]) {
+            LazyVGrid(columns: [.init(spacing: 16), .init(spacing: 16)], spacing: 16) {
                 ForEach(medsItems) { item in
                     PanelView(
                         icon:

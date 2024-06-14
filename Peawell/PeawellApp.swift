@@ -27,7 +27,7 @@ struct PeawellApp: App {
     var body: some Scene {
         WindowGroup {
             //  initial view that is used on app launch
-            TabBarView()
+            MainView()
             //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

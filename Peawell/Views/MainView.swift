@@ -12,7 +12,9 @@ struct MainView: View {
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
-    
+
+    @State var showSettingsSheet = false
+
     var body: some View {
         NavigationView {
             ScrollView() {
@@ -45,13 +47,27 @@ struct MainView: View {
             .toolbar {
                 ToolbarItem {
                     Menu {
-                        Toggle(isOn: $settingShowMedicationSection, label: {Text("Use medication module")})
-                        Toggle(isOn: $settingShowMoodSection, label: {Text("Use mood module")})
+                        Toggle(isOn: $settingShowMedicationSection, label: {Text("Medication module")})
+                        Toggle(isOn: $settingShowMoodSection, label: {Text("Mood module")})
+                        Divider()
+                        Button(action: {
+                            showSettingsSheet = true
+                        }) {
+                            Label("Settings", systemImage: "gear")
+                        }
                     } label: {
                         Label("Menu", systemImage: "ellipsis.circle")
                     }
                 }
 
+            }
+        }
+        .sheet(isPresented: $showSettingsSheet) {
+            if #available(iOS 16.0, *) {
+                SettingsView()
+                    .presentationDetents([.large])
+            } else {
+                SettingsView()
             }
         }
     }
