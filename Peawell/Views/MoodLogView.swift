@@ -33,8 +33,11 @@ struct MoodLogView: View {
                             Image("mood\(item.moodName ?? "Neutral")")
                         }
                         Text(item.activityName ?? "Text missing")
+                            .padding()
                             .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
                             .frame(maxWidth: .infinity, alignment: .topLeading)
+                            .background(Color.secondarySystemBackground)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding()
                             .toolbar {
                                 ToolbarItem {
