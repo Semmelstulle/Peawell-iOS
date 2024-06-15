@@ -20,6 +20,9 @@ struct MoodLogView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
     var moodItems: FetchedResults<Mood>
 
+    @State var isShowingEditDiarySheet = false
+    @State var editDiaryEntry = "fixme"
+
     var body: some View {
         List {
             ForEach(moodItems) { item in
@@ -40,6 +43,14 @@ struct MoodLogView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding()
                             .toolbar {
+                                ToolbarItem {
+                                    Button() {
+                                        isShowingEditDiarySheet = true
+                                    } label: {
+                                        Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
+                                            .foregroundColor(Color.red)
+                                    }
+                                }
                                 ToolbarItem {
                                     Button(
                                         role: .destructive
@@ -71,6 +82,10 @@ struct MoodLogView: View {
                     } label: {
                         Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
                     }
+                }
+                .sheet(isPresented: $isShowingEditDiarySheet) {
+                    TextEditor(text: $editDiaryEntry)
+                        .padding()
                 }
             }
         }
