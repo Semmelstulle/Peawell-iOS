@@ -46,6 +46,7 @@ struct MoodLogView: View {
                                 ToolbarItem {
                                     Button() {
                                         isShowingEditDiarySheet = true
+                                        self.editDiaryEntry = item.activityName ?? "error"
                                     } label: {
                                         Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
                                             .foregroundColor(Color.red)
@@ -82,10 +83,30 @@ struct MoodLogView: View {
                     } label: {
                         Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
                     }
+                    Button() {
+                        isShowingEditDiarySheet = true
+                        self.editDiaryEntry = item.activityName ?? "error"
+                    } label: {
+                        Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
+                            .foregroundColor(Color.red)
+                    }
                 }
                 .sheet(isPresented: $isShowingEditDiarySheet) {
-                    TextEditor(text: $editDiaryEntry)
-                        .padding()
+                    NavigationView {
+                        TextEditor(text: $editDiaryEntry)
+                            .padding()
+                            .navigationTitle(NSLocalizedString("module.edit.diary", comment: "header telling the user it is an edit screen"))
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar() {
+                                ToolbarItem {
+                                    Button() {
+                                        saveEdits()
+                                    } label: {
+                                        Image(systemName: "square.and.arrow.down")
+                                    }
+                                }
+                            }
+                    }
                 }
             }
         }
@@ -119,6 +140,16 @@ func deleteMood() {
     for object in fetchMood() {
         viewContext.delete(object)
     }
+    try? viewContext.save()
+}
+
+func saveEdits() {
+    let viewContext = PersistenceController.shared.container.viewContext
+
+    /*/  runs fetch functions to gather all data and delete them
+    for object in fetchMood() {
+        viewContext.delete(object)
+    }*/
     try? viewContext.save()
 }
 

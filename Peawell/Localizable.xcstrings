@@ -358,6 +358,23 @@
         }
       }
     },
+    "module.edit.diary" : {
+      "comment" : "header telling the user it is an edit screen",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eintrag bearbeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit diary entry"
+          }
+        }
+      }
+    },
     "module.med" : {
       "comment" : "just says medication log\nmodule name for meds",
       "localizations" : {
