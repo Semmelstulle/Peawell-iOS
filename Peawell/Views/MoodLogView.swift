@@ -101,6 +101,7 @@ struct MoodLogView: View {
                                 ToolbarItem {
                                     Button() {
                                         saveEdits()
+                                        isShowingEditDiarySheet = false
                                     } label: {
                                         Image(systemName: "square.and.arrow.down")
                                     }
