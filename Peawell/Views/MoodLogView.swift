@@ -36,6 +36,18 @@ struct MoodLogView: View {
                             .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .padding()
+                            .toolbar {
+                                ToolbarItem {
+                                    Button(
+                                        role: .destructive
+                                    ) {
+                                        trashItem(objectID: item.objectID)
+                                    } label: {
+                                        Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
+                                            .foregroundColor(Color.red)
+                                    }
+                                }
+                            }
                     }
                 } label: {
                     HStack() {
