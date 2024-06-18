@@ -22,6 +22,7 @@ struct MoodLogView: View {
 
     @State var isShowingEditDiarySheet = false
     @State var editDiaryEntry = "fixme"
+    @State var moodEntry: FetchedResults<Mood>.Element?
 
     var body: some View {
         List {
@@ -45,8 +46,9 @@ struct MoodLogView: View {
                             .toolbar {
                                 ToolbarItem {
                                     Button() {
-                                        isShowingEditDiarySheet = true
                                         self.editDiaryEntry = item.activityName ?? "error"
+                                        moodEntry = item
+                                        isShowingEditDiarySheet = true
                                     } label: {
                                         Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
                                             .foregroundColor(Color.red)
@@ -100,6 +102,7 @@ struct MoodLogView: View {
                             .toolbar() {
                                 ToolbarItem {
                                     Button() {
+                                        moodEntry?.activityName = editDiaryEntry
                                         saveEdits()
                                         isShowingEditDiarySheet = false
                                     } label: {
