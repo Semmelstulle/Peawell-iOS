@@ -43,7 +43,6 @@ struct SettingsView: View {
                     }, label: {
                         Label(NSLocalizedString("settings.button.reset", comment: "just should say delete"), systemImage: "trash").foregroundColor(.red)
                     })
-                    //.onTapGesture(perform: hapticWarning)
                     
                     //  confirmation alert is designed here
                     .alert(NSLocalizedString("settings.button.reset.alert", comment: "dialog that again tells deletion can not be undone"), isPresented: $showingDeleteAlert) {

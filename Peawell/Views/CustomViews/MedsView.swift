@@ -11,6 +11,7 @@ struct MedsView: View {
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""

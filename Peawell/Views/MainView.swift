@@ -18,6 +18,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ScrollView() {
+                //  ZStack will be replaced by a calendar in the future
                 ZStack() {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -28,7 +29,8 @@ struct MainView: View {
                         .padding()
                 }
                 .padding()
-                // the next sections are toggled by UserDefaults
+
+                //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
                         .padding()
@@ -41,6 +43,8 @@ struct MainView: View {
                     Text(NSLocalizedString("main.empty.hint", comment: "tell the person that all modules are disabled thus there is nothing here."))
                         .padding()
                 }
+
+                //  here the user gets to see all saved entries
                 VStack {
                     NavigationLink(destination: MoodLogView()) {
                         Image("moodAwesome")
@@ -49,6 +53,7 @@ struct MainView: View {
                             .padding(6)
                             .background(Color.mint)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
+                            //  padding options below try to mimic a native list view placement
                             .padding(.top, 6)
                             .padding(.bottom, 6)
                             .padding(.leading, 16)
@@ -70,6 +75,7 @@ struct MainView: View {
                             .padding(6)
                             .background(Color.accentColor)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
+                            //  padding options below try to mimic a native list view placement
                             .padding(.top, 6)
                             .padding(.bottom, 6)
                             .padding(.leading, 16)
@@ -88,6 +94,7 @@ struct MainView: View {
                 .padding()
             }
             .navigationTitle("Peawell")
+            //  is needed so the text is not centered in view
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .toolbar {
                 ToolbarItem {
@@ -108,6 +115,7 @@ struct MainView: View {
             }
         }
         .sheet(isPresented: $showSettingsSheet) {
+            //  check here is needed, because iOS 15 sheets can only be full screen
             if #available(iOS 16.0, *) {
                 SettingsView()
                     .presentationDetents([.large])

@@ -363,7 +363,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Eintrag bearbeiten"
           }
         },
@@ -398,7 +398,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stimmungstagebuch"
+            "value" : "Tagebuch"
           }
         },
         "en" : {

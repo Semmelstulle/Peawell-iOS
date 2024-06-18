@@ -30,6 +30,7 @@ struct MoodPickerView: View {
         VStack {
             Text(NSLocalizedString("mood.picker.prompt", comment: "ask for the daily, AVERAGE mood"))
             HStack {
+                //  different moods to tap on
                 MoodButtonView(panelColor: bgColorHorrible, moodImage: "moodHorrible")
                     .onTapGesture {
                         moodName = "Horrible"
@@ -78,6 +79,8 @@ struct MoodPickerView: View {
                 .padding()
                 .background(Color.tertiarySystemBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
+                //  custom save and discard buttons
                 HStack {
                     Button(
                         action: {

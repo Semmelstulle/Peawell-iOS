@@ -11,6 +11,7 @@ struct AddMedsSheetView: View {
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
@@ -39,7 +40,7 @@ struct AddMedsSheetView: View {
                         .keyboardType(.decimalPad)
                         Picker(
                             "",
-                            //"Pick the unit of your medication",
+                            //  "Pick the unit of your medication",
                             selection: $medUnit
                         ) {
                             ForEach(availableUnits, id: \.self) { item in
@@ -57,25 +58,6 @@ struct AddMedsSheetView: View {
                         }
                     }
                 }
-                /*Section(header: Text("Reminders")) {
-                    Button(
-                        action: {
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                showReminderPicker = true
-                            }
-                        }, label: {
-                            Text("Add reminder")
-                        }
-                        
-                    )
-                    if showReminderPicker == true {
-                        DatePicker(
-                            "When do you want to be reminded?",
-                            selection: $medReminders,
-                            displayedComponents: .hourAndMinute
-                        )
-                    }
-                }*/
                 Button(
                     action: {
                         if medName != "" && medAmount != "" && medKind != "" {

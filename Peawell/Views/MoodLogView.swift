@@ -29,6 +29,7 @@ struct MoodLogView: View {
             ForEach(moodItems) { item in
                 NavigationLink {
                     ScrollView () {
+                        //  this is the mood in large view at the top
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(getMoodColor(item.moodName))
@@ -43,28 +44,27 @@ struct MoodLogView: View {
                             .background(Color.secondarySystemBackground)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding()
-                            .toolbar {
-                                ToolbarItem {
-                                    Button() {
-                                        self.editDiaryEntry = item.activityName ?? "error"
-                                        moodEntry = item
-                                        isShowingEditDiarySheet = true
-                                    } label: {
-                                        Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
-                                            .foregroundColor(Color.red)
-                                    }
-                                }
-                                ToolbarItem {
-                                    Button(
-                                        role: .destructive
-                                    ) {
-                                        trashItem(objectID: item.objectID)
-                                    } label: {
-                                        Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
-                                            .foregroundColor(Color.red)
-                                    }
-                                }
+                    }
+                    //  this is the right place to declare the toolbar I hope. Shomehow, only the first button shows up on iOS 15
+                    .toolbar {
+                        ToolbarItem {
+                            Button() {
+                                self.editDiaryEntry = item.activityName ?? "error"
+                                moodEntry = item
+                                isShowingEditDiarySheet = true
+                            } label: {
+                                Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
                             }
+                        }
+                        ToolbarItem {
+                            Button(
+                                role: .destructive
+                            ) {
+                                trashItem(objectID: item.objectID)
+                            } label: {
+                                Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
+                            }
+                        }
                     }
                 } label: {
                     HStack() {
@@ -90,7 +90,8 @@ struct MoodLogView: View {
                         self.editDiaryEntry = item.activityName ?? "error"
                     } label: {
                         Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
-                            .foregroundColor(Color.red)
+                            //  this is how you set the bg color of the swipe actions and buttons
+                            .tint(Color.orange)
                     }
                 }
                 .sheet(isPresented: $isShowingEditDiarySheet) {
@@ -119,7 +120,7 @@ struct MoodLogView: View {
 }
 
 
-//prepares the color variables for the diary entries in the list view
+//  prepares the color variables for the diary entries in the list view
 func getMoodColor(_ moodName: String?) -> Color {
     switch moodName {
     case "Horrible":
@@ -149,11 +150,8 @@ func deleteMood() {
 
 func saveEdits() {
     let viewContext = PersistenceController.shared.container.viewContext
-
-    /*/  runs fetch functions to gather all data and delete them
-    for object in fetchMood() {
-        viewContext.delete(object)
-    }*/
+    
+    //  saves the context it recieves
     try? viewContext.save()
 }
 

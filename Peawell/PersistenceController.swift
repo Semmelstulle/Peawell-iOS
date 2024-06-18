@@ -21,8 +21,7 @@ struct PersistenceController {
         return controller
     }()
     
-    // An initializer to load Core Data, optionally able
-    // to use an in-memory store.
+    // An initializer to load Core Data, optionally able to use an in-memory store.
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Main")
         if inMemory {
