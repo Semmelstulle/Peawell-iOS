@@ -79,7 +79,7 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             .navigationTitle(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"))
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }

@@ -151,6 +151,7 @@
     },
     "global.menu" : {
       "comment" : "just here for accessibility, tells screen reader that this is an expanding menu",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -201,6 +202,9 @@
         }
       }
     },
+    "Home" : {
+
+    },
     "Horrible" : {
       "comment" : "mood horrible",
       "extractionState" : "manual",
@@ -218,6 +222,9 @@
           }
         }
       }
+    },
+    "Log now" : {
+
     },
     "main.empty.hint" : {
       "comment" : "tell the person that all modules are disabled thus there is nothing here.",
@@ -238,6 +245,7 @@
     },
     "main.motivational.quote" : {
       "comment" : "a quote to motivate the person on the main page",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -309,6 +317,7 @@
     },
     "menu.toggle.module.med" : {
       "comment" : "menu item that toggles med module",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -326,6 +335,7 @@
     },
     "menu.toggle.module.mood" : {
       "comment" : "menu item that toggles mood module",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -513,6 +523,7 @@
       }
     },
     "Peawell" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -521,6 +532,9 @@
           }
         }
       }
+    },
+    "Settings" : {
+
     },
     "settings.access.footer" : {
       "comment" : "tells that the user can control here what the app gets access to",

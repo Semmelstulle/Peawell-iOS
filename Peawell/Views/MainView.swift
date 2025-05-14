@@ -14,21 +14,22 @@ struct MainView: View {
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
 
     @State var showSettingsSheet = false
+    
+    //  gets current date and formats it so it can be used as the
+    //  navigationTitle for the view
+    var navTitleDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, d. MMM."
+        return formatter.string(from: Date())
+    }
 
     var body: some View {
         NavigationView {
             ScrollView() {
-                //  ZStack will be replaced by a calendar in the future
-                ZStack() {
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(LinearGradient(gradient: Gradient(colors: [.green, .mint]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .aspectRatio(2.4, contentMode: .fit)
-                    Text(NSLocalizedString("main.motivational.quote", comment: "a quote to motivate the person on the main page"))
-                        .foregroundColor(Color.secondarySystemBackground)
-                        .aspectRatio(2.4, contentMode: .fill)
-                        .padding()
-                }
-                .padding()
+                
+                CalendarProgressView()
+                    .frame(height: 80)
+                    .padding(.horizontal)
 
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
@@ -93,26 +94,9 @@ struct MainView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Peawell")
+            .navigationTitle(navTitleDate)
             //  is needed so the text is not centered in view
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .toolbar {
-                ToolbarItem {
-                    Menu {
-                        Toggle(isOn: $settingShowMoodSection, label: {Text(NSLocalizedString("menu.toggle.module.mood", comment: "menu item that toggles mood module"))})
-                        Toggle(isOn: $settingShowMedicationSection, label: {Text(NSLocalizedString("menu.toggle.module.med", comment: "menu item that toggles med module"))})
-                        Divider()
-                        Button(action: {
-                            showSettingsSheet = true
-                        }) {
-                            Label(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"), systemImage: "gear")
-                        }
-                    } label: {
-                        Label(NSLocalizedString("global.menu", comment: "just here for accessibility, tells screen reader that this is an expanding menu"), systemImage: "ellipsis.circle")
-                    }
-                }
-
-            }
         }
         .sheet(isPresented: $showSettingsSheet) {
             //  check here is needed, because iOS 15 sheets can only be full screen
