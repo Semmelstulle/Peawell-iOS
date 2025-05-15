@@ -83,8 +83,6 @@ private struct DayView: View {
     }
 }
 
-struct CalendarView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalendarProgressView()
-    }
+#Preview {
+    CalendarProgressView()
 }

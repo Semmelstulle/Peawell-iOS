@@ -20,7 +20,9 @@ struct AddMedsSheetView: View {
     @State var medKind = "Long pill"
     @State var availableKinds = ["Long pill", "Round pill", "Drops"]
     @State var medReminders = Date()
-    @State var showReminderPicker: Bool = false
+    @State var selectedDays: Int = 0
+    @State var hour: Int = 8
+    @State var minute: Int = 0
     
     var body: some View {
         NavigationView() {
@@ -58,6 +60,13 @@ struct AddMedsSheetView: View {
                         }
                     }
                 }
+                Section {
+                    DayOfWeekPicker(selectedDays: $selectedDays)
+                    TimePickerView(hour: $hour, minute: $minute)
+                }
+            }
+            .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
+            .toolbar {
                 Button(
                     action: {
                         if medName != "" && medAmount != "" && medKind != "" {
@@ -71,7 +80,56 @@ struct AddMedsSheetView: View {
                     }
                 )
             }
-            .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
+        }
+    }
+}
+
+struct DayOfWeekPicker: View {
+    @Binding var selectedDays: Int
+    let daysAbbreviated = ["M", "T", "W", "T", "F", "S", "S"]
+    
+    var body: some View {
+        HStack(spacing: 10) {
+            ForEach(0..<7) { index in
+                let mask = 1 << index
+                Circle()
+                    .fill(selectedDays & mask != 0 ? Color.blue : Color.gray.opacity(0.3))
+                    .frame(width: 40, height: 40)
+                    .overlay(Text(daysAbbreviated[index]).foregroundColor(.white))
+                    .onTapGesture {
+                        selectedDays ^= mask // Toggle this day
+                    }
+            }
+        }
+        .padding()
+    }
+}
+
+struct TimePickerView: View {
+    @Binding var hour: Int
+    @Binding var minute: Int
+    
+    var body: some View {
+        HStack {
+            Picker("Hour", selection: $hour) {
+                ForEach(0..<24) { hour in
+                    Text("\(hour)").tag(hour)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .frame(width: 100)
+            .clipped()
+            
+            Text(":")
+            
+            Picker("Minute", selection: $minute) {
+                ForEach(0..<60) { minute in
+                    Text(String(format: "%02d", minute)).tag(minute)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .frame(width: 100)
+            .clipped()
         }
     }
 }

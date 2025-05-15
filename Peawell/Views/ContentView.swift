@@ -16,7 +16,7 @@ struct ContentView: View {
                     Text("Peawell")
                 }
             
-            AddMedsSheetView()
+            SettingsView()
                 .tabItem {
                     Image(systemName: "plus")
                     Text(NSLocalizedString("tabbar.addMood", comment: "tells the user what the tab does"))
@@ -31,8 +31,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }

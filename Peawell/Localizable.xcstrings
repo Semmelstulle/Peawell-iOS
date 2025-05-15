@@ -28,6 +28,12 @@
         }
       }
     },
+    ":" : {
+
+    },
+    "%lld" : {
+
+    },
     "add.meds.header" : {
       "comment" : "tells the user fields below are neccessary",
       "localizations" : {
@@ -202,6 +208,9 @@
         }
       }
     },
+    "Hour" : {
+
+    },
     "main.empty.hint" : {
       "comment" : "tell the person that all modules are disabled thus there is nothing here.",
       "localizations" : {
@@ -272,6 +281,9 @@
           }
         }
       }
+    },
+    "Minute" : {
+
     },
     "module.add.meds" : {
       "comment" : "tells the user this screen is for adding meds",

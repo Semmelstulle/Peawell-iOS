@@ -1,3 +1,10 @@
+//
+//  CalendarView.swift
+//  Peawell
+//
+//  Created by Dennis on 14.05.25.
+//
+
 import SwiftUI
 
 struct LogSectionsView: View {
@@ -23,9 +30,9 @@ struct LogSectionsView: View {
                 NavigationLink(destination: MedLogView()) {
                     TileView(
                         tileTitle: NSLocalizedString("module.med", comment: "just says medication log"),
-                        tileImage: "Round pill",
+                        tileImage: "3dpill",
                         tileGradient: LinearGradient(
-                            colors: [.gray, .white],
+                            colors: [.mint, .teal],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -46,14 +53,13 @@ struct TileView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
                 .fill(tileGradient)
-                .shadow(radius: 2)
             VStack {
                 HStack {
                     Image(tileImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)
-                        .padding(5)
+                        .padding()
                     Spacer()
                 }
                 Spacer()
@@ -63,7 +69,7 @@ struct TileView: View {
                 Text(tileTitle)
                     .lineLimit(1)
                     .font(.system(size: geo.size.height * 0.3, weight: .bold))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(.white.opacity(0.5))
                     .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
                     .offset(x: geo.size.width * 0.2, y: geo.size.height * 0)
                     .clipped()
@@ -86,8 +92,6 @@ struct TileView: View {
 }
 
 
-struct LogSectionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        LogSectionsView()
-    }
+#Preview {
+    LogSectionsView()
 }

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24E263" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Meds" representedClassName="Meds" syncable="YES" codeGenerationType="class">
         <attribute name="medDose" optional="YES" attributeType="String"/>
         <attribute name="medKind" optional="YES" attributeType="String"/>
-        <attribute name="medReminders" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="medType" optional="YES" attributeType="String"/>
         <attribute name="medUnit" optional="YES" attributeType="String"/>
+        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MedSchedule"/>
+    </entity>
+    <entity name="MedSchedule" representedClassName="MedSchedule" syncable="YES" codeGenerationType="class">
+        <attribute name="daysOfWeekMask" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="hour" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="medication" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meds"/>
     </entity>
     <entity name="Mood" representedClassName="Mood" syncable="YES" codeGenerationType="class">
         <attribute name="activityName" optional="YES" attributeType="String"/>
