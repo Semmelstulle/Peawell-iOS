@@ -219,24 +219,6 @@
         }
       }
     },
-    "main.motivational.quote" : {
-      "comment" : "a quote to motivate the person on the main page",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du hast es durch all deine schwersten Tage geschafft, das ist wahre Stärke!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You already made it through all of your days. This is some serious strength!"
-          }
-        }
-      }
-    },
     "med.add.item" : {
       "comment" : "tells user that button adds item",
       "localizations" : {
@@ -287,42 +269,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : ""
-          }
-        }
-      }
-    },
-    "menu.toggle.module.med" : {
-      "comment" : "menu item that toggles med module",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abschnitt Medikamente"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medication section"
-          }
-        }
-      }
-    },
-    "menu.toggle.module.mood" : {
-      "comment" : "menu item that toggles mood module",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abschnitt Stimmung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mood section"
           }
         }
       }
