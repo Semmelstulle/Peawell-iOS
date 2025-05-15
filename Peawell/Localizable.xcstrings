@@ -149,24 +149,6 @@
         }
       }
     },
-    "global.menu" : {
-      "comment" : "just here for accessibility, tells screen reader that this is an expanding menu",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menü"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menu"
-          }
-        }
-      }
-    },
     "global.trash.item" : {
       "comment" : "tells screen reader that action deletes item",
       "localizations" : {
@@ -202,9 +184,6 @@
         }
       }
     },
-    "Home" : {
-
-    },
     "Horrible" : {
       "comment" : "mood horrible",
       "extractionState" : "manual",
@@ -222,9 +201,6 @@
           }
         }
       }
-    },
-    "Log now" : {
-
     },
     "main.empty.hint" : {
       "comment" : "tell the person that all modules are disabled thus there is nothing here.",
@@ -523,7 +499,6 @@
       }
     },
     "Peawell" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -532,9 +507,6 @@
           }
         }
       }
-    },
-    "Settings" : {
-
     },
     "settings.access.footer" : {
       "comment" : "tells that the user can control here what the app gets access to",
@@ -855,6 +827,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "version missing"
+          }
+        }
+      }
+    },
+    "tabbar.addMood" : {
+      "comment" : "tells the user what the tab does",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stimmung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log Mood"
           }
         }
       }

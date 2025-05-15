@@ -13,19 +13,19 @@ struct ContentView: View {
             MainView()
                 .tabItem {
                     Image(systemName: "house")
-                    Text("Home")
+                    Text("Peawell")
                 }
             
             AddMedsSheetView()
                 .tabItem {
                     Image(systemName: "plus")
-                    Text("Log now")
+                    Text(NSLocalizedString("tabbar.addMood", comment: "tells the user what the tab does"))
                 }
             
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text("Settings")
+                    Text(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"))
                 }
         }
     }
