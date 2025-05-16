@@ -17,7 +17,7 @@ struct LogSectionsView: View {
                 NavigationLink(destination: MoodLogView()) {
                     TileView(
                         tileTitle: NSLocalizedString("module.moods", comment: "just says mood diary"),
-                        tileImage: "moodGood",
+                        tileImage: "3dfaceNeutral",
                         tileGradient: LinearGradient(
                             colors: [.orange, .yellow],
                             startPoint: .topLeading,
@@ -30,7 +30,7 @@ struct LogSectionsView: View {
                 NavigationLink(destination: MedLogView()) {
                     TileView(
                         tileTitle: NSLocalizedString("module.med", comment: "just says medication log"),
-                        tileImage: "3dpill",
+                        tileImage: "3dpillRound",
                         tileGradient: LinearGradient(
                             colors: [.mint, .teal],
                             startPoint: .topLeading,
