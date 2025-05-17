@@ -11,23 +11,26 @@ struct CalendarProgressView: View {
     @State private var progressValues: [CGFloat] = Array(repeating: 0, count: 7)
     
     var body: some View {
-        GeometryReader { geometry in
-            HStack(spacing: 0) {
-                ForEach(0..<7, id: \.self) { index in
-                    let isCurrentDay = index == 6
-                    DayView(
-                        progress: progressValues[index],
-                        isCurrentDay: isCurrentDay,
-                        dayOffset: index - 6,
-                        containerWidth: geometry.size.width / 7
-                    )
+        GroupBox {
+            GeometryReader { geometry in
+                HStack(spacing: 0) {
+                    ForEach(0..<7, id: \.self) { index in
+                        let isCurrentDay = index == 6
+                        DayView(
+                            progress: progressValues[index],
+                            isCurrentDay: isCurrentDay,
+                            dayOffset: index - 6,
+                            containerWidth: geometry.size.width / 7
+                        )
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, idealHeight: 120)
+            .onAppear {
+                progressValues = (0..<7).map { _ in CGFloat.random(in: 0...1) }
+            }
         }
-        .frame(maxWidth: .infinity, idealHeight: 120)
-        .onAppear {
-            progressValues = (0..<7).map { _ in CGFloat.random(in: 0...1) }
-        }
+        .frame(height: 110)
     }
 }
 

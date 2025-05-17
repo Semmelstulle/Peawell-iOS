@@ -342,7 +342,7 @@
       }
     },
     "module.settings" : {
-      "comment" : "Settings\nshould just say settings to tell the user where it navigates to",
+      "comment" : "should just say settings to tell the user where it navigates to",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -445,6 +445,7 @@
       }
     },
     "Peawell" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

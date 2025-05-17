@@ -13,6 +13,10 @@ struct MainView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
+    // variables for showing sheets
+    @State private var showingSettingsSheet = false
+    @State private var showingJournalSheet = false
+    
     //  gets current date and formats it so it can be used as the
     //  navigationTitle for the view
     var navTitleDate: String {
@@ -27,7 +31,7 @@ struct MainView: View {
                 
                 CalendarProgressView()
                     .frame(height: 80)
-                    .padding(.horizontal)
+                    .padding()
 
                 LogSectionsView()
                 
@@ -48,6 +52,32 @@ struct MainView: View {
             .navigationTitle(navTitleDate)
             //  is needed so the text is not centered in view
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button {
+                        showingSettingsSheet = true
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                    Spacer()
+                    Button {
+                        showingJournalSheet = true
+                    } label: {
+                        Image(systemName: "note.text.badge.plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingSettingsSheet) {
+                SettingsView()
+            }
+            .sheet(isPresented: $showingJournalSheet) {
+                if #available(iOS 16.0, *) {
+                    MoodPickerView()
+                        .presentationDetents([.medium, .large])
+                } else {
+                    MoodPickerView()
+                }
+            }
         }
     }
 }

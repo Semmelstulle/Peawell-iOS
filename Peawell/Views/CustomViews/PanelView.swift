@@ -34,8 +34,7 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
 
 struct PanelView_Previews: PreviewProvider {
     static var previews: some View {
-        //PanelView()
-        //  the panels itself aren't as interesting, so we preview the whole main page
+        // the panels itself aren't as interesting, so we preview the whole main page
         MainView()
     }
 }
