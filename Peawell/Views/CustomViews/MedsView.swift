@@ -29,7 +29,7 @@ struct MedsView: View {
                             .resizable()
                             .frame(width: 20,height: 20)
                             .foregroundColor(.white)
-                            .padding(10)
+                            .padding(5)
                             .background(Color.accentColor)
                             .aspectRatio(1, contentMode: .fill)
                             .frame(height: 30)
@@ -52,10 +52,10 @@ struct MedsView: View {
                     icon:
                         Image(systemName: "plus")
                         .foregroundColor(.white)
-                        .padding(10)
+                        .padding(7)
                         .background(Color.accentColor)
                         .aspectRatio(1, contentMode: .fill)
-                        .frame(height: 32)
+                        .frame(height: 30)
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
