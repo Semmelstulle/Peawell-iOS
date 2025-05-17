@@ -25,14 +25,11 @@ struct MedsView: View {
                 ForEach(medsItems) { item in
                     PanelView(
                         icon:
-                            Image(item.medKind ?? "Long pill")
+                            Image(item.medKind ?? "longPill")
                             .resizable()
-                            .frame(width: 20,height: 20)
-                            .foregroundColor(.white)
+                            .frame(width: 30, height: 30)
                             .padding(5)
                             .background(Color.accentColor)
-                            .aspectRatio(1, contentMode: .fill)
-                            .frame(height: 30)
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
@@ -50,12 +47,11 @@ struct MedsView: View {
                 }
                 PanelView(
                     icon:
-                        Image(systemName: "plus")
-                        .foregroundColor(.white)
-                        .padding(7)
-                        .background(Color.accentColor)
-                        .aspectRatio(1, contentMode: .fill)
-                        .frame(height: 30)
+                        Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Color.accentColor)
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
@@ -74,6 +70,29 @@ struct MedsView: View {
                 }
             }
         }
+    }
+}
+
+struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String
+    var body: some View {
+        VStack {
+            HStack(alignment: .top) {
+                icon
+                Spacer()
+                Text(doseAmnt + " " + doseUnit)
+                    .font(.title3)
+                    .foregroundColor(Color.secondary)
+                    .lineLimit(1)
+            }
+            Text(title)
+                .padding(.top, 5)
+                .font(.title3)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding()
+        .background(Color.secondarySystemBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
