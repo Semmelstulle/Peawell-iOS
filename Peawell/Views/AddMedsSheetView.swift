@@ -18,7 +18,7 @@ struct AddMedsSheetView: View {
     @State var medUnit = "mg"
     @State var availableUnits = ["mg", "µg"]
     @State var medKind = "Long pill"
-    @State var availableKinds = ["Long pill", "Round pill", "Drops", "Inhaler"]
+    @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler"]
     
     var body: some View {
         NavigationView() {

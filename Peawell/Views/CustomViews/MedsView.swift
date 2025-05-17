@@ -26,10 +26,13 @@ struct MedsView: View {
                     PanelView(
                         icon:
                             Image(item.medKind ?? "Long pill")
+                            .resizable()
+                            .frame(width: 20,height: 20)
                             .foregroundColor(.white)
                             .padding(10)
                             .background(Color.accentColor)
                             .aspectRatio(1, contentMode: .fill)
+                            .frame(height: 30)
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
@@ -47,11 +50,12 @@ struct MedsView: View {
                 }
                 PanelView(
                     icon:
-                        Image("plus")
+                        Image(systemName: "plus")
                         .foregroundColor(.white)
                         .padding(10)
                         .background(Color.accentColor)
                         .aspectRatio(1, contentMode: .fill)
+                        .frame(height: 32)
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",

@@ -38,11 +38,15 @@ struct MainView: View {
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
-                        .padding()
+                        .padding(.horizontal)
+                        .padding(.top, 0)
+                        .padding(.bottom)
                 }
                 if settingShowMedicationSection == true {
                     MedsView()
-                        .padding()
+                        .padding(.horizontal)
+                        .padding(.top, 0)
+                        .padding(.bottom)
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
                     Text(NSLocalizedString("main.empty.hint", comment: "tell the person that all modules are disabled thus there is nothing here."))
@@ -53,29 +57,20 @@ struct MainView: View {
             //  is needed so the text is not centered in view
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
+                ToolbarItemGroup() {
                     Button {
                         showingSettingsSheet = true
                     } label: {
                         Image(systemName: "gear")
                     }
-                    Spacer()
-                    Button {
-                        showingJournalSheet = true
-                    } label: {
-                        Image(systemName: "note.text.badge.plus")
-                    }
                 }
             }
             .sheet(isPresented: $showingSettingsSheet) {
-                SettingsView()
-            }
-            .sheet(isPresented: $showingJournalSheet) {
-                if #available(iOS 16.0, *) {
-                    MoodPickerView()
+                if #available(iOS 16, *) {
+                    SettingsView()
                         .presentationDetents([.medium, .large])
                 } else {
-                    MoodPickerView()
+                    SettingsView()
                 }
             }
         }
