@@ -28,12 +28,6 @@
         }
       }
     },
-    ":" : {
-
-    },
-    "%lld" : {
-
-    },
     "add.meds.header" : {
       "comment" : "tells the user fields below are neccessary",
       "localizations" : {
@@ -208,9 +202,6 @@
         }
       }
     },
-    "Hour" : {
-
-    },
     "main.empty.hint" : {
       "comment" : "tell the person that all modules are disabled thus there is nothing here.",
       "localizations" : {
@@ -282,9 +273,6 @@
         }
       }
     },
-    "Minute" : {
-
-    },
     "module.add.meds" : {
       "comment" : "tells the user this screen is for adding meds",
       "localizations" : {
@@ -354,7 +342,7 @@
       }
     },
     "module.settings" : {
-      "comment" : "should just say settings to tell the user where it navigates to",
+      "comment" : "Settings\nshould just say settings to tell the user where it navigates to",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -791,6 +779,7 @@
     },
     "tabbar.addMood" : {
       "comment" : "tells the user what the tab does",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

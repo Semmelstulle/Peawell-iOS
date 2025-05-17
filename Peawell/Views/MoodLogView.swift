@@ -16,7 +16,7 @@ var bgColorAwesome: Color = Color.mint
 
 struct MoodLogView: View {
 
-    //  adds fetched data to scope
+    // adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
     var moodItems: FetchedResults<Mood>
 
@@ -29,7 +29,7 @@ struct MoodLogView: View {
             ForEach(moodItems) { item in
                 NavigationLink {
                     ScrollView () {
-                        //  this is the mood in large view at the top
+                        // this is the mood in large view at the top
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .foregroundColor(getMoodColor(item.moodName))
@@ -45,7 +45,7 @@ struct MoodLogView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding()
                     }
-                    //  this is the right place to declare the toolbar I hope. Shomehow, only the first button shows up on iOS 15
+                    // this is the right place to declare the toolbar I hope. Shomehow, only the first button shows up on iOS 15
                     .toolbar {
                         ToolbarItem {
                             Button() {
@@ -90,7 +90,7 @@ struct MoodLogView: View {
                         self.editDiaryEntry = item.activityName ?? "error"
                     } label: {
                         Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
-                            //  this is how you set the bg color of the swipe actions and buttons
+                            // this is how you set the bg color of the swipe actions and buttons
                             .tint(Color.orange)
                     }
                 }
@@ -141,7 +141,7 @@ func getMoodColor(_ moodName: String?) -> Color {
 func deleteMood() {
     let viewContext = PersistenceController.shared.container.viewContext
 
-    //  runs fetch functions to gather all data and delete them
+    // runs fetch functions to gather all data and delete them
     for object in fetchMood() {
         viewContext.delete(object)
     }
@@ -151,7 +151,7 @@ func deleteMood() {
 func saveEdits() {
     let viewContext = PersistenceController.shared.container.viewContext
     
-    //  saves the context it recieves
+    // saves the context it recieves
     try? viewContext.save()
 }
 

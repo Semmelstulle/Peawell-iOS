@@ -12,14 +12,48 @@ struct MedLogView: View {
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+    
+    //  these define the user input field's empty state
+    @State var medName: String = ""
+    @State var medAmount: String = ""
+    @State var medUnit: String = ""
 
     var body: some View {
         List {
             Section {
                 ForEach(medsItems) { item in
+                    // sub pages where the user can read more about dose, schedule etc.
                     NavigationLink {
-                        //  add the detail view here so the label is from Meds with name and dose, and this content here has the name aka medType as navigationtitle and the saved schedule as text written out
+                        List {
+                            Section {
+                                HStack {
+                                    Spacer()
+                                    Image(item.medKind ?? "")
+                                        .resizable()
+                                        .frame(width: 120, height: 120)
+                                        .padding()
+                                    Spacer()
+                                }
+                            }
+                            // needed so the icon has no list styling below it
+                            .listRowBackground(Color.clear)
+                            Section {
+                                HStack {
+                                    Text(NSLocalizedString("add.meds.medDose", comment: "ask for medication dose"))
+                                    Spacer()
+                                    Text(item.medDose ?? "")
+                                        .font(.title3)
+                                        .foregroundColor(Color.secondary)
+                                    Text(item.medUnit ?? "")
+                                        .font(.title3)
+                                        .foregroundColor(Color.secondary)
+                                }
+                            }
+                        }
+                        .navigationTitle(
+                            Text(item.medType ?? ""))
                     } label: {
+                        // the list of medications that can be logged, can be tapped for detail view coded above
                         HStack() {
                             Image(item.medKind ?? "")
                                 .resizable()
@@ -35,6 +69,7 @@ struct MedLogView: View {
                                 .opacity(0.4)
                         }
                     }
+                    // delete action when swiping on the item
                     .swipeActions(allowsFullSwipe: true) {
                         Button(
                             role: .destructive
@@ -45,9 +80,6 @@ struct MedLogView: View {
                         }
                     }
                 }
-            }
-            Section {
-                //  bla
             }
         }
         .navigationTitle(NSLocalizedString("module.med", comment: "module name for meds"))
