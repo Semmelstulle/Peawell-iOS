@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddMedsSheetView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
@@ -72,6 +73,21 @@ struct AddMedsSheetView: View {
                     }
                 )
             }
+        }
+    }
+    
+    //  Move function here to make it work in preview
+    private func saveMeds(medName: String, medAmount: String, medUnit: String, medKind: String) {
+        let newMed = Meds(context: viewContext)
+        newMed.medType = medName
+        newMed.medDose = medAmount
+        newMed.medUnit = medUnit
+        newMed.medKind = medKind
+        
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving medication: \(error.localizedDescription)")
         }
     }
 }

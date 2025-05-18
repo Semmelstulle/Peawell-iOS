@@ -18,6 +18,48 @@ struct PersistenceController {
     // A test configuration for SwiftUI previews
     static var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
+        let viewContext = controller.container.viewContext
+        
+        // Dummy data arrays for Meds
+        let medKinds = ["longPill", "roundPill", "drops", "inhaler"]
+        let medDoses = ["420", "69", "360", "21"]
+        let medTypes = ["Medication 1", "Daily pill", "Eyedrops", "Inhale stuff"]
+        let medUnits = ["mg", "µg", "ml", "mg"]
+        
+        for i in 0..<medKinds.count {
+            let newMed = Meds(context: viewContext)
+            newMed.medKind = medKinds[i]
+            newMed.medDose = medDoses[i]
+            newMed.medType = medTypes[i]
+            newMed.medUnit = medUnits[i]
+        }
+        
+        // Dummy data arrays for Moods
+        let activityNames = ["Running", "Reading", "Meditating", "Cooking", "Sleeping"]
+        let moodNames = ["Awesome", "Good", "Horrible", "Neutral", "Bad"]
+        let logDates: [Date] = [
+            Date(),
+            Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+            Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
+            Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+            Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+        ]
+        
+        for i in 0..<activityNames.count {
+            let newMood = Mood(context: viewContext)
+            newMood.activityName = activityNames[i]
+            newMood.moodName = moodNames[i]
+            newMood.logDate = logDates[i]
+        }
+
+        
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        
         return controller
     }()
     
