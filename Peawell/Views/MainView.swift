@@ -48,30 +48,14 @@ struct MainView: View {
             }
             .navigationTitle("Peawell")
             .toolbar {
-                //  animations require SFSymbols 6 which is iOS >=18
-                if #available(iOS 18, *) {
-                    Button {
-                        isAnimating.toggle()
-                        showingSettingsSheet = true
-                    } label: {
-                        Image(systemName: "gear")
-                            .symbolEffect(.rotate, options: .speed(2.0), value: isAnimating)
-                    }
-                } else {
-                    Button {
-                        showingSettingsSheet = true
-                    } label: {
-                        Image(systemName: "gear")
-                    }
+                Button {
+                    showingSettingsSheet = true
+                } label: {
+                    Image(systemName: "gear")
                 }
             }
             .sheet(isPresented: $showingSettingsSheet) {
-                if #available(iOS 16, *) {
-                    SettingsView()
-                        .presentationDetents([.medium, .large])
-                } else {
-                    SettingsView()
-                }
+                SettingsView()
             }
         }
     }

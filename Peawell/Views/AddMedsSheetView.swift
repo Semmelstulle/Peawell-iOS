@@ -18,8 +18,8 @@ struct AddMedsSheetView: View {
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit = "mg"
-    @State var availableUnits = ["mg", "µg"]
-    @State var medKind = "Long pill"
+    @State var availableUnits = ["mg", "µg", "ml"]
+    @State var medKind = "longPill"
     @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler"]
     
     var body: some View {
