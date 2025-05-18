@@ -13,6 +13,7 @@ import CoreHaptics
 let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
 struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
     
     //  settings stored in UserDefaults wrapped with AppStorage
     @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
@@ -79,7 +80,8 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             .navigationTitle(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
+
         }
     }
 }

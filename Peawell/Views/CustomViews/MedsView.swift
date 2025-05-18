@@ -17,7 +17,7 @@ struct MedsView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
 
-    @State var showAddMedSheet = false
+    @State public var showAddMedSheet = false
     
     var body: some View {
         ZStack {

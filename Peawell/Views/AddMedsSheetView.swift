@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddMedsSheetView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) private var dismiss
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
@@ -59,6 +60,7 @@ struct AddMedsSheetView: View {
                 }
             }
             .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button(
                     action: {
@@ -66,6 +68,7 @@ struct AddMedsSheetView: View {
                             saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit, medKind: medKind)
                             medName = ""
                             medAmount = ""
+                            dismiss()
                             hapticConfirm()
                         }
                     }, label: {

@@ -16,15 +16,7 @@ struct MainView: View {
     
     // variables for showing sheets
     @State private var showingSettingsSheet = false
-    @State private var showingJournalSheet = false
-    
-    //  gets current date and formats it so it can be used as the
-    //  navigationTitle for the view
-    var navTitleDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, d. MMM."
-        return formatter.string(from: Date())
-    }
+    @State private var isAnimating = false
 
     var body: some View {
         NavigationView {
@@ -54,11 +46,18 @@ struct MainView: View {
                         .padding()
                 }
             }
-            .navigationTitle(navTitleDate)
-            //  is needed so the text is not centered in view
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .navigationTitle("Peawell")
             .toolbar {
-                ToolbarItemGroup() {
+                //  animations require SFSymbols 6 which is iOS >=18
+                if #available(iOS 18, *) {
+                    Button {
+                        isAnimating.toggle()
+                        showingSettingsSheet = true
+                    } label: {
+                        Image(systemName: "gear")
+                            .symbolEffect(.rotate, options: .speed(2.0), value: isAnimating)
+                    }
+                } else {
                     Button {
                         showingSettingsSheet = true
                     } label: {
