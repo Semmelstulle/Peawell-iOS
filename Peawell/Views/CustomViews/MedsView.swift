@@ -17,6 +17,8 @@ struct MedsView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
 
+    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
     @State public var showAddMedSheet = false
     
     var body: some View {
@@ -33,7 +35,8 @@ struct MedsView: View {
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
-                        title: String(item.medType ?? "")
+                        title: String(item.medType ?? ""),
+                        reminder: (item.medRemind ? weekdays[Int(item.medDay)] + " " + (item.medTime?.formatted(date: .omitted, time: .shortened) ?? "") : "N/A")
                     )
                     .contextMenu() {
                         Button(
@@ -55,7 +58,8 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: String(format: NSLocalizedString("med.add.item", comment: "tells user that button adds item"))
+                    title: String(format: NSLocalizedString("med.add.item", comment: "tells user that button adds item")),
+                    reminder: ""
                 )
                 .onTapGesture {
                     showAddMedSheet = true
@@ -73,7 +77,7 @@ struct MedsView: View {
     }
 }
 
-struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String
+struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String; var reminder: String;
     var body: some View {
         VStack {
             HStack(alignment: .top) {
@@ -88,6 +92,10 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
                 .padding(.top, 5)
                 .font(.title3)
                 .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(reminder)
+                .font(.footnote)
+                .foregroundColor(Color.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()

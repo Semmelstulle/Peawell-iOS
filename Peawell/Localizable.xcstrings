@@ -454,6 +454,15 @@
         }
       }
     },
+    "Remind this medication" : {
+
+    },
+    "Reminder Time" : {
+
+    },
+    "Reminder weekday" : {
+
+    },
     "settings.access.footer" : {
       "comment" : "tells that the user can control here what the app gets access to",
       "localizations" : {

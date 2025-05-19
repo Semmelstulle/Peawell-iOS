@@ -21,7 +21,12 @@ struct AddMedsSheetView: View {
     @State var availableUnits = ["mg", "µg", "ml"]
     @State var medKind = "longPill"
     @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler"]
-    
+    @State var medDay: Int = 1
+    @State var medTime: Date = Date()
+    @State var medRemind: Bool = true
+
+    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
     var body: some View {
         NavigationView() {
             Form {
@@ -58,6 +63,19 @@ struct AddMedsSheetView: View {
                         }
                     }
                 }
+                Section {
+                    Toggle(isOn: $medRemind) {
+                        Text("Remind this medication")
+                    }
+                    if medRemind {
+                        Picker("Reminder weekday", selection: $medDay) {
+                            ForEach(0..<weekdays.count) {
+                                Text(weekdays[$0])
+                            }
+                        }
+                        DatePicker("Reminder Time", selection: $medTime, displayedComponents: .hourAndMinute)
+                    }
+                }
             }
             .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
             .navigationBarTitleDisplayMode(.inline)
@@ -86,7 +104,12 @@ struct AddMedsSheetView: View {
         newMed.medDose = medAmount
         newMed.medUnit = medUnit
         newMed.medKind = medKind
-        
+        if medRemind {
+            newMed.medRemind = true
+            newMed.medDay = Int32(medDay)
+            newMed.medTime = medTime
+        }
+
         do {
             try viewContext.save()
         } catch {
