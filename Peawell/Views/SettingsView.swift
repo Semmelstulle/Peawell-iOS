@@ -88,6 +88,7 @@ struct SettingsView: View {
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.gray)
+                            .font(.system(size: 20))
                             .symbolRenderingMode(.hierarchical)
                     }
                 }
