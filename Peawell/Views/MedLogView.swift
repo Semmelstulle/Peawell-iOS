@@ -17,6 +17,8 @@ struct MedLogView: View {
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
+    
+    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     var body: some View {
         List {
@@ -47,6 +49,17 @@ struct MedLogView: View {
                                     Text(item.medUnit ?? "")
                                         .font(.title3)
                                         .foregroundColor(Color.secondary)
+                                }
+                            }
+                            if item.medRemind == true {
+                                Section {
+                                    HStack {
+                                        Text(NSLocalizedString("add.reminder.days.of.week", comment: "Let user know here is where you select days of week"))
+                                        Spacer()
+                                        Text("\(item.medRemind ? weekdays[Int(item.medDay)] + " " + (item.medTime?.formatted(date: .omitted, time: .shortened) ?? "") : "N/A")")
+                                            .font(.title3)
+                                            .foregroundColor(Color.secondary)
+                                    }
                                 }
                             }
                         }

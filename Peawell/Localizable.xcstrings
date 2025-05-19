@@ -28,6 +28,9 @@
         }
       }
     },
+    "%@" : {
+
+    },
     "add.meds.enale.reminder" : {
       "comment" : "Let user know this toggles use of reminder",
       "localizations" : {

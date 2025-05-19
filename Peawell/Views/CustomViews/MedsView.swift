@@ -93,10 +93,10 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
                 .font(.title3)
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Text(reminder)
+            /*Text(reminder)
                 .font(.footnote)
                 .foregroundColor(Color.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)*/
         }
         .padding()
         .background(Color.secondarySystemBackground)
