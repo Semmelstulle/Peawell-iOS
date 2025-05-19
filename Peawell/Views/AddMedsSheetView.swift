@@ -66,16 +66,23 @@ struct AddMedsSheetView: View {
                 }
                 Section {
                     Toggle(isOn: $medRemind) {
-                        Text("Remind this medication")
+                        Text(NSLocalizedString("add.meds.enale.reminder", comment: "Let user know this toggles use of reminder"))
                     }
                     if medRemind {
-                        DatePicker("Reminder Time", selection: $medTime, displayedComponents: .hourAndMinute)
-                        Picker("Reminder weekday", selection: $medDay) {
+                        DatePicker(
+                            NSLocalizedString("add.reminder.hours.and.minutes", comment: "Let user know here is where you select the time"),
+                            selection: $medTime,
+                            displayedComponents: .hourAndMinute
+                        )
+                        Picker(
+                            NSLocalizedString("add.reminder.days.of.week", comment: "Let user know here is where you select days of week"),
+                            selection: $medDay
+                        ) {
                             ForEach(0..<weekdays.count) {
                                 Text(weekdays[$0])
                             }
                         }
-                        .labelsHidden()
+                        //.labelsHidden()
                     }
                 }
                 Section {
@@ -106,7 +113,7 @@ struct AddMedsSheetView: View {
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.gray)
-                            .font(.system(size: 20))
+                            .font(.system(size: 25))
                             .symbolRenderingMode(.hierarchical)
                     }
                 }

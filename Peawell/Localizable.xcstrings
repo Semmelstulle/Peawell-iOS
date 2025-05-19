@@ -28,6 +28,23 @@
         }
       }
     },
+    "add.meds.enale.reminder" : {
+      "comment" : "Let user know this toggles use of reminder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable reminder"
+          }
+        }
+      }
+    },
     "add.meds.header" : {
       "comment" : "tells the user fields below are neccessary",
       "localizations" : {
@@ -92,6 +109,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What's the name?"
+          }
+        }
+      }
+    },
+    "add.reminder.days.of.week" : {
+      "comment" : "Let user know here is where you select days of week",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnere an Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind at day"
+          }
+        }
+      }
+    },
+    "add.reminder.hours.and.minutes" : {
+      "comment" : "Let user know here is where you select the time",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnere zu Stunde"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remind at time"
           }
         }
       }
@@ -449,19 +500,16 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "Peawell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peawell"
           }
         }
       }
-    },
-    "Remind this medication" : {
-
-    },
-    "Reminder Time" : {
-
-    },
-    "Reminder weekday" : {
-
     },
     "settings.access.footer" : {
       "comment" : "tells that the user can control here what the app gets access to",
@@ -782,24 +830,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "version missing"
-          }
-        }
-      }
-    },
-    "tabbar.addMood" : {
-      "comment" : "tells the user what the tab does",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stimmung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log Mood"
           }
         }
       }
