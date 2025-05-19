@@ -132,6 +132,9 @@
         }
       }
     },
+    "Cancel" : {
+
+    },
     "global.edit.item" : {
       "comment" : "tells screen reader that action edits item",
       "localizations" : {

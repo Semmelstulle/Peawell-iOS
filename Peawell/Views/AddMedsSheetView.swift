@@ -13,7 +13,7 @@ struct AddMedsSheetView: View {
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
-
+    
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
@@ -24,9 +24,11 @@ struct AddMedsSheetView: View {
     @State var medDay: Int = 1
     @State var medTime: Date = Date()
     @State var medRemind: Bool = true
-
+    @State private var showDayPicker: Bool = false
+    @State private var showTimePicker: Bool = false
+    
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
+    
     var body: some View {
         NavigationView() {
             Form {
@@ -45,7 +47,6 @@ struct AddMedsSheetView: View {
                         .keyboardType(.decimalPad)
                         Picker(
                             "",
-                            //  "Pick the unit of your medication",
                             selection: $medUnit
                         ) {
                             ForEach(availableUnits, id: \.self) { item in
@@ -68,32 +69,48 @@ struct AddMedsSheetView: View {
                         Text("Remind this medication")
                     }
                     if medRemind {
+                        DatePicker("Reminder Time", selection: $medTime, displayedComponents: .hourAndMinute)
                         Picker("Reminder weekday", selection: $medDay) {
                             ForEach(0..<weekdays.count) {
                                 Text(weekdays[$0])
                             }
                         }
-                        DatePicker("Reminder Time", selection: $medTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
                     }
                 }
+                Section {
+                    Button(
+                        action: {
+                            if medName != "" && medAmount != "" && medKind != "" {
+                                saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit, medKind: medKind)
+                                medName = ""
+                                medAmount = ""
+                                dismiss()
+                                hapticConfirm()
+                            }
+                        }, label: {
+                            Label(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"), systemImage: "plus")
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
+                        }
+                    )
+                }
+                .listRowBackground(Color.accentColor.opacity(0.2))
             }
             .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button(
-                    action: {
-                        if medName != "" && medAmount != "" && medKind != "" {
-                            saveMeds(medName: medName, medAmount: medAmount, medUnit: medUnit, medKind: medKind)
-                            medName = ""
-                            medAmount = ""
-                            dismiss()
-                            hapticConfirm()
-                        }
-                    }, label: {
-                        Label(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"), systemImage: "plus")
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.gray)
+                            .symbolRenderingMode(.hierarchical)
                     }
-                )
+                }
             }
+
         }
     }
     

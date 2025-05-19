@@ -81,7 +81,17 @@ struct SettingsView: View {
             }
             .navigationTitle(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"))
             .navigationBarTitleDisplayMode(.inline)
-
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.gray)
+                            .symbolRenderingMode(.hierarchical)
+                    }
+                }
+            }
         }
     }
 }
