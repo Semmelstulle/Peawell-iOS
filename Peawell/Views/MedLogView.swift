@@ -85,7 +85,7 @@ struct MedLogView: View {
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .padding(6)
-                                .background(Color.accentColor)
+                                .background(Color("\(item.medKind ?? "roundPill")Color"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             Text(item.medType ?? "")
                             Spacer()

@@ -33,7 +33,7 @@ struct MedsView: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                             .padding(5)
-                            .background(Color.accentColor)
+                            .background(Color("\(item.medKind ?? "roundPill")Color"))
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
