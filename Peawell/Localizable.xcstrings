@@ -28,7 +28,13 @@
         }
       }
     },
-    "%@" : {
+    "%lld days selected" : {
+
+    },
+    "%lld times selected" : {
+
+    },
+    "Add Time" : {
 
     },
     "add.meds.enale.reminder" : {
@@ -185,6 +191,9 @@
           }
         }
       }
+    },
+    "Done" : {
+
     },
     "global.edit.item" : {
       "comment" : "tells screen reader that action edits item",
@@ -513,6 +522,21 @@
           }
         }
       }
+    },
+    "Schedule" : {
+
+    },
+    "Select days" : {
+
+    },
+    "Select Days" : {
+
+    },
+    "Select times" : {
+
+    },
+    "Select Times" : {
+
     },
     "settings.access.footer" : {
       "comment" : "tells that the user can control here what the app gets access to",

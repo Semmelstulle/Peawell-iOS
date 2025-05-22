@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MedsView: View {
     
+    //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
 
@@ -17,12 +18,13 @@ struct MedsView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
 
-    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
+    //  defines wether sheet is shown
     @State public var showAddMedSheet = false
     
     var body: some View {
         ZStack {
+            //  grid that replicates what Passwords and Reminders do
+            //  on the top
             LazyVGrid(columns: [.init(spacing: 16), .init(spacing: 16)], spacing: 16) {
                 ForEach(medsItems) { item in
                     PanelView(
@@ -35,8 +37,7 @@ struct MedsView: View {
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
-                        title: String(item.medType ?? ""),
-                        reminder: (item.medRemind ? weekdays[Int(item.medDay)] + " " + (item.medTime?.formatted(date: .omitted, time: .shortened) ?? "") : "N/A")
+                        title: String(item.medType ?? "")
                     )
                     .contextMenu() {
                         Button(
@@ -48,6 +49,7 @@ struct MedsView: View {
                         }
                     }
                 }
+                //  custom cell that is here for adding new meds
                 PanelView(
                     icon:
                         Image(systemName: "plus.circle.fill")
@@ -58,8 +60,7 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: String(format: NSLocalizedString("med.add.item", comment: "tells user that button adds item")),
-                    reminder: ""
+                    title: String(format: NSLocalizedString("med.add.item", comment: "tells user that button adds item"))
                 )
                 .onTapGesture {
                     showAddMedSheet = true
@@ -77,10 +78,11 @@ struct MedsView: View {
     }
 }
 
-struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String; var reminder: String;
+//  defines single cell for the grid #reusableCode
+struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String;
     var body: some View {
         VStack {
-            HStack(alignment: .top) {
+            HStack() {
                 icon
                 Spacer()
                 Text(doseAmnt + " " + doseUnit)
@@ -92,11 +94,8 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
                 .padding(.top, 5)
                 .font(.title3)
                 .foregroundColor(.primary)
+                .lineLimit(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            /*Text(reminder)
-                .font(.footnote)
-                .foregroundColor(Color.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)*/
         }
         .padding()
         .background(Color.secondarySystemBackground)

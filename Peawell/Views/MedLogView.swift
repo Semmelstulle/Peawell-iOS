@@ -18,6 +18,7 @@ struct MedLogView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
     
+    //  define selectable days here
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     var body: some View {
@@ -31,15 +32,19 @@ struct MedLogView: View {
                                 HStack {
                                     Spacer()
                                     Image(item.medKind ?? "")
-                                        .resizable()
-                                        .frame(width: 120, height: 120)
+                                        //  disabled for now to have
+                                        //  a look on the effect
+                                        //.resizable()
+                                        //.frame(width: 120, height: 120)
                                         .padding()
                                     Spacer()
                                 }
                             }
-                            // needed so the icon has no list styling below it
+                            //  needed so the icon has no list styling
+                            //  below it
                             .listRowBackground(Color.clear)
                             Section {
+                                //  tells medication dose to user
                                 HStack {
                                     Text(NSLocalizedString("add.meds.medDose", comment: "ask for medication dose"))
                                     Spacer()
@@ -51,14 +56,21 @@ struct MedLogView: View {
                                         .foregroundColor(Color.secondary)
                                 }
                             }
-                            if item.medRemind == true {
-                                Section {
-                                    HStack {
-                                        Text(NSLocalizedString("add.reminder.days.of.week", comment: "Let user know here is where you select days of week"))
-                                        Spacer()
-                                        Text("\(item.medRemind ? weekdays[Int(item.medDay)] + " " + (item.medTime?.formatted(date: .omitted, time: .shortened) ?? "") : "N/A")")
-                                            .font(.title3)
-                                            .foregroundColor(Color.secondary)
+                            //  list schedule for user
+                            if item.medRemind == true && item.schedule?.count ?? 0 > 0 {
+                                Section(header: Text("Schedule")) {
+                                    if let schedules = item.schedule as? Set<Schedules>, let schedule = schedules.first {
+                                        if let days = schedule.dates as? Set<Int> {
+                                            ForEach(Array(days).sorted(), id: \.self) { day in
+                                                Text(weekdays[day])
+                                            }
+                                        }
+                                        
+                                        if let times = schedule.times as? Set<Date> {
+                                            ForEach(Array(times).sorted(by: { $0 < $1 }), id: \.self) { time in
+                                                Text(time.formatted(date: .omitted, time: .shortened))
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -66,7 +78,8 @@ struct MedLogView: View {
                         .navigationTitle(
                             Text(item.medType ?? ""))
                     } label: {
-                        // the list of medications that can be logged, can be tapped for detail view coded above
+                        //  the list view of medications that can be
+                        //  logged by the user
                         HStack() {
                             Image(item.medKind ?? "")
                                 .resizable()
@@ -101,4 +114,5 @@ struct MedLogView: View {
 
 #Preview {
     MedLogView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Meds" representedClassName="Meds" syncable="YES" codeGenerationType="class">
-        <attribute name="medDay" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="medDose" optional="YES" attributeType="String"/>
         <attribute name="medKind" optional="YES" attributeType="String"/>
         <attribute name="medRemind" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="medTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="medType" optional="YES" attributeType="String"/>
         <attribute name="medUnit" optional="YES" attributeType="String"/>
+        <relationship name="schedule" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Schedules" inverseName="medication" inverseEntity="Schedules"/>
     </entity>
     <entity name="Mood" representedClassName="Mood" syncable="YES" codeGenerationType="class">
         <attribute name="activityName" optional="YES" attributeType="String"/>
         <attribute name="logDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="moodName" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Schedules" representedClassName="Schedules" syncable="YES" codeGenerationType="class">
+        <attribute name="dates" optional="YES" attributeType="Transformable" customClassName="NSSet"/>
+        <attribute name="times" optional="YES" attributeType="Transformable" customClassName="NSSet"/>
+        <relationship name="medication" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meds" inverseName="schedule" inverseEntity="Meds"/>
     </entity>
 </model>
