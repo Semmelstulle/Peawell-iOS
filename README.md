@@ -24,7 +24,7 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
 
 ## Preview
 
-![main page](./Resources/PreviewMain.PNG) ![overview](./Resources/PreviewOverview.PNG) ![in app settings](./Resources/PreviewAppSettings.PNG) ![iOS settings](./Resources/PreviewiOSSettings.PNG)
+![main page](./Resources/PreviewMain.PNG) ![in app settings](./Resources/PreviewSettings.PNG) ![diary view](./Resources/PreviewMood.PNG) ![medication detail view](./Resources/PreviewMeds.PNG)
 
 
 ## Roadmap
@@ -37,20 +37,20 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
 - [x] No tracking
 - [x] Moods
     - [x] Create
-    - [ ] Delete
+    - [x] Edit
+    - [x] Delete
     - [ ] Reminder
 - [ ] Medication
     - [x] Create
     - [ ] Edit
     - [x] Delete
     - [ ] Reminder
-- [ ] Multi-language Support
+- [x] Multi-language Support
     - [x] English
     - [x] German
-    - [ ] Spanish
-- [ ] Extensions
-    - [ ] Widget
-    - [ ] watchOS App (just logging)
+- [ ] Widgets
+    - [ ] Homescreen
+    - [ ] iOS 18 Control Center
 
 late future or maybe never:
 - Android version
@@ -63,5 +63,5 @@ If you want to create the Android version yourself, feel free to contact me so w
 Thank you for helping with CoreData and some logic:
 https://github.com/SkyrilHD
 
-And thank you for helping with all kind of stuff:
+And thank you for helping with all kinds of stuff:
 https://github.com/gitarero164
