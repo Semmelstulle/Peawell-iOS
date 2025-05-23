@@ -407,6 +407,9 @@
         }
       }
     },
+    "module.save.meds" : {
+      "comment" : "tells the user this screen is for saving new or changed meds"
+    },
     "module.settings" : {
       "comment" : "should just say settings to tell the user where it navigates to",
       "localizations" : {

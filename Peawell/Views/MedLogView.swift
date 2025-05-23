@@ -18,6 +18,8 @@ struct MedLogView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
     
+    @State private var editingMed: Meds?
+    
     //  define selectable days here
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -77,7 +79,7 @@ struct MedLogView: View {
                         }
                         .toolbar {
                             Button {
-                                //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                                editingMed = item
                             } label: {
                                 Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
                             }
@@ -91,6 +93,9 @@ struct MedLogView: View {
                         }
                         .navigationTitle(
                             Text(item.medType ?? ""))
+                        .sheet(item: $editingMed) { med in
+                            ModifyMedsSheetView(med: med)
+                        }
                     } label: {
                         //  the list view of medications that can be
                         //  logged by the user
@@ -119,7 +124,7 @@ struct MedLogView: View {
                             Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
                         }
                         Button {
-                            //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                            editingMed = item
                         } label: {
                             Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
                                 .tint(Color.orange)
@@ -129,6 +134,9 @@ struct MedLogView: View {
             }
         }
         .navigationTitle(NSLocalizedString("module.med", comment: "module name for meds"))
+        .sheet(item: $editingMed) { med in
+            ModifyMedsSheetView(med: med)
+        }
     }
 }
 

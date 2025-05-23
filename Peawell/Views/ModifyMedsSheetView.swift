@@ -22,6 +22,7 @@ struct ModifyMedsSheetView: View {
     @State var medAmount: String = ""
     @State var medUnit = "mg"
     @State var medKind = "longPill"
+    var med: Meds?
     
     //  define possible selections
     @State var availableUnits = ["mg", "µg", "ml"]
@@ -112,6 +113,7 @@ struct ModifyMedsSheetView: View {
                             action: {
                                 //  create a new medication with schedule
                                 saveMedsWithSchedule(
+                                    med: med,
                                     medName: medName,
                                     medAmount: medAmount,
                                     medUnit: medUnit,
@@ -122,7 +124,7 @@ struct ModifyMedsSheetView: View {
                                 )
                                 dismiss()
                             }, label: {
-                                Label(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"), systemImage: "plus")
+                                Label(NSLocalizedString("module.save.meds", comment: "tells the user this screen is for saving new or changed meds"), systemImage: "plus")
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)
                             }
@@ -143,6 +145,24 @@ struct ModifyMedsSheetView: View {
                             .foregroundStyle(.gray)
                             .font(.system(size: 25))
                             .symbolRenderingMode(.hierarchical)
+                    }
+                }
+            }
+        }
+        .onAppear {
+            if let med = med {
+                medName = med.medType ?? ""
+                medAmount = med.medDose ?? ""
+                medUnit = med.medUnit ?? "mg"
+                medKind = med.medKind ?? "longPill"
+                medRemind = med.medRemind
+                // Populate selectedDays and selectedTimes if schedule exists
+                if let schedules = med.schedule as? Set<Schedules>, let schedule = schedules.first {
+                    if let days = schedule.dates as? Set<Int> {
+                        selectedDays = days
+                    }
+                    if let times = schedule.times as? Set<Date> {
+                        selectedTimes = times
                     }
                 }
             }

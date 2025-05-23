@@ -49,26 +49,35 @@ struct PeawellApp: App {
 }
 
 //  new function to save meds
-func saveMedsWithSchedule(medName: String, medAmount: String, medUnit: String, medKind: String, medRemind: Bool, selectedDays: Set<Int>, selectedTimes: Set<Date>) {
-    // needed to add CoreData into scope
+func saveMedsWithSchedule(med: Meds?,
+                          medName: String,
+                          medAmount: String,
+                          medUnit: String,
+                          medKind: String,
+                          medRemind: Bool,
+                          selectedDays: Set<Int>,
+                          selectedTimes: Set<Date>) {
     let viewContext = PersistenceController.shared.container.viewContext
     
-    // Create the medication
-    let meds = Meds(context: viewContext)
-    meds.medType = medName
-    meds.medDose = medAmount
-    meds.medUnit = medUnit
-    meds.medKind = medKind
-    meds.medRemind = medRemind
+    // Use existing med or create new
+    let medObject = med ?? Meds(context: viewContext)
     
-    // Create a schedule if reminders are enabled
+    medObject.medType = medName
+    medObject.medDose = medAmount
+    medObject.medUnit = medUnit
+    medObject.medKind = medKind
+    medObject.medRemind = medRemind
+    
+    // Clear existing schedules
+    if let existingSchedules = medObject.schedule as? Set<Schedules> {
+        existingSchedules.forEach { viewContext.delete($0) }
+    }
+    
     if medRemind && !selectedDays.isEmpty && !selectedTimes.isEmpty {
         let schedule = Schedules(context: viewContext)
         schedule.dates = selectedDays as NSSet
         schedule.times = selectedTimes as NSSet
-        
-        // Connect schedule to medication
-        meds.addToSchedule(schedule)
+        medObject.addToSchedule(schedule)
     }
     
     do {
@@ -76,7 +85,7 @@ func saveMedsWithSchedule(medName: String, medAmount: String, medUnit: String, m
         hapticConfirm()
     } catch {
         let saveMedError = error as NSError
-        fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo) while saving")
+        fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo)")
     }
 }
 

@@ -18,6 +18,8 @@ struct MedsView: View {
     @State var medAmount: String = ""
     @State var medUnit: String = ""
 
+    @State private var editingMed: Meds?
+
     //  defines wether sheet is shown
     @State public var showAddMedSheet = false
     
@@ -48,7 +50,7 @@ struct MedsView: View {
                             Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
                         }
                         Button {
-                            //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                            editingMed = item
                         } label: {
                             Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
                         }
@@ -78,6 +80,10 @@ struct MedsView: View {
                         ModifyMedsSheetView()
                     }
                 }
+                .sheet(item: $editingMed) { med in
+                    ModifyMedsSheetView(med: med)
+                }
+
             }
         }
     }
