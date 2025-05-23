@@ -48,7 +48,20 @@ struct PeawellApp: App {
     }
 }
 
-//  new function to save meds
+
+//  vibration patterns called from CoreHaptics to use in SwiftUI
+func hapticWarning() {
+    let generator = UINotificationFeedbackGenerator()
+    generator.notificationOccurred(.warning)
+}
+
+func hapticConfirm() {
+    let generator = UINotificationFeedbackGenerator()
+    generator.notificationOccurred(.success)
+}
+
+
+//  function to safe added content to CoreData
 func saveMedsWithSchedule(med: Meds?,
                           medName: String,
                           medAmount: String,
@@ -89,40 +102,6 @@ func saveMedsWithSchedule(med: Meds?,
     }
 }
 
-
-
-//  vibration patterns called from CoreHaptics to use in SwiftUI
-func hapticWarning() {
-    let generator = UINotificationFeedbackGenerator()
-    generator.notificationOccurred(.warning)
-}
-
-func hapticConfirm() {
-    let generator = UINotificationFeedbackGenerator()
-    generator.notificationOccurred(.success)
-}
-
-
-//  function to safe added content to CoreData
-func saveMeds(medName: String, medAmount: String, medUnit: String, medKind: String) {
-
-    //  needed to add CoreData into scope
-    let viewContext = PersistenceController.shared.container.viewContext
-    let meds = Meds(context: viewContext)
-
-    //  maps CoreData values to variables
-    meds.medType = medName
-    meds.medDose = medAmount
-    meds.medUnit = medUnit
-    meds.medKind = medKind
-    do {
-        try viewContext.save()
-        hapticConfirm()
-    } catch {
-        let saveMedError = error as NSError
-        fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo) while saving")
-    }
-}
 
 func saveMood(actName: String, moodName: String, moodLogDate: Date) {
 
