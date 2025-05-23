@@ -299,6 +299,9 @@
         }
       }
     },
+    "med.edit.item" : {
+      "comment" : "tells user that action edits the medication"
+    },
     "med.trash.item" : {
       "comment" : "tells user that action trashes medication",
       "localizations" : {

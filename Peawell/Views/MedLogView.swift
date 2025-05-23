@@ -75,6 +75,20 @@ struct MedLogView: View {
                                 }
                             }
                         }
+                        .toolbar {
+                            Button {
+                                //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                            } label: {
+                                Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
+                            }
+                            Button(
+                                role: .destructive
+                            ) {
+                                trashItem(objectID: item.objectID)
+                            } label: {
+                                Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                            }
+                        }
                         .navigationTitle(
                             Text(item.medType ?? ""))
                     } label: {
@@ -85,7 +99,7 @@ struct MedLogView: View {
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .padding(6)
-                                .background(Color("\(item.medKind ?? "roundPill")Color"))
+                                .background(Color.accentColor)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             Text(item.medType ?? "")
                             Spacer()
@@ -102,7 +116,13 @@ struct MedLogView: View {
                         ) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
+                            Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                        }
+                        Button {
+                            //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                        } label: {
+                            Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
+                                .tint(Color.orange)
                         }
                     }
                 }

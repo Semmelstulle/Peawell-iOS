@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddMedsSheetView: View {
+struct ModifyMedsSheetView: View {
     
     //  env variables
     @Environment(\.managedObjectContext) private var viewContext
@@ -248,6 +248,6 @@ struct TimeSelectionView: View {
 
 struct AddMedsSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        AddMedsSheetView()
+        ModifyMedsSheetView()
     }
 }

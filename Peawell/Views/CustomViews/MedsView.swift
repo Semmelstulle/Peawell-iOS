@@ -33,7 +33,7 @@ struct MedsView: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                             .padding(5)
-                            .background(Color("\(item.medKind ?? "roundPill")Color"))
+                            .background(Color.accentColor)
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
@@ -46,6 +46,11 @@ struct MedsView: View {
                             trashItem(objectID: item.objectID)
                         } label: {
                             Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                        }
+                        Button {
+                            //  call ModifyMedsSheet here to edit medication by just calling the sheet but populate with data for that medication
+                        } label: {
+                            Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
                         }
                     }
                 }
@@ -67,10 +72,10 @@ struct MedsView: View {
                 }
                 .sheet(isPresented: $showAddMedSheet) {
                     if #available(iOS 16.0, *) {
-                        AddMedsSheetView()
+                        ModifyMedsSheetView()
                             .presentationDetents([.medium, .large])
                     } else {
-                        AddMedsSheetView()
+                        ModifyMedsSheetView()
                     }
                 }
             }
