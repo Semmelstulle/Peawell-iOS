@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MedsView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
@@ -41,6 +42,10 @@ struct MedsView: View {
                         doseUnit: String(item.medUnit ?? ""),
                         title: String(item.medType ?? "")
                     )
+                    .modifier(BounceAnimationModifier {
+                        hapticConfirm()
+                        logMedicationIntake(for: item)
+                    })
                     .contextMenu() {
                         Button(
                             role: .destructive
@@ -85,6 +90,47 @@ struct MedsView: View {
                 }
 
             }
+        }
+    }
+    private func logMedicationIntake(for medication: Meds) {
+        let newLog = LogTimeMeds(context: viewContext)
+        newLog.logTimes = Date()
+        newLog.medication = medication
+        
+        medication.addToLogTimes(newLog)
+        
+        do {
+            try viewContext.save()
+            medication.objectWillChange.send()
+        } catch {
+            print("Error saving log: \(error)")
+        }
+    }
+    struct BounceAnimationModifier: ViewModifier {
+        let action: () -> Void
+        @State private var isTapped = false
+        
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
+        func body(content: Content) -> some View {
+            content
+                .scaleEffect(isTapped ? 0.9 : 1.0)
+                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isTapped)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded {
+                            withAnimation(.easeInOut(duration: 0.1)) {
+                                isTapped = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                                    isTapped = false
+                                }
+                            }
+                            action()
+                        }
+                )
         }
     }
 }

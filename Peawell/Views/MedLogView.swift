@@ -12,6 +12,8 @@ struct MedLogView: View {
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \LogTimeMeds.logTimes, ascending: false)], animation: .default)
+    var logEntries: FetchedResults<LogTimeMeds>
     
     //  these define the user input field's empty state
     @State var medName: String = ""
@@ -25,7 +27,7 @@ struct MedLogView: View {
 
     var body: some View {
         List {
-            Section {
+            Section(header: Text("Medications")) {
                 ForEach(medsItems) { item in
                     // sub pages where the user can read more about dose, schedule etc.
                     NavigationLink {
@@ -128,6 +130,33 @@ struct MedLogView: View {
                         } label: {
                             Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
                                 .tint(Color.orange)
+                        }
+                    }
+                }
+            }
+            Section(header: Text("Log History")) {
+                ForEach(logEntries, id: \.self) { item in  // Add explicit ID
+                    HStack {  // Remove nested List
+                        Image(item.medication?.medKind ?? "longPill")  // Access through relationship
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(6)
+                            .background(Color.accentColor)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Text(item.medication?.medType ?? "Unknown Medication")
+                        Spacer()
+                        if let logTime = item.logTimes {
+                            Text(logTime.formatted(date: .abbreviated, time: .shortened))
+                                .opacity(0.4)
+                        }
+                    }
+                    .swipeActions(allowsFullSwipe: true) {
+                        Button(
+                            role: .destructive
+                        ) {
+                            trashItem(objectID: item.objectID)
+                        } label: {
+                            Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
                         }
                     }
                 }

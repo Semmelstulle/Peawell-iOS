@@ -193,7 +193,14 @@
       }
     },
     "Done" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        }
+      }
     },
     "global.edit.item" : {
       "comment" : "tells screen reader that action edits item",
@@ -265,6 +272,9 @@
         }
       }
     },
+    "Log History" : {
+
+    },
     "main.empty.hint" : {
       "comment" : "tell the person that all modules are disabled thus there is nothing here.",
       "localizations" : {
@@ -300,7 +310,15 @@
       }
     },
     "med.edit.item" : {
-      "comment" : "tells user that action edits the medication"
+      "comment" : "tells user that action edits the medication",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "edit"
+          }
+        }
+      }
     },
     "med.trash.item" : {
       "comment" : "tells user that action trashes medication",
@@ -338,6 +356,9 @@
           }
         }
       }
+    },
+    "Medications" : {
+
     },
     "module.add.meds" : {
       "comment" : "tells the user this screen is for adding meds",
@@ -408,7 +429,15 @@
       }
     },
     "module.save.meds" : {
-      "comment" : "tells the user this screen is for saving new or changed meds"
+      "comment" : "tells the user this screen is for saving new or changed meds",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "save"
+          }
+        }
+      }
     },
     "module.settings" : {
       "comment" : "should just say settings to tell the user where it navigates to",
@@ -544,40 +573,6 @@
     "Select Times" : {
 
     },
-    "settings.access.footer" : {
-      "comment" : "tells that the user can control here what the app gets access to",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lege fest, welche Zugriffe die App haben darf."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Control what the app is allowed to access"
-          }
-        }
-      }
-    },
-    "settings.access.header" : {
-      "comment" : "just says access in things the app can access",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zugriffe"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Access"
-          }
-        }
-      }
-    },
     "settings.button.reset" : {
       "comment" : "just should say delete",
       "localizations" : {
@@ -647,7 +642,7 @@
       }
     },
     "settings.footer" : {
-      "comment" : "greets international users from germany with a german flag ",
+      "comment" : "greets international users with a german flag ",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -744,23 +739,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Developer on Mastodon"
-          }
-        }
-      }
-    },
-    "settings.toggle.CloudKit" : {
-      "comment" : "tells the user that data will be stored to iCloud when on",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zu iCloud synchronisieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sync to iCloud"
           }
         }
       }
