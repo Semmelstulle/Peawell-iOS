@@ -114,8 +114,6 @@ func resetData() {
     //  sets UserData to default values (NOT a real reset by deletion!)
     UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
     UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
-    UserDefaults.standard.set(false, forKey: "settingSynciCloud")
-    UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     //  runs fetch functions to gather all data and delete them
