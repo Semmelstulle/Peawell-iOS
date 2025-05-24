@@ -9,32 +9,26 @@ import Foundation
 import CoreData
 
 struct PersistenceController {
-    // A singleton for our entire app to use
+    //  singleton for our entire app to use
     static let shared = PersistenceController()
-    
     // Storage for Core Data
     let container: NSPersistentContainer
-    
-    // A test configuration for SwiftUI previews
+        //  test configuration for SwiftUI previews
     static var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
         let viewContext = controller.container.viewContext
-        
-        // Dummy data arrays for Meds
+        //  dummy data for previews
         let medKinds = ["longPill", "roundPill", "drops", "inhaler"]
         let medDoses = ["420", "69", "360", "21"]
         let medTypes = ["Medication 1", "Daily pill", "Eyedrops", "Inhale stuff"]
         let medUnits = ["mg", "µg", "ml", "mg"]
-        
-        for i in 0..<medKinds.count {
+                for i in 0..<medKinds.count {
             let newMed = Meds(context: viewContext)
             newMed.medKind = medKinds[i]
             newMed.medDose = medDoses[i]
             newMed.medType = medTypes[i]
             newMed.medUnit = medUnits[i]
         }
-        
-        // Dummy data arrays for Moods
         let activityNames = ["Running", "Reading", "Meditating", "Cooking", "Sleeping"]
         let moodNames = ["Awesome", "Good", "Horrible", "Neutral", "Bad"]
         let logDates: [Date] = [
@@ -44,32 +38,26 @@ struct PersistenceController {
             Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
             Calendar.current.date(byAdding: .day, value: -4, to: Date())!
         ]
-        
         for i in 0..<activityNames.count {
             let newMood = Mood(context: viewContext)
             newMood.activityName = activityNames[i]
             newMood.moodName = moodNames[i]
             newMood.logDate = logDates[i]
         }
-
-        
         do {
             try viewContext.save()
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-        
         return controller
     }()
-    
     // An initializer to load Core Data, optionally able to use an in-memory store.
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Main")
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
-        
         container.loadPersistentStores {description, error in
             if let error = error {
                 fatalError("Error: \(error.localizedDescription)")
