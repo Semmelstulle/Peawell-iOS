@@ -38,6 +38,7 @@ struct MoodPickerView: View {
     var body: some View {
         VStack {
             Text(NSLocalizedString("mood.picker.prompt", comment: "ask for the daily, AVERAGE mood"))
+                .padding(.bottom, 10)
             HStack {
                 ForEach(moodOptions, id: \.name) { option in
                     MoodButtonView(
@@ -68,8 +69,11 @@ struct MoodPickerView: View {
                     String(format: NSLocalizedString(moodName, comment: "name of mood")) +
                     String(format: NSLocalizedString(" mood.picker.prompt.suffix", comment: "suffix, asks in natural language for what happened today"))
                 )
+                .padding(.vertical, 10)
                 TextEditor(text: $actName)
                     .frame(minHeight: 100)
+                    .padding(.bottom, 10)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
 
                 //  custom save and discard buttons
                 HStack {
@@ -84,12 +88,12 @@ struct MoodPickerView: View {
                             hapticConfirm()
                         },
                         label: {
-                            Label(NSLocalizedString("mood.picker.save", comment: "tells the user this button saves entry"), systemImage: "plus")
+                            Text(NSLocalizedString("mood.picker.save", comment: "tells the user this button saves entry"))
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .background(Color.accentColor.opacity(0.3))
                                 .foregroundColor(Color.accentColor)
-                                .clipShape(RoundedRectangle(cornerRadius: 100))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                     )
                     Button(
@@ -102,12 +106,12 @@ struct MoodPickerView: View {
                             moodLogDate = Date.now
                         },
                         label: {
-                            Label(NSLocalizedString("mood.picker.cancel", comment: "tells the user this button cancels input"), systemImage: "xmark.circle")
+                            Text(NSLocalizedString("mood.picker.cancel", comment: "tells the user this button cancels input"))
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .background(Color.tertiarySystemBackground)
                                 .foregroundColor(Color.primary)
-                                .clipShape(RoundedRectangle(cornerRadius: 100))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                     )
                 }
@@ -137,7 +141,11 @@ struct MoodButtonView: View {
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .foregroundColor(panelColor)
                         .aspectRatio(1, contentMode: .fit)
-                        .shadow(radius: isSelected ? 4 : 0)
+                        .shadow(color: panelColor.opacity(0.5), radius: isSelected ? 6 : 0)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        )
                 } else {
                     // Show grayed out circle
                     Circle()
@@ -147,7 +155,7 @@ struct MoodButtonView: View {
                         .opacity(0.3)
                         .overlay(
                             Circle()
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 2)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                         )
                 }
                 Image(moodImage)
