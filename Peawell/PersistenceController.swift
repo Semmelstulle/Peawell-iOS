@@ -35,8 +35,8 @@ struct PersistenceController {
             Date(),
             Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
             Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
-            Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
-            Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+            Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
+            Calendar.current.date(byAdding: .day, value: -5, to: Date())!
         ]
         for i in 0..<activityNames.count {
             let newMood = Mood(context: viewContext)
@@ -66,7 +66,6 @@ struct PersistenceController {
     }
     func save() {
         let context = container.viewContext
-        
         if context.hasChanges {
             do {
                 try context.save()

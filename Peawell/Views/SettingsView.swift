@@ -18,7 +18,6 @@ struct SettingsView: View {
     //  settings stored in UserDefaults wrapped with AppStorage
     @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
-    @AppStorage("settingSynciCloud") var settingSynciCloud = false
     
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
@@ -30,10 +29,6 @@ struct SettingsView: View {
                 ) {
                     Toggle(isOn: $settingShowMoodSection, label: {Text(NSLocalizedString("settings.toggle.module.mood", comment: "short hint that mood module is toggled"))})
                     Toggle(isOn: $settingShowMedicationSection, label: {Text(NSLocalizedString("settings.toggle.module.med", comment: "short hint that med module is toggled"))})
-                }
-                Section(header: Text(NSLocalizedString("settings.access.header", comment: "just says access in things the app can access")), footer: Text(NSLocalizedString("settings.access.footer", comment: "tells that the user can control here what the app gets access to"))
-                ) {
-                    Toggle(isOn: $settingSynciCloud, label: {Text(NSLocalizedString("settings.toggle.CloudKit", comment: "tells the user that data will be stored to iCloud when on"))})
                 }
                 Section(header: Text(NSLocalizedString("settings.toggle.reset.header", comment: "hints that below data will be erased")),
                         footer: Text(NSLocalizedString("settings.toggle.reset.footer", comment: "makes clear to user that erasing is irreversible"))
@@ -74,7 +69,7 @@ struct SettingsView: View {
                 HStack() {
                     //  oh, hello there!
                     Spacer()
-                    Text(NSLocalizedString("settings.footer", comment: "greets international users from germany with a german flag ")).foregroundColor(.secondary)
+                    Text(NSLocalizedString("settings.footer", comment: "greets international users with a german flag ")).foregroundColor(.secondary)
                     Spacer()
                 }
                 .listRowBackground(Color.clear)

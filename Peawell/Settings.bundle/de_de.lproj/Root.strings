@@ -7,7 +7,5 @@
 "Modules" = "Module";
 "Use mood module" = "Abschnitt Launen benutzen";
 "Use medication module" = "Abschnitt Medikation benutzen";
-"Access" = "Zugriff";
-"Sync to iCloud" = "Zu iCloud synchronisieren";
 "Delete data" = "Daten löschen";
 "Reset data on next launch" = "Beim nächsten Start die App zurücksetzen";
