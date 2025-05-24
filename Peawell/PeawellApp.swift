@@ -9,9 +9,7 @@ import SwiftUI
 import CoreHaptics
 import CoreData
 
-//  the whole logic lives here
-
-//  needs to piggyback on UIKit to get system colours
+//  needs to piggyback on UIKit to get system colors
 extension Color {
     static let secondarySystemBackground =
     Color(uiColor: .secondarySystemBackground)
@@ -19,35 +17,26 @@ extension Color {
     Color(uiColor: .tertiarySystemBackground)
 }
 
+//  defines entry point and sets it up
 @main
 struct PeawellApp: App {
-    
-    //  sets up CoreData part 1
     let persistenceController = PersistenceController.shared
-    
     var body: some Scene {
         WindowGroup {
-
-            //  initial view that is used on app launch
             MainView()
-
-            //  sets up CoreData part 2
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-    
     //  adds UserData to local scope
     @AppStorage("resetOnLaunch") var resetOnLaunch = false
     init() {
         if self.resetOnLaunch == true {
-
             //  resets toggle and calls reset function
             UserDefaults.standard .set(false, forKey: "resetOnLaunch")
             resetData()
         }
     }
 }
-
 
 //  vibration patterns called from CoreHaptics to use in SwiftUI
 func hapticWarning() {
@@ -60,19 +49,20 @@ func hapticConfirm() {
     generator.notificationOccurred(.success)
 }
 
-
 //  function to safe added content to CoreData
-func saveMedsWithSchedule(med: Meds?,
-                          medName: String,
-                          medAmount: String,
-                          medUnit: String,
-                          medKind: String,
-                          medRemind: Bool,
-                          selectedDays: Set<Int>,
-                          selectedTimes: Set<Date>) {
+func saveMedsWithSchedule(
+    med: Meds?,
+    medName: String,
+    medAmount: String,
+    medUnit: String,
+    medKind: String,
+    medRemind: Bool,
+    selectedDays: Set<Int>,
+    selectedTimes: Set<Date>
+) {
     let viewContext = PersistenceController.shared.container.viewContext
     
-    // Use existing med or create new
+    //  use existing med or create new
     let medObject = med ?? Meds(context: viewContext)
     
     medObject.medType = medName
@@ -81,18 +71,16 @@ func saveMedsWithSchedule(med: Meds?,
     medObject.medKind = medKind
     medObject.medRemind = medRemind
     
-    // Clear existing schedules
+    //  clear existing schedules
     if let existingSchedules = medObject.schedule as? Set<Schedules> {
         existingSchedules.forEach { viewContext.delete($0) }
     }
-    
     if medRemind && !selectedDays.isEmpty && !selectedTimes.isEmpty {
         let schedule = Schedules(context: viewContext)
         schedule.dates = selectedDays as NSSet
         schedule.times = selectedTimes as NSSet
         medObject.addToSchedule(schedule)
     }
-    
     do {
         try viewContext.save()
         hapticConfirm()
@@ -102,13 +90,11 @@ func saveMedsWithSchedule(med: Meds?,
     }
 }
 
-
+//  saves the mood and diary entry
 func saveMood(actName: String, moodName: String, moodLogDate: Date) {
-
     //  needed to add CoreData into scope
     let viewContext = PersistenceController.shared.container.viewContext
     let mood = Mood(context: viewContext)
-
     //  maps CoreData values to variables
     mood.activityName = actName
     mood.moodName = moodName
@@ -122,8 +108,7 @@ func saveMood(actName: String, moodName: String, moodLogDate: Date) {
     }
 }
 
-
-// resets all data to empty and settings to their default
+//  resets all data to empty and settings to their default
 func resetData() {
 
     //  sets UserData to default values (NOT a real reset by deletion!)
@@ -131,10 +116,8 @@ func resetData() {
     UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
     UserDefaults.standard.set(false, forKey: "settingSynciCloud")
     UserDefaults.standard.set(false, forKey: "settingSyncCalendar")
-    
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-    
     //  runs fetch functions to gather all data and delete them
     for object in fetchMood() {
         viewContext.delete(object)
@@ -145,15 +128,12 @@ func resetData() {
     try? viewContext.save()
 }
 
-
 //  functions to delete specific items
 func trashItem(objectID: NSManagedObjectID) {
-
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     withAnimation {
         do {
-
             //  checks if object exists and tries to delete if so
             if let object = try? viewContext.existingObject(with: objectID) {
                 viewContext.delete(object)
@@ -166,16 +146,12 @@ func trashItem(objectID: NSManagedObjectID) {
     }
 }
 
-
 // functions to get data
 func fetchMood() -> [NSManagedObject] {
-
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-    
     //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-    
     let fetchRequest: NSFetchRequest<Mood> = Mood.fetchRequest()
     do {
         var results: [Mood]
@@ -187,15 +163,11 @@ func fetchMood() -> [NSManagedObject] {
     return fetchedArray
 }
 
-
 func fetchMeds() -> [NSManagedObject] {
-
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
-    
     //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
-    
     let fetchRequest: NSFetchRequest<Meds> = Meds.fetchRequest()
     do {
         var results: [Meds]
