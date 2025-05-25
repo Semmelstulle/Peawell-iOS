@@ -39,7 +39,7 @@ struct MoodPickerView: View {
     var body: some View {
         Button(
             action: {
-                showMoodField.toggle()
+                showMoodField = true
             }, label: {
                 Label(NSLocalizedString("module.new.mood", comment: "tells the user this button is for adding new mood"), systemImage: "square.and.pencil")
                     .padding(.vertical)
@@ -49,7 +49,7 @@ struct MoodPickerView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         )
-        .sheet(isPresented: $showMoodField) {
+        .sheet(isPresented: $showMoodField, onDismiss: clearInputs) {
             NavigationStack {
                 Form {
                     Section(header:
@@ -66,12 +66,8 @@ struct MoodPickerView: View {
                                     onTap: {
                                         if moodName == option.name {
                                             moodName = ""
-                                            showMoodField = false
                                         } else {
                                             moodName = option.name
-                                            withAnimation(.bouncy(duration: 0.2)) {
-                                                showMoodField = true
-                                            }
                                         }
                                     }
                                 )
@@ -99,9 +95,7 @@ struct MoodPickerView: View {
                         Button(
                             action: {
                                 saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                                moodName = ""
-                                actName = ""
-                                hapticConfirm()
+                                clearInputs()
                                 dismiss()
                             },
                             label: {
@@ -118,6 +112,7 @@ struct MoodPickerView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
+                            clearInputs()
                             dismiss()
                         } label: {
                             Image(systemName: "xmark.circle.fill")
@@ -131,6 +126,11 @@ struct MoodPickerView: View {
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.hidden)
         }
+    }
+    
+    private func clearInputs() {
+        moodName = ""
+        actName = ""
     }
 }
 
