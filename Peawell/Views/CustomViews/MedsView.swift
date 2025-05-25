@@ -80,6 +80,7 @@ struct MedsView: View {
                 .sheet(isPresented: $showAddMedSheet) {
                     ModifyMedsSheetView()
                         .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.hidden)
                 }
                 .sheet(item: $editingMed) { med in
                     ModifyMedsSheetView(med: med)

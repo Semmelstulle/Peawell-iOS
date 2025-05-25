@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarProgressView: View {
+struct CalendarView: View {
     @State private var progressValues: [CGFloat] = Array(repeating: 0, count: 7)
     
     var body: some View {
@@ -87,5 +87,5 @@ private struct DayView: View {
 }
 
 #Preview {
-    CalendarProgressView()
+    CalendarView()
 }

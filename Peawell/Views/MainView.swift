@@ -22,8 +22,7 @@ struct MainView: View {
         NavigationStack {
             ScrollView() {
                 
-                CalendarProgressView()
-                    .frame(height: 80)
+                CalendarView()
                     .padding()
                 
                 LogSectionsView()

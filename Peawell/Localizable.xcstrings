@@ -11,23 +11,6 @@
         }
       }
     },
-    " mood.picker.prompt.suffix" : {
-      "comment" : "suffix, asks in natural language for what happened today",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ". Schreibe doch gleich etwas über deinen Tag auf."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : " today. Take some time to write things down."
-          }
-        }
-      }
-    },
     "%lld days selected" : {
 
     },
@@ -411,6 +394,9 @@
         }
       }
     },
+    "module.mood.picker" : {
+      "comment" : "title of the mood picker sheet"
+    },
     "module.moods" : {
       "comment" : "just says mood diary\nmodule name for moods",
       "localizations" : {
@@ -428,6 +414,9 @@
         }
       }
     },
+    "module.new.mood" : {
+      "comment" : "tells the user this button is for adding new mood"
+    },
     "module.save.meds" : {
       "comment" : "tells the user this screen is for saving new or changed meds",
       "localizations" : {
@@ -438,6 +427,9 @@
           }
         }
       }
+    },
+    "module.save.mood" : {
+      "comment" : "tells the user this screen is for saving new mood"
     },
     "module.settings" : {
       "comment" : "should just say settings to tell the user where it navigates to",
@@ -456,23 +448,6 @@
         }
       }
     },
-    "mood.picker.cancel" : {
-      "comment" : "tells the user this button cancels input",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abbrechen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        }
-      }
-    },
     "mood.picker.prompt" : {
       "comment" : "ask for the daily, AVERAGE mood",
       "localizations" : {
@@ -486,40 +461,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What was your average mood today?"
-          }
-        }
-      }
-    },
-    "mood.picker.prompt.prefix " : {
-      "comment" : "prefix, asks in natural language for what happened today",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du fühlst dich also "
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "So you're feeling "
-          }
-        }
-      }
-    },
-    "mood.picker.save" : {
-      "comment" : "tells the user this button saves entry",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Speichern"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save"
           }
         }
       }
@@ -844,6 +785,9 @@
           }
         }
       }
+    },
+    "What made you smile today?" : {
+
     }
   },
   "version" : "1.0"

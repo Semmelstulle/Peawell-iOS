@@ -131,7 +131,7 @@ struct ModifyMedsSheetView: View {
                         )
                     }
                 }
-                .listRowBackground(Color.accentColor.opacity(0.2))
+                .listRowBackground(Color.accentColor.opacity(0.3))
             }
             .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
             .navigationBarTitleDisplayMode(.inline)

@@ -108,6 +108,7 @@
 			children = (
 				95943E2D29ED85D10096CE6B /* CustomViews */,
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
+				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
 				9543A6C129E6E695003046FC /* SettingsView.swift */,
 				952B207629EF109000884166 /* MoodLogView.swift */,
 				95EE54F12C1C402C00F34D53 /* MedLogView.swift */,
@@ -121,7 +122,6 @@
 			children = (
 				95A673FA2DD5BDC400CEE7D4 /* LogSectionsView.swift */,
 				953EDAE52DD5133900C5EA91 /* CalendarView.swift */,
-				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
 				95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */,
 			);
 			path = CustomViews;
