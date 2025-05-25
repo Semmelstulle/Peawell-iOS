@@ -37,7 +37,7 @@ struct ModifyMedsSheetView: View {
     @State private var showTimeSelectionSheet = false
     
     var body: some View {
-        NavigationView() {
+        NavigationStack {
             Form {
                 //  neccessary fields on the top
                 Section(header: Text(NSLocalizedString("add.meds.header", comment: "tells the user fields below are neccessary"))) {

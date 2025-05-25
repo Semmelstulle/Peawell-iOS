@@ -23,7 +23,7 @@ struct SettingsView: View {
     @State private var showingDeleteAlert: Bool = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text(NSLocalizedString("settings.modules.header", comment: "tells the user this section is for managing modules of the app")), footer: Text(NSLocalizedString("settings.modules.footer", comment: "short description to tell user what the toggles do"))
                 ) {

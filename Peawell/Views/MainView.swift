@@ -17,15 +17,15 @@ struct MainView: View {
     // variables for showing sheets
     @State private var showingSettingsSheet = false
     @State private var isAnimating = false
-
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView() {
                 
                 CalendarProgressView()
                     .frame(height: 80)
                     .padding()
-
+                
                 LogSectionsView()
                     .padding()
                 
