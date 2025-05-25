@@ -41,7 +41,7 @@ private struct DayView: View {
     let containerWidth: CGFloat
     
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 10) {
             ZStack {
                 // Progress ring background
                 Circle()

@@ -6,16 +6,7 @@
 //
 
 import SwiftUI
-import CoreHaptics
 import CoreData
-
-//  needs to piggyback on UIKit to get system colors
-extension Color {
-    static let secondarySystemBackground =
-    Color(uiColor: .secondarySystemBackground)
-    static let tertiarySystemBackground =
-    Color(uiColor: .tertiarySystemBackground)
-}
 
 //  defines entry point and sets it up
 @main

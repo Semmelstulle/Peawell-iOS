@@ -28,24 +28,21 @@ struct MoodLogView: View {
         List {
             ForEach(moodItems) { item in
                 NavigationLink {
-                    ScrollView () {
-                        // this is the mood in large view at the top
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(getMoodColor(item.moodName))
-                                .frame(maxWidth: .infinity, idealHeight: 50)
-                                .padding()
-                            Image("mood\(item.moodName ?? "Neutral")")
+                    List () {
+                        Section {
+                            HStack {
+                                Spacer()
+                                Image("mood\(item.moodName ?? "Neutral")")
+                                Spacer()
+                            }
                         }
-                        Text(item.activityName ?? "Text missing")
-                            .padding()
-                            .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                            .background(Color.secondarySystemBackground)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding()
+                        .listRowBackground(getMoodColor(item.moodName))
+                        Section {
+                            Text(item.activityName ?? "Text missing")
+                                .frame(maxWidth: .infinity, alignment: .topLeading)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
                     }
-                    // this is the right place to declare the toolbar I hope. Shomehow, only the first button shows up on iOS 15
                     .toolbar {
                         ToolbarItem {
                             Button() {
@@ -66,6 +63,7 @@ struct MoodLogView: View {
                             }
                         }
                     }
+                    .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
                 } label: {
                     HStack() {
                         Image("mood\(item.moodName ?? "Neutral")")

@@ -36,10 +36,6 @@ struct MedLogView: View {
                                 HStack {
                                     Spacer()
                                     Image(item.medKind ?? "")
-                                        //  disabled for now to have
-                                        //  a look on the effect
-                                        //.resizable()
-                                        //.frame(width: 120, height: 120)
                                         .padding()
                                     Spacer()
                                 }

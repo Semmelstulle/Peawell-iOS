@@ -151,8 +151,7 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
-        .background(Color.secondarySystemBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .background(Color(.secondarySystemGroupedBackground))        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 

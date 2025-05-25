@@ -43,6 +43,7 @@ struct MainView: View {
                         .padding()
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Peawell")
             .toolbar {
                 Button {

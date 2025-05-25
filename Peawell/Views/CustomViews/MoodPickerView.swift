@@ -109,7 +109,7 @@ struct MoodPickerView: View {
                             Text(NSLocalizedString("mood.picker.cancel", comment: "tells the user this button cancels input"))
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.tertiarySystemBackground)
+                                .background(Color(.systemBackground))
                                 .foregroundColor(Color.primary)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
@@ -119,7 +119,7 @@ struct MoodPickerView: View {
             
         }
         .padding()
-        .background(Color.secondarySystemBackground)
+        .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
