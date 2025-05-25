@@ -38,17 +38,6 @@ struct PeawellApp: App {
     }
 }
 
-//  vibration patterns called from CoreHaptics to use in SwiftUI
-func hapticWarning() {
-    let generator = UINotificationFeedbackGenerator()
-    generator.notificationOccurred(.warning)
-}
-
-func hapticConfirm() {
-    let generator = UINotificationFeedbackGenerator()
-    generator.notificationOccurred(.success)
-}
-
 //  function to safe added content to CoreData
 func saveMedsWithSchedule(
     med: Meds?,
@@ -124,24 +113,6 @@ func resetData() {
         viewContext.delete(object)
     }
     try? viewContext.save()
-}
-
-//  functions to delete specific items
-func trashItem(objectID: NSManagedObjectID) {
-    //  add CoreData to scope
-    let viewContext = PersistenceController.shared.container.viewContext
-    withAnimation {
-        do {
-            //  checks if object exists and tries to delete if so
-            if let object = try? viewContext.existingObject(with: objectID) {
-                viewContext.delete(object)
-            }
-            try viewContext.save()
-            hapticConfirm()
-        } catch {
-            NSLog(error.localizedDescription)
-        }
-    }
 }
 
 // functions to get data
