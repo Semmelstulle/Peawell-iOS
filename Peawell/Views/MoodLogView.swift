@@ -155,4 +155,6 @@ func saveEdits() {
 
 #Preview {
     MoodLogView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+
 }

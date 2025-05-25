@@ -269,5 +269,6 @@ struct TimeSelectionView: View {
 struct AddMedsSheetView_Previews: PreviewProvider {
     static var previews: some View {
         ModifyMedsSheetView()
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
