@@ -40,7 +40,6 @@ struct LogSectionsView: View {
                 }
             }
         }
-        .padding()
     }
 }
 

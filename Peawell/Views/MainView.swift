@@ -27,19 +27,16 @@ struct MainView: View {
                     .padding()
 
                 LogSectionsView()
+                    .padding()
                 
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     MoodPickerView()
-                        .padding(.horizontal)
-                        .padding(.top, 0)
-                        .padding(.bottom)
+                        .padding()
                 }
                 if settingShowMedicationSection == true {
                     MedsView()
-                        .padding(.horizontal)
-                        .padding(.top, 0)
-                        .padding(.bottom)
+                        .padding()
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
                     Text(NSLocalizedString("main.empty.hint", comment: "tell the person that all modules are disabled thus there is nothing here."))
