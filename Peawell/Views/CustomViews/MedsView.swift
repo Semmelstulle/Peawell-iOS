@@ -78,12 +78,8 @@ struct MedsView: View {
                     showAddMedSheet = true
                 }
                 .sheet(isPresented: $showAddMedSheet) {
-                    if #available(iOS 16.0, *) {
-                        ModifyMedsSheetView()
-                            .presentationDetents([.medium, .large])
-                    } else {
-                        ModifyMedsSheetView()
-                    }
+                    ModifyMedsSheetView()
+                        .presentationDetents([.medium, .large])
                 }
                 .sheet(item: $editingMed) { med in
                     ModifyMedsSheetView(med: med)
