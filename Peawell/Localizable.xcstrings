@@ -267,6 +267,22 @@
         }
       }
     },
+    "med.add.item" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add medication"
+          }
+        }
+      }
+    },
     "med.edit.item" : {
       "localizations" : {
         "de" : {

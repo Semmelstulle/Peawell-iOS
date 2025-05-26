@@ -16,7 +16,7 @@ struct LogSectionsView: View {
             if settingShowMoodSection {
                 NavigationLink(destination: MoodLogView()) {
                     TileView(
-                        tileTitle: "title.diary",
+                        tileTitle: LocalizedStringKey("title.diary"),
                         tileImage: "3dDiary",
                         tileGradient: LinearGradient(
                             colors: [.orange, .yellow],
@@ -29,7 +29,7 @@ struct LogSectionsView: View {
             if settingShowMedicationSection {
                 NavigationLink(destination: MedLogView()) {
                     TileView(
-                        tileTitle: "title.med",
+                        tileTitle: LocalizedStringKey("title.med"),
                         tileImage: "3dMedication",
                         tileGradient: LinearGradient(
                             colors: [.mint, .teal],
@@ -44,7 +44,7 @@ struct LogSectionsView: View {
 }
 
 struct TileView: View {
-    let tileTitle: String
+    let tileTitle: LocalizedStringKey
     let tileImage: String
     let tileGradient: LinearGradient
     
@@ -79,7 +79,7 @@ struct TileView: View {
                 HStack {
                     Spacer()
                     Image(systemName: "chevron.right")
-                        //.font(.title)
+                    //.font(.title)
                         .foregroundColor(.white.opacity(0.8))
                         .padding()
                 }

@@ -13,14 +13,14 @@ struct MedsView: View {
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
-
+    
     //  these define the user input field's empty state
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit: String = ""
-
+    
     @State private var editingMed: Meds?
-
+    
     //  defines wether sheet is shown
     @State public var showAddMedSheet = false
     
@@ -40,7 +40,7 @@ struct MedsView: View {
                             .clipShape(Circle()),
                         doseAmnt: String(item.medDose ?? ""),
                         doseUnit: String(item.medUnit ?? ""),
-                        title: String(item.medType ?? "")
+                        title: LocalizedStringKey(item.medType ?? "")
                     )
                     .modifier(BounceAnimationModifier {
                         hapticConfirm()
@@ -72,7 +72,7 @@ struct MedsView: View {
                         .clipShape(Circle()),
                     doseAmnt: String(medsItems.count),
                     doseUnit: "",
-                    title: String("med.add.item")
+                    title: LocalizedStringKey("med.add.item")
                 )
                 .onTapGesture {
                     showAddMedSheet = true
@@ -85,7 +85,7 @@ struct MedsView: View {
                 .sheet(item: $editingMed) { med in
                     ModifyMedsSheetView(med: med)
                 }
-
+                
             }
         }
     }
@@ -133,7 +133,12 @@ struct MedsView: View {
 }
 
 //  defines single cell for the grid #reusableCode
-struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUnit: String; var title: String;
+struct PanelView<V: View>: View {
+    var icon: V
+    var doseAmnt: String
+    var doseUnit: String
+    var title: LocalizedStringKey
+    
     var body: some View {
         VStack {
             HStack() {
@@ -152,7 +157,8 @@ struct PanelView<V: View>: View { var icon: V; var doseAmnt: String; var doseUni
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding()
-        .background(Color(.secondarySystemGroupedBackground))        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
