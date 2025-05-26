@@ -25,56 +25,79 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text(NSLocalizedString("settings.modules.header", comment: "tells the user this section is for managing modules of the app")), footer: Text(NSLocalizedString("settings.modules.footer", comment: "short description to tell user what the toggles do"))
+                Section(
+                    header: Text("section.header.modules"),
+                    footer: Text("section.footer.modules")
                 ) {
-                    Toggle(isOn: $settingShowMoodSection, label: {Text(NSLocalizedString("settings.toggle.module.mood", comment: "short hint that mood module is toggled"))})
-                    Toggle(isOn: $settingShowMedicationSection, label: {Text(NSLocalizedString("settings.toggle.module.med", comment: "short hint that med module is toggled"))})
+                    Toggle(
+                        isOn: $settingShowMoodSection,
+                        label: {Text("toggle.show.mood")})
+                    
+                    Toggle(
+                        isOn: $settingShowMedicationSection,
+                        label: {Text("toggle.show.med")}
+                    )
                 }
-                Section(header: Text(NSLocalizedString("settings.toggle.reset.header", comment: "hints that below data will be erased")),
-                        footer: Text(NSLocalizedString("settings.toggle.reset.footer", comment: "makes clear to user that erasing is irreversible"))
+                Section(
+                    header: Text("section.header.reset"),
+                    footer: Text("section.footer.reset")
                 ) {
                     Button(action: {
                         self.showingDeleteAlert = true
                         hapticWarning()
                     }, label: {
-                        Label(NSLocalizedString("settings.button.reset", comment: "just should say delete"), systemImage: "trash").foregroundColor(.red)
+                        Label(
+                            "button.reset",
+                            systemImage: "trash"
+                        )
+                        .foregroundColor(.red)
                     })
                     
                     //  confirmation alert is designed here
-                    .alert(NSLocalizedString("settings.button.reset.alert", comment: "dialog that again tells deletion can not be undone"), isPresented: $showingDeleteAlert) {
-                        Button(NSLocalizedString("settings.button.reset.alert.cancel", comment: "just should say cancel"), role: .cancel) {
+                    .alert("dialog.infoText", isPresented: $showingDeleteAlert) {
+                        Button("button.dialog.cancelReset", role: .cancel) {
                             //  nothing here, action is cancelled
                         }
-                        Button(NSLocalizedString("settings.button.reset.alert.confirm", comment: "reassures the user really want to clear data"), role: .destructive) {
+                        Button("button.dialog.confirmReset", role: .destructive) {
                             resetData()
                         }
                     }
                 }
                 //  links to project and dev
-                Section(header: Text(NSLocalizedString("settings.section.about", comment: "says 'about this project'"))
+                Section(
+                    header: Text("section.header.about")
                 ) {
-                    Link(destination: URL(string: "https://mastodon.social/@semmelstulle")!,
-                         label: { Label(NSLocalizedString("settings.socials.mastodon", comment: "says that this is the dev's Mastodon page"), systemImage: "link").foregroundColor(.blue)
-                    })
-                    Link(destination: URL(string: "https://github.com/SemmelStulle/Peawell_iOS")!,
-                         label: { Label(NSLocalizedString("settings.socials.github", comment: "says that this is the app's GitHub page"), systemImage: "link").foregroundColor(.blue)
-                    })
+                    Link(
+                        destination: URL(string: "https://mastodon.social/@semmelstulle")!,
+                        label: {
+                            Label("link.socials.mastodon", systemImage: "link").foregroundColor(.blue)
+                        }
+                    )
+                    Link(
+                        destination: URL(string: "https://github.com/SemmelStulle/Peawell_iOS")!,
+                        label: {
+                            Label("link.socials.github", systemImage: "link").foregroundColor(.blue)
+                        }
+                    )
                     //  HStack so not all of it is crammed on the left side
                     HStack() {
-                        Text(NSLocalizedString("settings.version.info", comment: "says 'app version'")).foregroundColor(.secondary)
+                        Text("suffix.appVersion")
+                            .foregroundColor(.secondary)
                         Spacer()
-                        Text(appVersion ?? String(NSLocalizedString("settings.version.release", comment: "says version missing"))).foregroundColor(.secondary)
+                        Text(appVersion ?? String("N/A"))
+                            .foregroundColor(.secondary)
                     }
                 }
                 HStack() {
                     //  oh, hello there!
                     Spacer()
-                    Text(NSLocalizedString("settings.footer", comment: "greets international users with a german flag ")).foregroundColor(.secondary)
+                    Text("greeter.settings")
+                        .foregroundColor(.secondary)
                     Spacer()
                 }
                 .listRowBackground(Color.clear)
             }
-            .navigationTitle(NSLocalizedString("module.settings", comment: "should just say settings to tell the user where it navigates to"))
+            .navigationTitle("title.settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

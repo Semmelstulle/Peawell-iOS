@@ -45,23 +45,17 @@ struct MoodLogView: View {
                             }
                         }
                         .toolbar {
-                            ToolbarItem {
-                                Button() {
-                                    self.editDiaryEntry = item.activityName ?? "error"
-                                    moodEntry = item
-                                    isShowingEditDiarySheet = true
-                                } label: {
-                                    Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
-                                }
+                            Button {
+                                self.editDiaryEntry = item.activityName ?? "error"
+                                moodEntry = item
+                                isShowingEditDiarySheet = true
+                            } label: {
+                                Image(systemName: "square.and.pencil")
                             }
-                            ToolbarItem {
-                                Button(
-                                    role: .destructive
-                                ) {
-                                    trashItem(objectID: item.objectID)
-                                } label: {
-                                    Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
-                                }
+                            Button(role: .destructive) {
+                                trashItem(objectID: item.objectID)
+                            } label: {
+                                Image(systemName: "trash")
                             }
                         }
                         .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
@@ -77,27 +71,24 @@ struct MoodLogView: View {
                         }
                     }
                     .swipeActions(allowsFullSwipe: true) {
-                        Button(
-                            role: .destructive
-                        ) {
+                        Button(role: .destructive) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label(NSLocalizedString("global.trash.item", comment: "tells screen reader that action deletes item"), systemImage: "trash")
+                            Image(systemName: "trash")
                         }
-                        Button() {
+                        Button {
+                            self.editDiaryEntry = item.activityName ?? "error.hint"
+                            moodEntry = item
                             isShowingEditDiarySheet = true
-                            self.editDiaryEntry = item.activityName ?? "error"
                         } label: {
-                            Label(NSLocalizedString("global.edit.item", comment: "tells screen reader that action edits item"), systemImage: "square.and.pencil")
-                            // this is how you set the bg color of the swipe actions and buttons
-                                .tint(Color.orange)
+                            Image(systemName: "square.and.pencil")
                         }
                     }
                     .sheet(isPresented: $isShowingEditDiarySheet) {
                         NavigationView {
                             TextEditor(text: $editDiaryEntry)
                                 .padding()
-                                .navigationTitle(NSLocalizedString("module.edit.diary", comment: "header telling the user it is an edit screen"))
+                                .navigationTitle("title.editDiary")
                                 .navigationBarTitleDisplayMode(.inline)
                                 .toolbar() {
                                     ToolbarItem {
@@ -114,7 +105,7 @@ struct MoodLogView: View {
                     }
                 }
             }
-            .navigationTitle(NSLocalizedString("module.moods", comment: "module name for moods"))
+            .navigationTitle("title.diary")
         }
     }
 }

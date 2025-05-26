@@ -11,545 +11,55 @@
         }
       }
     },
-    "%lld days selected" : {
-
-    },
-    "%lld times selected" : {
-
-    },
-    "Add Time" : {
-
-    },
-    "add.meds.enale.reminder" : {
-      "comment" : "Let user know this toggles use of reminder",
+    "%lld x.days.selected" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erinnerungen"
+            "value" : "%lld Tage"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enable reminder"
+            "value" : "%lld days"
           }
         }
       }
     },
-    "add.meds.header" : {
-      "comment" : "tells the user fields below are neccessary",
+    "%lld x.times.selected" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bitte angeben"
+            "value" : "%lld Zeiten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please fill out"
+            "value" : "%lld times"
           }
         }
       }
     },
-    "add.meds.medDose" : {
-      "comment" : "ask for medication dose",
+    "button.addTime" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dosis des Medikaments"
+            "value" : "Zeit hinzufügen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "What's the amount?"
+            "value" : "Add time"
           }
         }
       }
     },
-    "add.meds.medKind" : {
-      "comment" : "ask for medication type",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Art des Medikaments"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What's the type?"
-          }
-        }
-      }
-    },
-    "add.meds.medName" : {
-      "comment" : "ask for medication name",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name des Medikaments"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What's the name?"
-          }
-        }
-      }
-    },
-    "add.reminder.days.of.week" : {
-      "comment" : "Let user know here is where you select days of week",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erinnere an Tag"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remind at day"
-          }
-        }
-      }
-    },
-    "add.reminder.hours.and.minutes" : {
-      "comment" : "Let user know here is where you select the time",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erinnere zu Stunde"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remind at time"
-          }
-        }
-      }
-    },
-    "Awesome" : {
-      "comment" : "mood awesome",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "super"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "awesome"
-          }
-        }
-      }
-    },
-    "Bad" : {
-      "comment" : "mood bad",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "schlecht"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "bad"
-          }
-        }
-      }
-    },
-    "Done" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fertig"
-          }
-        }
-      }
-    },
-    "global.edit.item" : {
-      "comment" : "tells screen reader that action edits item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eintrag bearbeiten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "edit item"
-          }
-        }
-      }
-    },
-    "global.trash.item" : {
-      "comment" : "tells screen reader that action deletes item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eintrag löschen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete item"
-          }
-        }
-      }
-    },
-    "Good" : {
-      "comment" : "mood good",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "gut"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "good"
-          }
-        }
-      }
-    },
-    "Horrible" : {
-      "comment" : "mood horrible",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "schrecklich"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "horrible"
-          }
-        }
-      }
-    },
-    "Log History" : {
-
-    },
-    "main.empty.hint" : {
-      "comment" : "tell the person that all modules are disabled thus there is nothing here.",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alle Module wurden deaktiviert!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All modules are disabled!"
-          }
-        }
-      }
-    },
-    "med.add.item" : {
-      "comment" : "tells user that button adds item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add medication"
-          }
-        }
-      }
-    },
-    "med.edit.item" : {
-      "comment" : "tells user that action edits the medication",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "edit"
-          }
-        }
-      }
-    },
-    "med.trash.item" : {
-      "comment" : "tells user that action trashes medication",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medikation entfernen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Remove medication"
-          }
-        }
-      }
-    },
-    "Medication dose" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        }
-      }
-    },
-    "Medication name" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        }
-      }
-    },
-    "Medications" : {
-
-    },
-    "module.add.meds" : {
-      "comment" : "tells the user this screen is for adding meds",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medikation hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add medication"
-          }
-        }
-      }
-    },
-    "module.edit.diary" : {
-      "comment" : "header telling the user it is an edit screen",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eintrag bearbeiten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit diary entry"
-          }
-        }
-      }
-    },
-    "module.med" : {
-      "comment" : "just says medication log\nmodule name for meds",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medikamente"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medication"
-          }
-        }
-      }
-    },
-    "module.mood.picker" : {
-      "comment" : "title of the mood picker sheet"
-    },
-    "module.moods" : {
-      "comment" : "just says mood diary\nmodule name for moods",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tagebuch"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mood"
-          }
-        }
-      }
-    },
-    "module.new.mood" : {
-      "comment" : "tells the user this button is for adding new mood"
-    },
-    "module.save.meds" : {
-      "comment" : "tells the user this screen is for saving new or changed meds",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "save"
-          }
-        }
-      }
-    },
-    "module.save.mood" : {
-      "comment" : "tells the user this screen is for saving new mood"
-    },
-    "module.settings" : {
-      "comment" : "should just say settings to tell the user where it navigates to",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einstellungen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings"
-          }
-        }
-      }
-    },
-    "mood.picker.prompt" : {
-      "comment" : "ask for the daily, AVERAGE mood",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wie hast du dich heute insgesamt gefühlt?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What was your average mood today?"
-          }
-        }
-      }
-    },
-    "Neutral" : {
-      "comment" : "mood neutral",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "neutral"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "neutral"
-          }
-        }
-      }
-    },
-    "Peawell" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peawell"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peawell"
-          }
-        }
-      }
-    },
-    "Schedule" : {
-
-    },
-    "Select days" : {
-
-    },
-    "Select Days" : {
-
-    },
-    "Select times" : {
-
-    },
-    "Select Times" : {
-
-    },
-    "settings.button.reset" : {
-      "comment" : "just should say delete",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alle Daten löschen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erase all data"
-          }
-        }
-      }
-    },
-    "settings.button.reset.alert" : {
-      "comment" : "dialog that again tells deletion can not be undone",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ganz sicher? Der Vorgang wird alles unwiderruflich löschen!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Are you sure?\\nThis will erase all data and can not be undone!"
-          }
-        }
-      }
-    },
-    "settings.button.reset.alert.cancel" : {
-      "comment" : "just should say cancel",
+    "button.dialog.cancelReset" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -560,13 +70,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancel"
+            "value" : "Abort"
           }
         }
       }
     },
-    "settings.button.reset.alert.confirm" : {
-      "comment" : "reassures the user really want to clear data",
+    "button.dialog.confirmReset" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -582,8 +91,103 @@
         }
       }
     },
-    "settings.footer" : {
-      "comment" : "greets international users with a german flag ",
+    "button.done" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "button.mood.save" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintrag speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save entry"
+          }
+        }
+      }
+    },
+    "button.moodPickerSheet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebucheintrag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journal entry"
+          }
+        }
+      }
+    },
+    "button.reset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Daten löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset all data"
+          }
+        }
+      }
+    },
+    "button.save.meds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikament speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save medication"
+          }
+        }
+      }
+    },
+    "dialog.infoText" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher? Dieser Vorgang kann nicht rückgängig gemacht werden, alle Daten gehen verloren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure? This action can not be reverted, your data will be lost."
+          }
+        }
+      }
+    },
+    "greeter.settings" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -599,76 +203,39 @@
         }
       }
     },
-    "settings.modules.footer" : {
-      "comment" : "short description to tell user what the toggles do",
+    "header.schedule" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zeige oder verstecke Abschnitte."
+            "value" : "Zeitplan"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "These toggles will show or hide specific modules"
+            "value" : "Schedule"
           }
         }
       }
     },
-    "settings.modules.header" : {
-      "comment" : "tells the user this section is for managing modules of the app",
+    "link.socials.github" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Module"
+            "value" : "Diese App auf GitHub"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manage app modules"
+            "value" : "This app on GitHub"
           }
         }
       }
     },
-    "settings.section.about" : {
-      "comment" : "says 'about this project'",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Über diese App"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About this project"
-          }
-        }
-      }
-    },
-    "settings.socials.github" : {
-      "comment" : "says that this is the app's GitHub page",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die App auf GitHub"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The app on GitHub"
-          }
-        }
-      }
-    },
-    "settings.socials.mastodon" : {
-      "comment" : "says that this is the dev's Mastodon page",
+    "link.socials.mastodon" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -679,81 +246,287 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Developer on Mastodon"
+            "value" : "The developer on Mastodon"
           }
         }
       }
     },
-    "settings.toggle.module.med" : {
-      "comment" : "short hint that med module is toggled",
+    "main.empty.hint" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abschnitt Medikamente"
+            "value" : "Alle Module wurden deaktiviert!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medication section"
+            "value" : "All modules are disabled!"
           }
         }
       }
     },
-    "settings.toggle.module.mood" : {
-      "comment" : "short hint that mood module is toggled",
+    "med.edit.item" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abschnitt Stimmung"
+            "value" : "Medikament bearbeiten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mood section"
+            "value" : "Edit medication"
           }
         }
       }
     },
-    "settings.toggle.reset.footer" : {
-      "comment" : "makes clear to user that erasing is irreversible",
+    "med.trash.item" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vorsicht! Gelöschte Daten können nicht wiederhergestellt werden!"
+            "value" : "Medikament entfernen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Be careful, deleted data can not be restored!"
+            "value" : "Remove medication"
           }
         }
       }
     },
-    "settings.toggle.reset.header" : {
-      "comment" : "hints that below data will be erased",
+    "mood.header.howDidYouFeel" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Daten löschen"
+            "value" : "Wie hast du dich gefühlt?"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erase data"
+            "value" : "How did you feel?"
           }
         }
       }
     },
-    "settings.version.info" : {
-      "comment" : "says 'app version'",
+    "mood.textEditor.whatMadeYouSmile" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was hat dir dieses Gefühl gegeben?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What made you feel that way?"
+          }
+        }
+      }
+    },
+    "none.days.selected" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "keine Tage ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "select days"
+          }
+        }
+      }
+    },
+    "none.times.selected" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "keine Zeiten ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "select times"
+          }
+        }
+      }
+    },
+    "Peawell" : {
+      "shouldTranslate" : false
+    },
+    "prompt.meds.amount" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dosis des Medikaments"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication dose"
+          }
+        }
+      }
+    },
+    "prompt.meds.name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name des Medikaments"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name of the medication"
+          }
+        }
+      }
+    },
+    "section.footer.modules" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige oder verstecke bestimmte Module in der App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle visibility of the modules in the app"
+          }
+        }
+      }
+    },
+    "section.footer.reset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aktion löscht alle Daten und stellt die Standardeinstellungen wieder her."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This will delete all data and reset to default settings. This action can not be undone."
+          }
+        }
+      }
+    },
+    "section.header.about" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über diese App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About this app"
+          }
+        }
+      }
+    },
+    "section.header.medHistory" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikationsverlauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication history"
+          }
+        }
+      }
+    },
+    "section.header.medList" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liste der Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List of medications"
+          }
+        }
+      }
+    },
+    "section.header.meds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erforderliche Felder"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Required fields"
+          }
+        }
+      }
+    },
+    "section.header.modules" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Module"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modules"
+          }
+        }
+      }
+    },
+    "section.header.reset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "suffix.appVersion" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -769,25 +542,197 @@
         }
       }
     },
-    "settings.version.release" : {
-      "comment" : "says version missing",
+    "suffix.picker.medKind" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Version fehlt"
+            "value" : "Art des Medikaments"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "version missing"
+            "value" : "Kind of medication"
           }
         }
       }
     },
-    "What made you smile today?" : {
-
+    "title.daySelection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select days"
+          }
+        }
+      }
+    },
+    "title.diary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journal"
+          }
+        }
+      }
+    },
+    "title.editDiary" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintrag bearbeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit journal"
+          }
+        }
+      }
+    },
+    "title.med" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikament"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication"
+          }
+        }
+      }
+    },
+    "title.modify.meds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikament hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add medication"
+          }
+        }
+      }
+    },
+    "title.mood" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagebucheintrag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journal entry"
+          }
+        }
+      }
+    },
+    "title.settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "title.timeSelection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeiten auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select times"
+          }
+        }
+      }
+    },
+    "toggle.reminders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen einschalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set reminders"
+          }
+        }
+      }
+    },
+    "toggle.show.med" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige Abschnitt Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show medication section"
+          }
+        }
+      }
+    },
+    "toggle.show.mood" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige Abschnitt Tagebuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show journal section"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

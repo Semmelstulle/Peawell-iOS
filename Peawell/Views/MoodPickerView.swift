@@ -37,97 +37,82 @@ struct MoodPickerView: View {
     ]
     
     var body: some View {
-        Button(
-            action: {
-                showMoodField = true
-            }, label: {
-                Label(NSLocalizedString("module.new.mood", comment: "tells the user this button is for adding new mood"), systemImage: "square.and.pencil")
-                    .padding(.vertical)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor.opacity(0.3))
-                    .foregroundColor(Color.accentColor)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-        )
-        .sheet(isPresented: $showMoodField, onDismiss: clearInputs) {
-            NavigationStack {
-                Form {
-                    Section(header:
-                                Text(NSLocalizedString("mood.picker.prompt", comment: "ask for the daily, AVERAGE mood"))
-                    ) {
-                        HStack {
-                            ForEach(moodOptions, id: \.name) { option in
-                                MoodButtonView(
-                                    panelColor: option.color,
-                                    moodImage: option.image,
-                                    moodName: option.name,
-                                    isSelected: moodName == option.name,
-                                    anySelected: !moodName.isEmpty,
-                                    onTap: {
-                                        if moodName == option.name {
-                                            moodName = ""
-                                        } else {
-                                            moodName = option.name
-                                        }
+        NavigationStack {
+            Form {
+                Section(header:
+                            Text("mood.header.howDidYouFeel")
+                ) {
+                    HStack {
+                        ForEach(moodOptions, id: \.name) { option in
+                            MoodButtonView(
+                                panelColor: option.color,
+                                moodImage: option.image,
+                                moodName: option.name,
+                                isSelected: moodName == option.name,
+                                anySelected: !moodName.isEmpty,
+                                onTap: {
+                                    if moodName == option.name {
+                                        moodName = ""
+                                    } else {
+                                        moodName = option.name
                                     }
-                                )
-                                .animation(.easeInOut, value: moodName)
-                            }
+                                }
+                            )
+                            .animation(.easeInOut, value: moodName)
                         }
                     }
-                    Section {
-                        // Make the TextEditor expand
-                        ZStack(alignment: .topLeading) {
-                            if actName.isEmpty {
-                                Text("What made you smile today?")
-                                    .foregroundColor(.secondary)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 12)
-                            }
-                            TextEditor(text: $actName)
-                                .frame(minHeight: 100, maxHeight: .infinity, alignment: .top)
-                                .padding(4)
-                        }
-                        .frame(maxHeight: .infinity, alignment: .top)
-                        .listRowInsets(EdgeInsets())
-                    }
-                    Section {
-                        Button(
-                            action: {
-                                saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                                clearInputs()
-                                dismiss()
-                            },
-                            label: {
-                                Label(NSLocalizedString("module.save.mood", comment: "tells the user this screen is for saving new mood"), systemImage: "plus")
-                                    .frame(maxWidth: .infinity)
-                                    .multilineTextAlignment(.center)
-                            }
-                        )
-                    }
-                    .listRowBackground(Color.accentColor.opacity(0.3))
                 }
-                .navigationTitle(NSLocalizedString("module.mood.picker", comment: "title of the mood picker sheet"))
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
+                Section {
+                    // Make the TextEditor expand
+                    ZStack(alignment: .topLeading) {
+                        if actName.isEmpty {
+                            Text("mood.textEditor.whatMadeYouSmile")
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 12)
+                        }
+                        TextEditor(text: $actName)
+                            .frame(minHeight: 100, maxHeight: .infinity, alignment: .top)
+                            .padding(4)
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .listRowInsets(EdgeInsets())
+                }
+                Section {
+                    Button(
+                        action: {
+                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
                             clearInputs()
                             dismiss()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.gray)
-                                .font(.system(size: 25))
-                                .symbolRenderingMode(.hierarchical)
+                        },
+                        label: {
+                            Label("button.mood.save", systemImage: "plus")
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
                         }
+                    )
+                }
+                .listRowBackground(Color.accentColor.opacity(0.3))
+            }
+            .navigationTitle("title.mood")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        clearInputs()
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.gray)
+                            .font(.system(size: 25))
+                            .symbolRenderingMode(.hierarchical)
                     }
                 }
             }
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.hidden)
         }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.hidden)
     }
-    
     private func clearInputs() {
         moodName = ""
         actName = ""
@@ -171,8 +156,6 @@ struct MoodButtonView: View {
         .buttonStyle(.plain)
     }
 }
-
-
 
 #Preview {
     MoodPickerView()

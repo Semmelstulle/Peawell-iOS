@@ -40,17 +40,17 @@ struct ModifyMedsSheetView: View {
         NavigationStack {
             Form {
                 //  neccessary fields on the top
-                Section(header: Text(NSLocalizedString("add.meds.header", comment: "tells the user fields below are neccessary"))) {
+                Section(header: Text("section.header.meds")) {
                     TextField(
-                        "Medication name",
+                        "prompt.meds.name",
                         text: $medName,
-                        prompt: Text(NSLocalizedString("add.meds.medName", comment: "ask for medication name"))
+                        prompt: Text("prompt.meds.name")
                     )
                     HStack {
                         TextField(
-                            "Medication dose",
+                            "prompt.meds.amount",
                             text: $medAmount,
-                            prompt: Text(NSLocalizedString("add.meds.medDose", comment: "ask for medication dose"))
+                            prompt: Text("prompt.meds.amount")
                         )
                         .keyboardType(.decimalPad)
                         Picker(
@@ -64,7 +64,7 @@ struct ModifyMedsSheetView: View {
                         .labelsHidden()
                     }
                     Picker(
-                        NSLocalizedString("add.meds.medKind", comment: "ask for medication type"),
+                        "suffix.picker.medKind",
                         selection: $medKind
                     ) {
                         ForEach(availableKinds, id: \.self) { item in
@@ -75,16 +75,16 @@ struct ModifyMedsSheetView: View {
                 //  toggle so the schedule is only shown if relevant
                 Section {
                     Toggle(isOn: $medRemind) {
-                        Text(NSLocalizedString("add.meds.enale.reminder", comment: "Let user know this toggles use of reminder"))
+                        Text("toggle.reminders")
                     }
                     if medRemind {
                         Button(action: {
                             showDaySelectionSheet = true
                         }) {
                             HStack {
-                                Text(NSLocalizedString("add.reminder.days.of.week", comment: "Let user know here is where you select days of week"))
+                                Text("title.daySelection")
                                 Spacer()
-                                Text(selectedDays.isEmpty ? "Select days" : "\(selectedDays.count) days selected")
+                                Text(selectedDays.isEmpty ? "none.days.selected" : "\(selectedDays.count) x.days.selected")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -96,9 +96,9 @@ struct ModifyMedsSheetView: View {
                             showTimeSelectionSheet = true
                         }) {
                             HStack {
-                                Text(NSLocalizedString("add.reminder.hours.and.minutes", comment: "Let user know here is where you select the time"))
+                                Text("title.timeSelection")
                                 Spacer()
-                                Text(selectedTimes.isEmpty ? "Select times" : "\(selectedTimes.count) times selected")
+                                Text(selectedTimes.isEmpty ? "none.times.selected" : "\(selectedTimes.count) x.times.selected")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -124,7 +124,7 @@ struct ModifyMedsSheetView: View {
                                 )
                                 dismiss()
                             }, label: {
-                                Label(NSLocalizedString("module.save.meds", comment: "tells the user this screen is for saving new or changed meds"), systemImage: "plus")
+                                Label("button.save.meds", systemImage: "plus")
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)
                             }
@@ -133,7 +133,7 @@ struct ModifyMedsSheetView: View {
                 }
                 .listRowBackground(Color.accentColor.opacity(0.3))
             }
-            .navigationTitle(NSLocalizedString("module.add.meds", comment: "tells the user this screen is for adding meds"))
+            .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
             //  just a fancy dismiss button
             .toolbar {
@@ -199,10 +199,10 @@ struct DaySelectionView: View {
                     .foregroundColor(.primary)
                 }
             }
-            .navigationTitle("Select Days")
+            .navigationTitle("title.daySelection")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
+                    Button("button.done") {
                         dismiss()
                     }
                 }
@@ -223,7 +223,7 @@ struct TimeSelectionView: View {
                     .datePickerStyle(.wheel)
                     .labelsHidden()
                 
-                Button("Add Time") {
+                Button("button.addTime") {
                     let calendar = Calendar.current
                     let components = calendar.dateComponents([.hour, .minute], from: newTime)
                     if let normalizedTime = calendar.date(from: components) {
@@ -243,17 +243,17 @@ struct TimeSelectionView: View {
                     .onDelete(perform: deleteTime)
                 }
                 .toolbar {
-                    EditButton()
-                }
-            }
-            .navigationTitle("Select Times")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        dismiss()
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("button.done") {
+                            dismiss()
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
                     }
                 }
             }
+            .navigationTitle("title.timeSelection")
         }
     }
     

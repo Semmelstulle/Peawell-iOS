@@ -27,9 +27,8 @@ struct MedLogView: View {
 
     var body: some View {
         List {
-            Section(header: Text("Medications")) {
+            Section(header: Text("section.header.medList")) {
                 ForEach(medsItems) { item in
-                    // sub pages where the user can read more about dose, schedule etc.
                     NavigationLink {
                         List {
                             Section {
@@ -40,13 +39,10 @@ struct MedLogView: View {
                                     Spacer()
                                 }
                             }
-                            //  needed so the icon has no list styling
-                            //  below it
                             .listRowBackground(Color.clear)
                             Section {
-                                //  tells medication dose to user
                                 HStack {
-                                    Text(NSLocalizedString("add.meds.medDose", comment: "ask for medication dose"))
+                                    Text("prompt.meds.amount")
                                     Spacer()
                                     Text(item.medDose ?? "")
                                         .font(.title3)
@@ -56,9 +52,8 @@ struct MedLogView: View {
                                         .foregroundColor(Color.secondary)
                                 }
                             }
-                            //  list schedule for user
                             if item.medRemind == true && item.schedule?.count ?? 0 > 0 {
-                                Section(header: Text("Schedule")) {
+                                Section(header: Text("header.schedule")) {
                                     if let schedules = item.schedule as? Set<Schedules>, let schedule = schedules.first {
                                         if let days = schedule.dates as? Set<Int> {
                                             ForEach(Array(days).sorted(), id: \.self) { day in
@@ -79,14 +74,12 @@ struct MedLogView: View {
                             Button {
                                 editingMed = item
                             } label: {
-                                Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
+                                Image(systemName: "square.and.pencil")
                             }
-                            Button(
-                                role: .destructive
-                            ) {
+                            Button(role: .destructive) {
                                 trashItem(objectID: item.objectID)
                             } label: {
-                                Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                                Image(systemName: "trash")
                             }
                         }
                         .navigationTitle(
@@ -95,8 +88,6 @@ struct MedLogView: View {
                             ModifyMedsSheetView(med: med)
                         }
                     } label: {
-                        //  the list view of medications that can be
-                        //  logged by the user
                         HStack() {
                             Image(item.medKind ?? "")
                                 .resizable()
@@ -112,25 +103,21 @@ struct MedLogView: View {
                                 .opacity(0.4)
                         }
                     }
-                    // delete action when swiping on the item
                     .swipeActions(allowsFullSwipe: true) {
-                        Button(
-                            role: .destructive
-                        ) {
+                        Button(role: .destructive) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                            Image(systemName: "trash")
                         }
                         Button {
                             editingMed = item
                         } label: {
-                            Label(NSLocalizedString("med.edit.item", comment: "tells user that action edits the medication"), systemImage: "square.and.pencil")
-                                .tint(Color.orange)
+                            Image(systemName: "square.and.pencil")
                         }
                     }
                 }
             }
-            Section(header: Text("Log History")) {
+            Section(header: Text("section.header.medHistory")) {
                 ForEach(logEntries, id: \.self) { item in  // Add explicit ID
                     HStack {  // Remove nested List
                         Image(item.medication?.medKind ?? "longPill")  // Access through relationship
@@ -147,18 +134,16 @@ struct MedLogView: View {
                         }
                     }
                     .swipeActions(allowsFullSwipe: true) {
-                        Button(
-                            role: .destructive
-                        ) {
+                        Button(role: .destructive) {
                             trashItem(objectID: item.objectID)
                         } label: {
-                            Label(NSLocalizedString("med.trash.item", comment: "tells user that action trashes medication"), systemImage: "trash")
+                            Image(systemName: "trash")
                         }
                     }
                 }
             }
         }
-        .navigationTitle(NSLocalizedString("module.med", comment: "module name for meds"))
+        .navigationTitle("title.med")
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
         }

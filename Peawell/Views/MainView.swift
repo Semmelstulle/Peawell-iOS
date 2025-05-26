@@ -17,6 +17,7 @@ struct MainView: View {
     // variables for showing sheets
     @State private var showingSettingsSheet = false
     @State private var isAnimating = false
+    @State private var showingMoodPickerSheet = false
     
     var body: some View {
         NavigationStack {
@@ -30,15 +31,28 @@ struct MainView: View {
                 
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
-                    MoodPickerView()
-                        .padding()
+                    Button(action: {
+                        showingMoodPickerSheet = true
+                    }) {
+                        Label("button.moodPickerSheet", systemImage: "square.and.pencil")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.accentColor.opacity(0.3))
+                            .foregroundColor(.accentColor)
+                            .cornerRadius(10)
+                    }
+                    .padding()
+                    .sheet(isPresented: $showingMoodPickerSheet) {
+                        MoodPickerView()
+                    }
                 }
                 if settingShowMedicationSection == true {
                     MedsView()
                         .padding()
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
-                    Text(NSLocalizedString("main.empty.hint", comment: "tell the person that all modules are disabled thus there is nothing here."))
+                    Text("main.empty.hint")
                         .padding()
                 }
             }
