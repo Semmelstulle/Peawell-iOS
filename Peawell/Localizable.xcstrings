@@ -171,6 +171,9 @@
         }
       }
     },
+    "Details for %@" : {
+
+    },
     "dialog.infoText" : {
       "localizations" : {
         "de" : {
@@ -701,6 +704,9 @@
           }
         }
       }
+    },
+    "Today" : {
+
     },
     "toggle.reminders" : {
       "localizations" : {

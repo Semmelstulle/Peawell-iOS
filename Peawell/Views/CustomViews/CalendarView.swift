@@ -8,65 +8,115 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @State private var progressValues: [CGFloat] = Array(repeating: 0, count: 7)
+    @State private var path = NavigationPath()
+    @State private var scrollOffset: CGFloat = 0
+    @State private var scrollProxy: ScrollViewProxy?
+    private let totalDays = 105
     
     var body: some View {
-        GroupBox {
-            GeometryReader { geometry in
-                HStack(spacing: 0) {
-                    ForEach(0..<7, id: \.self) { index in
-                        let isCurrentDay = index == 6
-                        DayView(
-                            progress: progressValues[index],
-                            isCurrentDay: isCurrentDay,
-                            dayOffset: index - 6,
-                            containerWidth: geometry.size.width / 7
+        NavigationStack(path: $path) {
+            VStack {
+                GeometryReader { geometry in
+                    let dayWidth = geometry.size.width / 7
+                    ScrollViewReader { proxy in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 0) {
+                                ForEach(-90..<15, id: \.self) { offset in
+                                    NavigationLink(value: dateForOffset(offset)) {
+                                        DayView(
+                                            dayOffset: offset,
+                                            containerWidth: dayWidth,
+                                            isCurrentDay: offset == 0
+                                        )
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .id(offset)
+                                }
+                            }
+                            .background(GeometryReader { geo in
+                                Color.clear.preference(
+                                    key: ScrollOffsetKey.self,
+                                    value: geo.frame(in: .named("scroll")).origin
+                                )
+                            })
+                        }
+                        .coordinateSpace(name: "scroll")
+                        .onPreferenceChange(ScrollOffsetKey.self) { value in
+                            scrollOffset = -value.x
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onEnded { _ in
+                                    let visibleDays = Int(round(scrollOffset / dayWidth))
+                                    let snappedOffset = visibleDays - (visibleDays % 7)
+                                    let targetOffset = max(min(snappedOffset, 104 * 7), 0)
+                                    
+                                    withAnimation(.spring()) {
+                                        proxy.scrollTo(targetOffset, anchor: .center)
+                                    }
+                                }
                         )
+                        .onAppear {
+                            scrollProxy = proxy
+                            proxy.scrollTo(0, anchor: .center)
+                        }
+                    }
+                }
+                .frame(height: 120)
+            }
+            .padding(.horizontal, -16)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("button.scrollToToday") {
+                        withAnimation {
+                            scrollProxy?.scrollTo(0, anchor: .center)
+                        }
                     }
                 }
             }
-            .frame(maxWidth: .infinity, idealHeight: 120)
-            .onAppear {
-                progressValues = (0..<7).map { _ in CGFloat.random(in: 0...1) }
+            .navigationDestination(for: Date.self) { date in
+                DayDetailView(date: date)
             }
         }
-        .frame(height: 110)
+    }
+    
+    private func dateForOffset(_ offset: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: offset, to: Date()) ?? Date()
     }
 }
+    
+// MARK: - Helper Components
 
 private struct DayView: View {
-    let progress: CGFloat
-    let isCurrentDay: Bool
     let dayOffset: Int
     let containerWidth: CGFloat
+    let isCurrentDay: Bool
+    
+    private var date: Date {
+        Calendar.current.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+    }
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 8) {
             ZStack {
-                // Progress ring background
                 Circle()
                     .stroke(lineWidth: 4)
                     .foregroundColor(.gray.opacity(0.2))
-                
-                // Progress ring
                 Circle()
-                    .trim(from: 0, to: progress)
-                    .stroke(
-                        style: StrokeStyle(
-                            lineWidth: 8,
-                            lineCap: .round
-                        )
-                    )
-                    .foregroundColor(.accentColor)
+                    .trim(from: 0, to: 0.8)
+                    .stroke(style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                    .foregroundColor(isCurrentDay ? .white : .accentColor) // White for current day
                     .rotationEffect(.degrees(-90))
             }
-            .frame(width: containerWidth * 0.6)
-            .padding(.top, 4)
+            .frame(width: containerWidth * 0.55)
             
-            // Day number
-            Text(dayString)
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(isCurrentDay ? .white : .primary)
+            VStack(spacing: 2) {
+                Text(dayString)
+                    .font(.system(.callout, weight: .medium))
+                Text(monthAbbreviation)
+                    .font(.system(.footnote, weight: .light))
+            }
+            .foregroundColor(isCurrentDay ? .white : .primary)
         }
         .frame(width: containerWidth)
         .padding(.vertical, 8)
@@ -74,8 +124,13 @@ private struct DayView: View {
     }
     
     private var dayString: String {
-        let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
-        return Calendar.current.component(.day, from: date).description
+        Calendar.current.component(.day, from: date).description
+    }
+    
+    private var monthAbbreviation: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter.string(from: date)
     }
     
     private var currentDayPill: some View {
@@ -86,6 +141,26 @@ private struct DayView: View {
     }
 }
 
+struct ScrollOffsetKey: PreferenceKey {
+    static var defaultValue: CGPoint = .zero
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
+        value = nextValue()
+    }
+}
+
+struct DayDetailView: View {
+    let date: Date
+    var body: some View {
+        Text("Details for \(date.formatted(date: .long, time: .omitted))")
+            .navigationTitle(date.formatted(date: .abbreviated, time: .omitted))
+    }
+}
+
 #Preview {
     CalendarView()
+}
+
+#Preview {
+    MainView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
