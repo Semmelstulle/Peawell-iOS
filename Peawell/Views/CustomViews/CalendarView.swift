@@ -14,69 +14,67 @@ struct CalendarView: View {
     private let totalDays = 105
     
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack {
-                GeometryReader { geometry in
-                    let dayWidth = geometry.size.width / 7
-                    ScrollViewReader { proxy in
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack(spacing: 0) {
-                                ForEach(-90..<15, id: \.self) { offset in
-                                    NavigationLink(value: dateForOffset(offset)) {
-                                        DayView(
-                                            dayOffset: offset,
-                                            containerWidth: dayWidth,
-                                            isCurrentDay: offset == 0
-                                        )
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .id(offset)
+        VStack {
+            GeometryReader { geometry in
+                let dayWidth = geometry.size.width / 7
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHStack(spacing: 0) {
+                            ForEach(-90..<15, id: \.self) { offset in
+                                NavigationLink(value: dateForOffset(offset)) {
+                                    DayView(
+                                        dayOffset: offset,
+                                        containerWidth: dayWidth,
+                                        isCurrentDay: offset == 0
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .id(offset)
+                            }
+                        }
+                        .background(GeometryReader { geo in
+                            Color.clear.preference(
+                                key: ScrollOffsetKey.self,
+                                value: geo.frame(in: .named("scroll")).origin
+                            )
+                        })
+                    }
+                    .coordinateSpace(name: "scroll")
+                    .onPreferenceChange(ScrollOffsetKey.self) { value in
+                        scrollOffset = -value.x
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onEnded { _ in
+                                let visibleDays = Int(round(scrollOffset / dayWidth))
+                                let snappedOffset = visibleDays - (visibleDays % 7)
+                                let targetOffset = max(min(snappedOffset, 104 * 7), 0)
+                                
+                                withAnimation(.spring()) {
+                                    proxy.scrollTo(targetOffset, anchor: .center)
                                 }
                             }
-                            .background(GeometryReader { geo in
-                                Color.clear.preference(
-                                    key: ScrollOffsetKey.self,
-                                    value: geo.frame(in: .named("scroll")).origin
-                                )
-                            })
-                        }
-                        .coordinateSpace(name: "scroll")
-                        .onPreferenceChange(ScrollOffsetKey.self) { value in
-                            scrollOffset = -value.x
-                        }
-                        .gesture(
-                            DragGesture()
-                                .onEnded { _ in
-                                    let visibleDays = Int(round(scrollOffset / dayWidth))
-                                    let snappedOffset = visibleDays - (visibleDays % 7)
-                                    let targetOffset = max(min(snappedOffset, 104 * 7), 0)
-                                    
-                                    withAnimation(.spring()) {
-                                        proxy.scrollTo(targetOffset, anchor: .center)
-                                    }
-                                }
-                        )
-                        .onAppear {
-                            scrollProxy = proxy
-                            proxy.scrollTo(0, anchor: .center)
-                        }
-                    }
-                }
-                .frame(height: 120)
-            }
-            .padding(.horizontal, -16)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("button.scrollToToday") {
-                        withAnimation {
-                            scrollProxy?.scrollTo(0, anchor: .center)
-                        }
+                    )
+                    .onAppear {
+                        scrollProxy = proxy
+                        proxy.scrollTo(0, anchor: .center)
                     }
                 }
             }
-            .navigationDestination(for: Date.self) { date in
-                DayDetailView(date: date)
+            .frame(height: 120)
+        }
+        .padding(.horizontal, -16)
+        .toolbar {
+            ToolbarItem(/*placement: .primaryAction*/) {
+                Button("button.scrollToToday") {
+                    withAnimation {
+                        scrollProxy?.scrollTo(0, anchor: .center)
+                    }
+                }
             }
+        }
+        .navigationDestination(for: Date.self) { date in
+            DayDetailView(date: date)
         }
     }
     
@@ -84,7 +82,7 @@ struct CalendarView: View {
         Calendar.current.date(byAdding: .day, value: offset, to: Date()) ?? Date()
     }
 }
-    
+
 // MARK: - Helper Components
 
 private struct DayView: View {
