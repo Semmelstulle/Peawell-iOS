@@ -148,9 +148,84 @@ struct ScrollOffsetKey: PreferenceKey {
 
 struct DayDetailView: View {
     let date: Date
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \LogTimeMeds.logTimes, ascending: false)], animation: .default)
+    var medLogs: FetchedResults<LogTimeMeds>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
+    var moodLogs: FetchedResults<Mood>
+    
     var body: some View {
-        Text("Details for \(date.formatted(date: .long, time: .omitted))")
-            .navigationTitle(date.formatted(date: .abbreviated, time: .omitted))
+        List {
+            Section(header: Text("section.header.medHistory")) {
+                ForEach(medLogsForDay, id: \.self) { item in
+                    HStack {
+                        Image(item.medication?.medKind ?? "longPill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(6)
+                            .background(Color.accentColor)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Text(item.medication?.medType ?? "Unknown Medication")
+                        Spacer()
+                        if let logTime = item.logTimes {
+                            Text(logTime.formatted(date: .abbreviated, time: .shortened))
+                                .opacity(0.4)
+                        }
+                    }
+                }
+            }
+            Section(header: Text("title.diary")) {
+                ForEach(moodLogsForDay, id: \.self) { item in
+                    NavigationLink(destination: MoodDetailSubView(item: item)) {
+                        HStack {
+                            Image("mood\(item.moodName ?? "Neutral")")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .padding(6)
+                                .background(getMoodColor(item.moodName))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Text(item.logDate ?? Date.now, style: .date)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(date.formatted(date: .abbreviated, time: .omitted))
+    }
+    
+    private var medLogsForDay: [LogTimeMeds] {
+        medLogs.filter { log in
+            guard let logDate = log.logTimes else { return false }
+            return Calendar.current.isDate(logDate, inSameDayAs: date)
+        }
+    }
+    private var moodLogsForDay: [Mood] {
+        moodLogs.filter { log in
+            guard let logDate = log.logDate else { return false }
+            return Calendar.current.isDate(logDate, inSameDayAs: date)
+        }
+    }
+}
+
+private struct MoodDetailSubView: View {
+    let item: Mood
+    var body: some View {
+        List {
+            Section {
+                HStack {
+                    Spacer()
+                    Image("mood\(item.moodName ?? "Neutral")")
+                    Spacer()
+                }
+            }
+            .listRowBackground(getMoodColor(item.moodName))
+            Section {
+                Text(item.activityName ?? "Text missing")
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+        }
+        .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
     }
 }
 

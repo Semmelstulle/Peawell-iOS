@@ -188,6 +188,7 @@
       }
     },
     "Details for %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
