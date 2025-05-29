@@ -171,8 +171,37 @@
         }
       }
     },
+    "button.scrollToToday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
     "Details for %@" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details für %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details for %@"
+          }
+        }
+      }
     },
     "dialog.infoText" : {
       "localizations" : {
@@ -704,9 +733,6 @@
           }
         }
       }
-    },
-    "Today" : {
-
     },
     "toggle.reminders" : {
       "localizations" : {
