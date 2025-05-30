@@ -11,6 +11,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld x.days.selected" : {
       "localizations" : {
         "de" : {
@@ -42,9 +45,6 @@
           }
         }
       }
-    },
-    "Add Medication" : {
-
     },
     "button.addTime" : {
       "localizations" : {
@@ -190,23 +190,6 @@
         }
       }
     },
-    "Details for %@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details für %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details for %@"
-          }
-        }
-      }
-    },
     "dialog.infoText" : {
       "localizations" : {
         "de" : {
@@ -299,23 +282,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All modules are disabled!"
-          }
-        }
-      }
-    },
-    "med.add.item" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add medication"
           }
         }
       }

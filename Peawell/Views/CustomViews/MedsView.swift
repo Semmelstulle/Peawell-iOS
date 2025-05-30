@@ -73,7 +73,6 @@ struct MedsView: View {
                 Image(systemName: "plus")
                     .font(.title2)
             }
-            .accessibilityLabel("Add Medication")
         }
         .padding(.horizontal, 16)
     }

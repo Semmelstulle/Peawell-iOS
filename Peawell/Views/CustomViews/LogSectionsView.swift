@@ -7,89 +7,99 @@
 
 import SwiftUI
 
+enum TileDestination: Hashable {
+    case mood
+    case med
+}
+
 struct LogSectionsView: View {
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
     
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
+    private var moodItems: FetchedResults<Mood>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
+    private var medsItems: FetchedResults<Meds>
+    
     var body: some View {
         HStack(spacing: 16) {
             if settingShowMoodSection {
-                NavigationLink(destination: MoodLogView()) {
-                    TileView(
-                        tileTitle: LocalizedStringKey("title.diary"),
-                        tileImage: "3dDiary",
-                        tileGradient: LinearGradient(
-                            colors: [.orange, .yellow],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                }
+                TileButton(
+                    iconName: "3dDiary",
+                    title: LocalizedStringKey("title.diary"),
+                    count: moodItems.count,
+                    gradient: LinearGradient(
+                        colors: [.orange, .yellow],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    value: .mood
+                )
             }
             if settingShowMedicationSection {
-                NavigationLink(destination: MedLogView()) {
-                    TileView(
-                        tileTitle: LocalizedStringKey("title.med"),
-                        tileImage: "3dMedication",
-                        tileGradient: LinearGradient(
-                            colors: [.mint, .teal],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                }
+                TileButton(
+                    iconName: "3dMedication",
+                    title: LocalizedStringKey("title.med"),
+                    count: medsItems.count,
+                    gradient: LinearGradient(
+                        colors: [.mint, .teal],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    value: .med
+                )
+            }
+        }
+        .navigationDestination(for: TileDestination.self) { destination in
+            switch destination {
+            case .mood:
+                MoodLogView()
+            case .med:
+                MedLogView()
             }
         }
     }
 }
 
-struct TileView: View {
-    let tileTitle: LocalizedStringKey
-    let tileImage: String
-    let tileGradient: LinearGradient
+struct TileButton: View {
+    let iconName: String
+    let title: LocalizedStringKey
+    let count: Int
+    let gradient: LinearGradient
+    let value: TileDestination
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(tileGradient)
-            VStack {
-                HStack {
-                    Image(tileImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
-                        .padding()
-                    Spacer()
+        NavigationLink(value: value) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(gradient)
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(alignment: .top) {
+                        Image(iconName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                        Spacer()
+                        HStack(spacing: 4) {
+                            Text("\(count)")
+                                .font(.title2)
+                                .foregroundColor(.white)
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                    }
+                    .padding()
+                    Text(title)
+                        .font(.title2.bold())
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .padding([.trailing, .leading, .bottom])
                 }
-                Spacer()
-            }
-            // Huge, bottom-right, clipped text
-            GeometryReader { geo in
-                Text(tileTitle)
-                    .lineLimit(1)
-                    .font(.system(size: geo.size.height * 0.3, weight: .bold))
-                    .foregroundColor(.white.opacity(0.5))
-                    .frame(width: geo.size.width, height: geo.size.height, alignment: .bottomTrailing)
-                    .offset(x: geo.size.width * 0.2, y: geo.size.height * 0)
-                    .clipped()
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            // Chevron overlay
-            VStack {
-                HStack {
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                    //.font(.title)
-                        .foregroundColor(.white.opacity(0.8))
-                        .padding()
-                }
-                Spacer()
             }
         }
-        .frame(height: 120)
+        .buttonStyle(PlainButtonStyle())
     }
 }
-
 
 #Preview {
     LogSectionsView()
