@@ -36,7 +36,6 @@ struct MedsView: View {
                 Image(systemName: "plus")
                     .font(.title2)
             }
-            .accessibilityLabel("Add Medication")
         }
             .padding(.horizontal, 20)
         ) {
@@ -57,7 +56,6 @@ struct MedsView: View {
                         logMedicationIntake(for: item)
                     }
                 )
-                .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 .contextMenu() {
                     Button(
                         role: .destructive
@@ -120,14 +118,14 @@ struct PanelView<V: View>: View {
                     .scaledToFit()
                 icon
                     .frame(width: 42, height: 42)
+                    .shadow(radius: 5, x: 0, y: 3)
             }
             .frame(maxWidth: 90, alignment: .center)
-            .clipped()
             VStack {
                 Text(title)
                     .font(.title3)
                     .foregroundColor(.primary)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(doseAmnt + " " + doseUnit)
                     .font(.title3)
@@ -135,7 +133,7 @@ struct PanelView<V: View>: View {
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal)
             ZStack {
                 if showTick {
                     Image(systemName: "checkmark.circle.fill")
@@ -143,14 +141,14 @@ struct PanelView<V: View>: View {
                         .scaledToFit()
                         .symbolRenderingMode(.hierarchical)
                         .frame(width: 30, height: 30)
-                        .frame(maxWidth: 100, alignment: .center)
+                        .frame(maxWidth: 90, alignment: .center)
                 } else {
                     Image(systemName: "plus.circle.fill")
                         .resizable()
                         .scaledToFit()
                         .symbolRenderingMode(.hierarchical)
                         .frame(width: 30, height: 30)
-                        .frame(maxWidth: 100, alignment: .center)
+                        .frame(maxWidth: 90, alignment: .center)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 showTick = true
