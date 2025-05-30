@@ -25,71 +25,63 @@ struct MedsView: View {
     @State public var showAddMedSheet = false
     
     var body: some View {
-        ZStack {
-            //  grid that replicates what Passwords and Reminders do
-            //  on the top
-            LazyVGrid(columns: [.init(spacing: 16), .init(spacing: 16)], spacing: 16) {
-                ForEach(medsItems) { item in
-                    PanelView(
-                        icon:
-                            Image(item.medKind ?? "longPill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .padding(5)
-                            .background(Color.accentColor)
-                            .clipShape(Circle()),
-                        doseAmnt: String(item.medDose ?? ""),
-                        doseUnit: String(item.medUnit ?? ""),
-                        title: LocalizedStringKey(item.medType ?? "")
-                    )
-                    .modifier(BounceAnimationModifier {
-                        hapticConfirm()
-                        logMedicationIntake(for: item)
-                    })
-                    .contextMenu() {
-                        Button(
-                            role: .destructive
-                        ) {
-                            trashItem(objectID: item.objectID)
-                        } label: {
-                            Label("med.trash.item", systemImage: "trash")
-                        }
-                        Button {
-                            editingMed = item
-                        } label: {
-                            Label("med.edit.item", systemImage: "square.and.pencil")
-                        }
-                    }
-                }
-                //  custom cell that is here for adding new meds
+        VStack {
+            ForEach(medsItems) { item in
+                let medKind = item.medKind ?? "longPill"
+                let medColorName = "\(medKind)Color"
                 PanelView(
                     icon:
-                        Image(systemName: "plus.circle.fill")
+                        Image(medKind)
                         .resizable()
-                        .frame(width: 40, height: 40)
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(Color.accentColor)
-                        .clipShape(Circle()),
-                    doseAmnt: String(medsItems.count),
-                    doseUnit: "",
-                    title: LocalizedStringKey("med.add.item")
+                        .scaledToFit(),
+                    medColor: Color(medColorName),
+                    doseAmnt: String(item.medDose ?? ""),
+                    doseUnit: String(item.medUnit ?? ""),
+                    title: LocalizedStringKey(item.medType ?? ""),
+                    onPlusTap: {
+                        hapticConfirm()
+                        logMedicationIntake(for: item)
+                    }
                 )
-                .onTapGesture {
+                .contextMenu() {
+                    Button(
+                        role: .destructive
+                    ) {
+                        trashItem(objectID: item.objectID)
+                    } label: {
+                        Label("med.trash.item", systemImage: "trash")
+                    }
+                    Button {
+                        editingMed = item
+                    } label: {
+                        Label("med.edit.item", systemImage: "square.and.pencil")
+                    }
+                }
+            }
+            //  custom cell that is here for adding new meds
+            PanelView(
+                icon: EmptyView(),
+                medColor: Color.clear,
+                doseAmnt: String(medsItems.count),
+                doseUnit: "",
+                title: LocalizedStringKey("med.add.item"),
+                onPlusTap: {
+                    hapticConfirm()
                     showAddMedSheet = true
                 }
-                .sheet(isPresented: $showAddMedSheet) {
-                    ModifyMedsSheetView()
-                        .presentationDetents([.medium, .large])
-                        .presentationDragIndicator(.hidden)
-                }
-                .sheet(item: $editingMed) { med in
-                    ModifyMedsSheetView(med: med)
-                }
-                
+            )
+            .sheet(isPresented: $showAddMedSheet) {
+                ModifyMedsSheetView()
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.hidden)
+            }
+            .sheet(item: $editingMed) { med in
+                ModifyMedsSheetView(med: med)
             }
         }
     }
-    private func logMedicationIntake(for medication: Meds) {
+    private func logMedicationIntake(for medication: Meds?) {
+        guard let medication = medication else { return }
         let newLog = LogTimeMeds(context: viewContext)
         newLog.logTimes = Date()
         newLog.medication = medication
@@ -103,67 +95,78 @@ struct MedsView: View {
             print("Error saving log: \(error)")
         }
     }
-    struct BounceAnimationModifier: ViewModifier {
-        let action: () -> Void
-        @State private var isTapped = false
-        
-        init(action: @escaping () -> Void) {
-            self.action = action
-        }
-        func body(content: Content) -> some View {
-            content
-                .scaleEffect(isTapped ? 0.9 : 1.0)
-                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isTapped)
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded {
-                            withAnimation(.easeInOut(duration: 0.1)) {
-                                isTapped = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
-                                    isTapped = false
-                                }
-                            }
-                            action()
-                        }
-                )
-        }
-    }
 }
 
 //  defines single cell for the grid #reusableCode
 struct PanelView<V: View>: View {
     var icon: V
+    var medColor: Color
     var doseAmnt: String
     var doseUnit: String
     var title: LocalizedStringKey
+    var onPlusTap: (() -> Void)? = nil
+    
+    @State private var showTick = false
     
     var body: some View {
-        VStack {
-            HStack() {
+        HStack(alignment: .center) {
+            ZStack {
+                Rectangle()
+                    .fill(medColor)
+                    .scaledToFit()
                 icon
-                Spacer()
+                    .frame(width: 42, height: 42)
+            }
+            .frame(maxWidth: 90, alignment: .center)
+            .clipped()
+            VStack {
+                Text(title)
+                    .font(.title3)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Text(doseAmnt + " " + doseUnit)
                     .font(.title3)
                     .foregroundColor(Color.secondary)
                     .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            Text(title)
-                .padding(.top, 5)
-                .font(.title3)
-                .foregroundColor(.primary)
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 20)
+            ZStack {
+                if showTick {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .symbolRenderingMode(.hierarchical)
+                        .frame(width: 30, height: 30)
+                        .frame(maxWidth: 100, alignment: .center)
+                } else {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .symbolRenderingMode(.hierarchical)
+                        .frame(width: 30, height: 30)
+                        .frame(maxWidth: 100, alignment: .center)
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                showTick = true
+                            }
+                            onPlusTap?()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showTick = false
+                                }
+                            }
+                        }
+                }
+            }
         }
-        .padding()
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
-struct MedsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MedsView()
-    }
+#Preview {
+    MedsView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

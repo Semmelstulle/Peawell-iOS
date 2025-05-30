@@ -301,6 +301,7 @@
       }
     },
     "med.add.item" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

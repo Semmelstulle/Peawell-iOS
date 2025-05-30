@@ -22,13 +22,10 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             ScrollView() {
-                
                 CalendarView()
                     .padding()
-                
                 LogSectionsView()
                     .padding()
-                
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     Button(action: {
