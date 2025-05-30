@@ -25,7 +25,22 @@ struct MedsView: View {
     @State public var showAddMedSheet = false
     
     var body: some View {
-        VStack {
+        Section(header:
+                    HStack {
+            Text("section.header.medList")
+                .font(.headline)
+            Spacer()
+            Button(action: {
+                showAddMedSheet = true
+            }) {
+                Image(systemName: "plus")
+                    .font(.title2)
+            }
+            .accessibilityLabel("Add Medication")
+        }
+            .padding(.bottom, -16)
+            .padding(.horizontal, 20)
+        ) {
             ForEach(medsItems) { item in
                 let medKind = item.medKind ?? "longPill"
                 let medColorName = "\(medKind)Color"
@@ -43,6 +58,7 @@ struct MedsView: View {
                         logMedicationIntake(for: item)
                     }
                 )
+                .padding(.vertical, -16)
                 .contextMenu() {
                     Button(
                         role: .destructive
@@ -58,26 +74,14 @@ struct MedsView: View {
                     }
                 }
             }
-            //  custom cell that is here for adding new meds
-            PanelView(
-                icon: EmptyView(),
-                medColor: Color.clear,
-                doseAmnt: String(medsItems.count),
-                doseUnit: "",
-                title: LocalizedStringKey("med.add.item"),
-                onPlusTap: {
-                    hapticConfirm()
-                    showAddMedSheet = true
-                }
-            )
-            .sheet(isPresented: $showAddMedSheet) {
-                ModifyMedsSheetView()
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.hidden)
-            }
-            .sheet(item: $editingMed) { med in
-                ModifyMedsSheetView(med: med)
-            }
+        }
+        .sheet(isPresented: $showAddMedSheet) {
+            ModifyMedsSheetView()
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.hidden)
+        }
+        .sheet(item: $editingMed) { med in
+            ModifyMedsSheetView(med: med)
         }
     }
     private func logMedicationIntake(for medication: Meds?) {

@@ -43,6 +43,9 @@
         }
       }
     },
+    "Add Medication" : {
+
+    },
     "button.addTime" : {
       "localizations" : {
         "de" : {
