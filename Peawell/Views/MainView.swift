@@ -43,10 +43,11 @@ struct MainView: View {
                     .sheet(isPresented: $showingMoodPickerSheet) {
                         MoodPickerView()
                     }
+                    .padding(.bottom)
                 }
                 if settingShowMedicationSection == true {
                     MedsView()
-                        .padding()
+                        .padding(.horizontal)
                 }
                 if settingShowMedicationSection == false && settingShowMoodSection == false {
                     Text("main.empty.hint")

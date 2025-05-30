@@ -38,7 +38,6 @@ struct MedsView: View {
             }
             .accessibilityLabel("Add Medication")
         }
-            .padding(.bottom, -16)
             .padding(.horizontal, 20)
         ) {
             ForEach(medsItems) { item in
@@ -58,7 +57,7 @@ struct MedsView: View {
                         logMedicationIntake(for: item)
                     }
                 )
-                .padding(.vertical, -16)
+                .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 .contextMenu() {
                     Button(
                         role: .destructive
@@ -75,6 +74,7 @@ struct MedsView: View {
                 }
             }
         }
+        .listStyle(.plain)
         .sheet(isPresented: $showAddMedSheet) {
             ModifyMedsSheetView()
                 .presentationDetents([.medium, .large])
