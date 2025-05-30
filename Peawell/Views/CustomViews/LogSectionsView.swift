@@ -28,11 +28,6 @@ struct LogSectionsView: View {
                     iconName: "3dDiary",
                     title: LocalizedStringKey("title.diary"),
                     count: moodItems.count,
-                    gradient: LinearGradient(
-                        colors: [.orange, .yellow],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
                     value: .mood
                 )
             }
@@ -41,11 +36,6 @@ struct LogSectionsView: View {
                     iconName: "3dMedication",
                     title: LocalizedStringKey("title.med"),
                     count: medsItems.count,
-                    gradient: LinearGradient(
-                        colors: [.mint, .teal],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
                     value: .med
                 )
             }
@@ -65,14 +55,13 @@ struct TileButton: View {
     let iconName: String
     let title: LocalizedStringKey
     let count: Int
-    let gradient: LinearGradient
     let value: TileDestination
     
     var body: some View {
         NavigationLink(value: value) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(gradient)
+                    .fill(Color(.secondarySystemGroupedBackground))
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(alignment: .top) {
                         Image(iconName)
@@ -80,19 +69,17 @@ struct TileButton: View {
                             .scaledToFit()
                             .frame(width: 40, height: 40)
                         Spacer()
-                        HStack(spacing: 4) {
+                        HStack(spacing: 8) {
                             Text("\(count)")
-                                .font(.title2.bold())
-                                .foregroundColor(.white)
+                                .font(.title2)
                             Image(systemName: "chevron.right")
-                                .foregroundColor(.white.opacity(0.8))
+                                .opacity(0.8)
                         }
-                        .padding(4)
                     }
                     .padding(12)
                     Text(title)
                         .font(.body.bold())
-                        .foregroundColor(.white)
+                        .opacity(0.6)
                         .lineLimit(1)
                         .padding([.trailing, .leading, .bottom], 12)
                 }
@@ -103,5 +90,5 @@ struct TileButton: View {
 }
 
 #Preview {
-    LogSectionsView()
+    MainView()
 }
