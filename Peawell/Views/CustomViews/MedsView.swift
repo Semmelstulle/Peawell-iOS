@@ -113,20 +113,18 @@ struct PanelView<V: View>: View {
                     .frame(width: 42, height: 42)
                     .shadow(radius: 4, x: 0, y: 2)
             }
-            .frame(maxWidth: 90, alignment: .center)
+            .frame(maxWidth: 80, alignment: .center)
             VStack {
                 Text(title)
-                    .font(.title3)
                     .foregroundColor(.primary)
                     .lineLimit(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(doseAmnt + " " + doseUnit)
-                    .font(.title3)
                     .foregroundColor(Color.secondary)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 8)
             ZStack {
                 if showTick {
                     Image(systemName: "checkmark.circle.fill")
@@ -134,14 +132,14 @@ struct PanelView<V: View>: View {
                         .scaledToFit()
                         .symbolRenderingMode(.hierarchical)
                         .frame(width: 30, height: 30)
-                        .frame(maxWidth: 90, alignment: .center)
+                        .frame(maxWidth: 80, alignment: .center)
                 } else {
                     Image(systemName: "plus.circle.fill")
                         .resizable()
                         .scaledToFit()
                         .symbolRenderingMode(.hierarchical)
                         .frame(width: 30, height: 30)
-                        .frame(maxWidth: 90, alignment: .center)
+                        .frame(maxWidth: 80, alignment: .center)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.2)) {
                                 showTick = true

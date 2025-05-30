@@ -82,18 +82,19 @@ struct TileButton: View {
                         Spacer()
                         HStack(spacing: 4) {
                             Text("\(count)")
-                                .font(.title2)
+                                .font(.title2.bold())
                                 .foregroundColor(.white)
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.white.opacity(0.8))
                         }
+                        .padding(4)
                     }
-                    .padding()
+                    .padding(12)
                     Text(title)
-                        .font(.title2.bold())
+                        .font(.body.bold())
                         .foregroundColor(.white)
                         .lineLimit(1)
-                        .padding([.trailing, .leading, .bottom])
+                        .padding([.trailing, .leading, .bottom], 12)
                 }
             }
         }
