@@ -25,88 +25,86 @@ struct MoodLogView: View {
     @State var moodEntry: FetchedResults<Mood>.Element?
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(moodItems) { item in
-                    NavigationLink {
-                        List () {
-                            Section {
-                                HStack {
-                                    Spacer()
-                                    Image("mood\(item.moodName ?? "Neutral")")
-                                    Spacer()
-                                }
-                            }
-                            .listRowBackground(getMoodColor(item.moodName))
-                            Section {
-                                Text(item.activityName ?? "Text missing")
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+        List {
+            ForEach(moodItems) { item in
+                NavigationLink {
+                    List () {
+                        Section {
+                            HStack {
+                                Spacer()
+                                Image("mood\(item.moodName ?? "Neutral")")
+                                Spacer()
                             }
                         }
-                        .toolbar {
-                            Button {
-                                self.editDiaryEntry = item.activityName ?? "error"
-                                moodEntry = item
-                                isShowingEditDiarySheet = true
-                            } label: {
-                                Image(systemName: "square.and.pencil")
-                            }
-                            Button(role: .destructive) {
-                                trashItem(objectID: item.objectID)
-                            } label: {
-                                Image(systemName: "trash")
-                            }
-                        }
-                        .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
-                    } label: {
-                        HStack() {
-                            Image("mood\(item.moodName ?? "Neutral")")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .padding(6)
-                                .background(getMoodColor(item.moodName))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Text(item.logDate ?? Date.now, style: .date)
+                        .listRowBackground(getMoodColor(item.moodName))
+                        Section {
+                            Text(item.activityName ?? "Text missing")
+                                .frame(maxWidth: .infinity, alignment: .topLeading)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
                     }
-                    .swipeActions(allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            trashItem(objectID: item.objectID)
-                        } label: {
-                            Image(systemName: "trash")
-                        }
+                    .toolbar {
                         Button {
-                            self.editDiaryEntry = item.activityName ?? "error.hint"
+                            self.editDiaryEntry = item.activityName ?? "error"
                             moodEntry = item
                             isShowingEditDiarySheet = true
                         } label: {
                             Image(systemName: "square.and.pencil")
                         }
+                        Button(role: .destructive) {
+                            trashItem(objectID: item.objectID)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
                     }
-                    .sheet(isPresented: $isShowingEditDiarySheet) {
-                        NavigationView {
-                            TextEditor(text: $editDiaryEntry)
-                                .padding()
-                                .navigationTitle("title.editDiary")
-                                .navigationBarTitleDisplayMode(.inline)
-                                .toolbar() {
-                                    ToolbarItem {
-                                        Button() {
-                                            moodEntry?.activityName = editDiaryEntry
-                                            saveEdits()
-                                            isShowingEditDiarySheet = false
-                                        } label: {
-                                            Image(systemName: "square.and.arrow.down")
-                                        }
+                    .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
+                } label: {
+                    HStack() {
+                        Image("mood\(item.moodName ?? "Neutral")")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(6)
+                            .background(getMoodColor(item.moodName))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Text(item.logDate ?? Date.now, style: .date)
+                    }
+                }
+                .swipeActions(allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        trashItem(objectID: item.objectID)
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    Button {
+                        self.editDiaryEntry = item.activityName ?? "error.hint"
+                        moodEntry = item
+                        isShowingEditDiarySheet = true
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
+                }
+                .sheet(isPresented: $isShowingEditDiarySheet) {
+                    NavigationView {
+                        TextEditor(text: $editDiaryEntry)
+                            .padding()
+                            .navigationTitle("title.editDiary")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar() {
+                                ToolbarItem {
+                                    Button() {
+                                        moodEntry?.activityName = editDiaryEntry
+                                        saveEdits()
+                                        isShowingEditDiarySheet = false
+                                    } label: {
+                                        Image(systemName: "square.and.arrow.down")
                                     }
                                 }
-                        }
+                            }
                     }
                 }
             }
-            .navigationTitle("title.diary")
         }
+        .navigationTitle("title.diary")
     }
 }
 
