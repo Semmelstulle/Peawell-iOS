@@ -64,17 +64,15 @@ struct MedsView: View {
     
     private var sectionHeader: some View {
         HStack {
-            Text("section.header.medList")
-                .font(.footnote)
-                .foregroundColor(.secondary)
-                .textCase(.uppercase)
+            Text("title.med")
+                .font(.title2.bold())
             Spacer()
             Button(action: { showAddMedSheet = true }) {
                 Image(systemName: "plus")
                     .font(.title2)
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 4)
     }
     
     private func logMedicationIntake(for medication: Meds?) {
