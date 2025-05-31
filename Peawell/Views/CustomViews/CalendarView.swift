@@ -14,7 +14,7 @@ struct CalendarView: View {
     private let totalDays = 105
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             GeometryReader { geometry in
                 let dayWidth = geometry.size.width / 7
                 ScrollViewReader { proxy in
@@ -61,11 +61,11 @@ struct CalendarView: View {
                     }
                 }
             }
-            .frame(height: 120)
+            .frame(height: 80)
         }
         .padding(.horizontal, -16)
         .toolbar {
-            ToolbarItem(/*placement: .primaryAction*/) {
+            ToolbarItem {
                 Button("button.scrollToToday") {
                     withAnimation {
                         scrollProxy?.scrollTo(0, anchor: .center)
@@ -95,47 +95,40 @@ private struct DayView: View {
     }
     
     var body: some View {
-        VStack(spacing: 8) {
-            ZStack {
-                Circle()
-                    .stroke(lineWidth: 4)
-                    .foregroundColor(.gray.opacity(0.2))
-                Circle()
-                    .trim(from: 0, to: 0.8)
-                    .stroke(style: StrokeStyle(lineWidth: 6, lineCap: .round))
-                    .foregroundColor(isCurrentDay ? .white : .accentColor) // White for current day
-                    .rotationEffect(.degrees(-90))
-            }
-            .frame(width: containerWidth * 0.55)
-            
-            VStack(spacing: 2) {
+        VStack(spacing: 6) {
+            Text(dayOfWeekLetter)
+                .font(.title3)
+                .foregroundColor(.secondary)
+                .frame(height: 24)
+            if isCurrentDay {
+                ZStack {
+                    Circle()
+                        .fill(Color.accentColor)
+                    Text(dayString)
+                        .font(.title3)
+                        .foregroundColor(.white)
+                }
+                .frame(width: containerWidth * 0.75, height: containerWidth * 0.75)
+            } else {
                 Text(dayString)
-                    .font(.system(.callout, weight: .medium))
-                Text(monthAbbreviation)
-                    .font(.system(.footnote, weight: .light))
+                    .font(.title3)
+                    .foregroundColor(.primary)
+                    .frame(width: containerWidth * 0.75, height: containerWidth * 0.75)
             }
-            .foregroundColor(isCurrentDay ? .white : .primary)
         }
         .frame(width: containerWidth)
         .padding(.vertical, 8)
-        .background(isCurrentDay ? currentDayPill : nil)
     }
     
     private var dayString: String {
         Calendar.current.component(.day, from: date).description
     }
     
-    private var monthAbbreviation: String {
+    private var dayOfWeekLetter: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM"
+        formatter.locale = Locale.current
+        formatter.dateFormat = "EEEEE"
         return formatter.string(from: date)
-    }
-    
-    private var currentDayPill: some View {
-        Capsule()
-            .fill(Color.accentColor)
-            .padding(.horizontal, 4)
-            .padding(.vertical, 2)
     }
 }
 

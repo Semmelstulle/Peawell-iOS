@@ -35,7 +35,7 @@ struct MainView: View {
                 CalendarView()
                     .padding()
                 LogSectionsView()
-                    .padding(16)
+                    .padding()
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     Section(header: sectionHeader) {
