@@ -98,7 +98,6 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             .navigationTitle("title.settings")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

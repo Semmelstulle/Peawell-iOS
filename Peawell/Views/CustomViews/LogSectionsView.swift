@@ -67,7 +67,7 @@ struct TileButton: View {
                         Image(iconName)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 42, height: 42)
                         Spacer()
                         HStack(spacing: 8) {
                             Text("\(count)")
