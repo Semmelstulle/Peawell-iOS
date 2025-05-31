@@ -46,6 +46,9 @@
         }
       }
     },
+    "App Icon" : {
+
+    },
     "button.addTime" : {
       "localizations" : {
         "de" : {

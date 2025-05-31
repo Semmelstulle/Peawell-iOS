@@ -18,6 +18,12 @@ struct SettingsView: View {
     //  settings stored in UserDefaults wrapped with AppStorage
     @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
+    @AppStorage("selectedAppIcon") private var selectedAppIcon: String = "AppIcon"
+    private let appIcons: [(name: String, label: String)] = [
+        ("AppIcon", "Default"),
+        ("AppIconAlt1", "Flat"),
+        ("AppIconAlt2", "Zoom")
+    ]
     
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
@@ -37,6 +43,27 @@ struct SettingsView: View {
                         isOn: $settingShowMedicationSection,
                         label: {Text("toggle.show.med")}
                     )
+                }
+                Section(
+                    header: Text("App Icon")
+                ) {
+                    Picker(selection: $selectedAppIcon, label:
+                            HStack {
+                        Image(uiImage: getAppIconImage(named: selectedAppIcon))
+                            .resizable()
+                            .frame(width: 42, height: 42)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Text("App Icon")
+                    }
+                    ) {
+                        ForEach(appIcons, id: \.name) { icon in
+                            Text(icon.label)
+                                .tag(icon.name)
+                        }
+                    }
+                    .onChange(of: selectedAppIcon) { newValue in
+                        UIApplication.shared.setAlternateIconName(newValue == "AppIcon" ? nil : newValue)
+                    }
                 }
                 Section(
                     header: Text("section.header.reset"),
@@ -117,5 +144,19 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
+    }
+}
+
+// Helper to get app icon image from asset catalog
+func getAppIconImage(named name: String) -> UIImage {
+    switch name {
+    case "AppIcon":
+        return UIImage(named: "AppIconPreview") ?? UIImage(systemName: "app") ?? UIImage()
+    case "AppIconAlt1":
+        return UIImage(named: "AppIconAlt1Preview") ?? UIImage(systemName: "app") ?? UIImage()
+    case "AppIconAlt2":
+        return UIImage(named: "AppIconAlt2Preview") ?? UIImage(systemName: "app") ?? UIImage()
+    default:
+        return UIImage(systemName: "app") ?? UIImage()
     }
 }
