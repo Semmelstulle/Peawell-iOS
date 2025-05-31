@@ -127,6 +127,7 @@
       }
     },
     "button.moodPickerSheet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -319,6 +320,7 @@
       }
     },
     "mood.header.howDidYouFeel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

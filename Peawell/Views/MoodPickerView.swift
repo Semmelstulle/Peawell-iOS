@@ -14,86 +14,52 @@ struct MoodPickerView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.moodName, ascending: true)], animation: .default)
     var items: FetchedResults<Mood>
     
-    // state of the variables that will be updated by code
-    @State var moodName: String = ""
+    // receive moodName from parent
+    var moodName: String
+    var onDismiss: (() -> Void)? = nil
+    
     @State var actName: String = ""
     @State var moodLogDate: Date = Date()
-    @State var showMoodField: Bool = false
-    
-    // prepares colors
-    var bgColorHorrible: Color = Color.red
-    var bgColorBad: Color = Color.orange
-    var bgColorNeutral: Color = Color.yellow
-    var bgColorGood: Color = Color.green
-    var bgColorAwesome: Color = Color.mint
-    
-    // this sets up colors for the part where you pick a mood and it turns the others grayscale
-    let moodOptions: [(color: Color, name: String, image: String)] = [
-        (.red, "Horrible", "moodHorrible"),
-        (.orange, "Bad", "moodBad"),
-        (.yellow, "Neutral", "moodNeutral"),
-        (.green, "Good", "moodGood"),
-        (.mint, "Awesome", "moodAwesome")
-    ]
     
     var body: some View {
         NavigationStack {
-            Form {
-                Section(header:
-                            Text("mood.header.howDidYouFeel")
-                ) {
-                    HStack {
-                        ForEach(moodOptions, id: \.name) { option in
-                            MoodButtonView(
-                                panelColor: option.color,
-                                moodImage: option.image,
-                                moodName: option.name,
-                                isSelected: moodName == option.name,
-                                anySelected: !moodName.isEmpty,
-                                onTap: {
-                                    if moodName == option.name {
-                                        moodName = ""
-                                    } else {
-                                        moodName = option.name
-                                    }
-                                }
-                            )
-                            .animation(.easeInOut, value: moodName)
-                        }
+            VStack(spacing: 0) {
+                ZStack(alignment: .topLeading) {
+                    TextEditor(text: $actName)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(Color(.tertiarySystemGroupedBackground))
+                        )
+                        .scrollContentBackground(.hidden)
+                        .foregroundColor(.primary)
+                    if actName.isEmpty {
+                        Text("mood.textEditor.whatMadeYouSmile")
+                            .foregroundColor(.secondary)
+                            .padding([.horizontal, .vertical], 16)
                     }
                 }
-                Section {
-                    // Make the TextEditor expand
-                    ZStack(alignment: .topLeading) {
-                        if actName.isEmpty {
-                            Text("mood.textEditor.whatMadeYouSmile")
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 12)
-                        }
-                        TextEditor(text: $actName)
-                            .frame(minHeight: 100, maxHeight: .infinity, alignment: .top)
-                            .padding(4)
+                .padding([.top, .horizontal])
+                Button(
+                    action: {
+                        saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
+                        clearInputs()
+                        dismiss()
+                        onDismiss?()
+                    }, label: {
+                        Label("button.mood.save", systemImage: "square.and.pencil")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.accentColor.opacity(0.3))
+                            .foregroundColor(.accentColor)
+                            .cornerRadius(10)
                     }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .listRowInsets(EdgeInsets())
-                }
-                Section {
-                    Button(
-                        action: {
-                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                            clearInputs()
-                            dismiss()
-                        },
-                        label: {
-                            Label("button.mood.save", systemImage: "plus")
-                                .frame(maxWidth: .infinity)
-                                .multilineTextAlignment(.center)
-                        }
-                    )
-                }
-                .listRowBackground(Color.accentColor.opacity(0.3))
+                )
+                .padding()
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("title.mood")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -101,6 +67,7 @@ struct MoodPickerView: View {
                     Button {
                         clearInputs()
                         dismiss()
+                        onDismiss?()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.gray)
@@ -114,7 +81,6 @@ struct MoodPickerView: View {
         .presentationDragIndicator(.hidden)
     }
     private func clearInputs() {
-        moodName = ""
         actName = ""
     }
 }
@@ -158,5 +124,5 @@ struct MoodButtonView: View {
 }
 
 #Preview {
-    MoodPickerView()
+    MoodPickerView(moodName: "moodAwesome")
 }

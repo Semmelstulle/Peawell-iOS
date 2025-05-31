@@ -18,6 +18,16 @@ struct MainView: View {
     @State private var showingSettingsSheet = false
     @State private var isAnimating = false
     @State private var showingMoodPickerSheet = false
+    @State private var selectedMoodName: String? = nil
+    
+    // Mood options for the picker
+    let moodOptions: [(color: Color, name: String, image: String)] = [
+        (.red, "Horrible", "moodHorrible"),
+        (.orange, "Bad", "moodBad"),
+        (.yellow, "Neutral", "moodNeutral"),
+        (.green, "Good", "moodGood"),
+        (.mint, "Awesome", "moodAwesome")
+    ]
     
     var body: some View {
         NavigationStack {
@@ -28,22 +38,30 @@ struct MainView: View {
                     .padding(16)
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
-                    Button(action: {
-                        showingMoodPickerSheet = true
-                    }) {
-                        Label("button.moodPickerSheet", systemImage: "square.and.pencil")
-                            .font(.headline)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.accentColor.opacity(0.3))
-                            .foregroundColor(.accentColor)
-                            .cornerRadius(10)
+                    Section(header: sectionHeader) {
+                        HStack {
+                            ForEach(moodOptions, id: \.name) { option in
+                                MoodButtonView(
+                                    panelColor: option.color,
+                                    moodImage: option.image,
+                                    moodName: option.name,
+                                    isSelected: selectedMoodName == option.name,
+                                    anySelected: selectedMoodName != nil,
+                                    onTap: {
+                                        selectedMoodName = option.name
+                                        showingMoodPickerSheet = true
+                                    }
+                                )
+                                .animation(.easeInOut, value: selectedMoodName)
+                            }
+                        }
+                        .padding()
+                        .background(Color(.secondarySystemGroupedBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .padding(.top, -12)
                     }
-                    .padding()
-                    .sheet(isPresented: $showingMoodPickerSheet) {
-                        MoodPickerView()
-                    }
-                    .padding(.bottom)
+                    .listStyle(.plain)
+                    .padding([.leading, .trailing, .bottom])
                 }
                 if settingShowMedicationSection == true {
                     MedsView()
@@ -66,8 +84,28 @@ struct MainView: View {
             .sheet(isPresented: $showingSettingsSheet) {
                 SettingsView()
             }
+            .sheet(isPresented: $showingMoodPickerSheet) {
+                if let moodName = selectedMoodName {
+                    MoodPickerView(moodName: moodName) {
+                        // On dismiss, clear selected mood
+                        selectedMoodName = nil
+                    }
+                    .onDisappear {
+                        selectedMoodName = nil
+                    }
+                }
+            }
         }
     }
+}
+
+private var sectionHeader: some View {
+    HStack {
+        Text("title.diary")
+            .font(.title2.bold())
+        Spacer()
+    }
+    .padding(.horizontal, 4)
 }
 
 #Preview {

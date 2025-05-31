@@ -153,7 +153,7 @@ struct PanelView<V: View>: View {
             }
         }
         .background(Color(.secondarySystemGroupedBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
