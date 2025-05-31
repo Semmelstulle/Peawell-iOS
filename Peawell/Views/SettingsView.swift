@@ -53,6 +53,10 @@ struct SettingsView: View {
                             .resizable()
                             .frame(width: 42, height: 42)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray, lineWidth: 0.5)
+                            )
                         Text("App Icon")
                     }
                     ) {
