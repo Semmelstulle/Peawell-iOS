@@ -117,7 +117,8 @@ struct ModifyMedsSheetView: View {
                         Button(action: {
                             withAnimation { currentPage = 1 }
                         }) {
-                            Label("Next", systemImage: "arrow.right")
+                            Label("button.next", systemImage: "arrow.right")
+                                .padding(8)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)
                         }
@@ -181,6 +182,7 @@ struct ModifyMedsSheetView: View {
                                 dismiss()
                             }, label: {
                                 Label("button.save.meds", systemImage: "plus")
+                                    .padding(8)
                                     .frame(maxWidth: .infinity)
                                     .multilineTextAlignment(.center)
                             }

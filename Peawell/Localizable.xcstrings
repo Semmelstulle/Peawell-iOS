@@ -9,10 +9,11 @@
             "value" : ""
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "%lld" : {
-
+      "shouldTranslate" : false
     },
     "%lld x.days.selected" : {
       "localizations" : {
@@ -45,9 +46,6 @@
           }
         }
       }
-    },
-    "App Icon" : {
-
     },
     "button.addTime" : {
       "localizations" : {
@@ -129,19 +127,18 @@
         }
       }
     },
-    "button.moodPickerSheet" : {
-      "extractionState" : "stale",
+    "button.next" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tagebucheintrag"
+            "value" : "Weiter"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Journal entry"
+            "value" : "Next"
           }
         }
       }
@@ -222,6 +219,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Made with love in 🇩🇪"
+          }
+        }
+      }
+    },
+    "header.iconPicker" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Icon"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Icon"
           }
         }
       }
@@ -322,23 +335,6 @@
         }
       }
     },
-    "mood.header.howDidYouFeel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wie hast du dich gefühlt?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How did you feel?"
-          }
-        }
-      }
-    },
     "mood.textEditor.whatMadeYouSmile" : {
       "localizations" : {
         "de" : {
@@ -354,9 +350,6 @@
           }
         }
       }
-    },
-    "Next" : {
-
     },
     "none.days.selected" : {
       "localizations" : {
@@ -565,22 +558,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App version"
-          }
-        }
-      }
-    },
-    "suffix.picker.medKind" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Art des Medikaments"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kind of medication"
           }
         }
       }

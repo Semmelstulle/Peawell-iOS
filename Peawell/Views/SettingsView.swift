@@ -45,28 +45,30 @@ struct SettingsView: View {
                     )
                 }
                 Section(
-                    header: Text("App Icon")
+                    header: Text("header.iconPicker")
                 ) {
-                    Picker(selection: $selectedAppIcon, label:
-                            HStack {
-                        Image(uiImage: getAppIconImage(named: selectedAppIcon))
-                            .resizable()
-                            .frame(width: 42, height: 42)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 0.5)
-                            )
-                        Text("App Icon")
-                    }
-                    ) {
-                        ForEach(appIcons, id: \.name) { icon in
-                            Text(icon.label)
-                                .tag(icon.name)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 20) {
+                            ForEach(appIcons, id: \.name) { icon in
+                                Button(action: {
+                                    selectedAppIcon = icon.name
+                                    UIApplication.shared.setAlternateIconName(icon.name == "AppIcon" ? nil : icon.name)
+                                }) {
+                                    Image(uiImage: getAppIconImage(named: icon.name))
+                                        .resizable()
+                                        .frame(width: 54, height: 54)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(selectedAppIcon == icon.name ? Color.accentColor : Color.gray.opacity(0.3), lineWidth: selectedAppIcon == icon.name ? 2 : 1)
+                                        )
+                                        .padding(2)
+                                        .animation(.spring(), value: selectedAppIcon)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
                         }
-                    }
-                    .onChange(of: selectedAppIcon) { newValue in
-                        UIApplication.shared.setAlternateIconName(newValue == "AppIcon" ? nil : newValue)
+                        .padding(.vertical, 8)
                     }
                 }
                 Section(
