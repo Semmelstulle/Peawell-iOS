@@ -104,6 +104,7 @@ func fetchMood() -> [NSManagedObject] {
     //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
     let fetchRequest: NSFetchRequest<Mood> = Mood.fetchRequest()
+    fetchRequest.fetchBatchSize = 20
     do {
         var results: [Mood]
         results = try viewContext.fetch(fetchRequest)
@@ -120,6 +121,7 @@ func fetchMeds() -> [NSManagedObject] {
     //  prepares data as arr
     var fetchedArray: [NSManagedObject] = []
     let fetchRequest: NSFetchRequest<Meds> = Meds.fetchRequest()
+    fetchRequest.fetchBatchSize = 20
     do {
         var results: [Meds]
         results = try viewContext.fetch(fetchRequest)
