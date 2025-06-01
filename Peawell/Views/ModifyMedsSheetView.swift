@@ -35,80 +35,100 @@ struct ModifyMedsSheetView: View {
     @State private var selectedTimes: Set<Date> = []
     @State private var showDaySelectionSheet = false
     @State private var showTimeSelectionSheet = false
+    @State private var currentPage = 0
     
     var body: some View {
         NavigationStack {
-            Form {
-                //  neccessary fields on the top
-                Section(header: Text("section.header.meds")) {
-                    TextField(
-                        "prompt.meds.name",
-                        text: $medName,
-                        prompt: Text("prompt.meds.name")
-                    )
-                    HStack {
-                        TextField(
-                            "prompt.meds.amount",
-                            text: $medAmount,
-                            prompt: Text("prompt.meds.amount")
-                        )
-                        .keyboardType(.decimalPad)
-                        Picker(
-                            "",
-                            selection: $medUnit
-                        ) {
-                            ForEach(availableUnits, id: \.self) { item in
-                                Text(item)
+            VStack {
+                TabView(selection: $currentPage) {
+                    // Page 1: Med details
+                    VStack {
+                        Form {
+                            Section(header: Text("section.header.meds")) {
+                                TextField(
+                                    "prompt.meds.name",
+                                    text: $medName,
+                                    prompt: Text("prompt.meds.name")
+                                )
+                                HStack {
+                                    TextField(
+                                        "prompt.meds.amount",
+                                        text: $medAmount,
+                                        prompt: Text("prompt.meds.amount")
+                                    )
+                                    .keyboardType(.decimalPad)
+                                    Picker(
+                                        "",
+                                        selection: $medUnit
+                                    ) {
+                                        ForEach(availableUnits, id: \.self) { item in
+                                            Text(item)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                }
+                                Picker(
+                                    "suffix.picker.medKind",
+                                    selection: $medKind
+                                ) {
+                                    ForEach(availableKinds, id: \.self) { item in
+                                        Text(item)
+                                    }
+                                }
                             }
                         }
-                        .labelsHidden()
-                    }
-                    Picker(
-                        "suffix.picker.medKind",
-                        selection: $medKind
-                    ) {
-                        ForEach(availableKinds, id: \.self) { item in
-                            Text(item)
-                        }
-                    }
-                }
-                //  toggle so the schedule is only shown if relevant
-                Section {
-                    Toggle(isOn: $medRemind) {
-                        Text("toggle.reminders")
-                    }
-                    if medRemind {
+                        Spacer()
                         Button(action: {
-                            showDaySelectionSheet = true
+                            withAnimation { currentPage = 1 }
                         }) {
-                            HStack {
-                                Text("title.daySelection")
-                                Spacer()
-                                Text(selectedDays.isEmpty ? "none.days.selected" : "\(selectedDays.count) x.days.selected")
-                                    .foregroundColor(.secondary)
-                            }
+                            Label("Next", systemImage: "arrow.right")
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
                         }
-                        .sheet(isPresented: $showDaySelectionSheet) {
-                            DaySelectionView(selectedDays: $selectedDays)
-                        }
-                        
-                        Button(action: {
-                            showTimeSelectionSheet = true
-                        }) {
-                            HStack {
-                                Text("title.timeSelection")
-                                Spacer()
-                                Text(selectedTimes.isEmpty ? "none.times.selected" : "\(selectedTimes.count) x.times.selected")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .sheet(isPresented: $showTimeSelectionSheet) {
-                            TimeSelectionView(selectedTimes: $selectedTimes)
-                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding()
+                        .opacity(currentPage == 0 ? 1 : 0)
+                        .disabled(medName.isEmpty || medAmount.isEmpty)
                     }
-                }
-                Section {
-                    if !medName.isEmpty && !medAmount.isEmpty {
+                    .tag(0)
+                    // Page 2: Reminders
+                    VStack {
+                        Form {
+                            Section {
+                                Toggle(isOn: $medRemind) {
+                                    Text("toggle.reminders")
+                                }
+                                if medRemind {
+                                    Button(action: {
+                                        showDaySelectionSheet = true
+                                    }) {
+                                        HStack {
+                                            Text("title.daySelection")
+                                            Spacer()
+                                            Text(selectedDays.isEmpty ? "none.days.selected" : "\(selectedDays.count) x.days.selected")
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    .sheet(isPresented: $showDaySelectionSheet) {
+                                        DaySelectionView(selectedDays: $selectedDays)
+                                    }
+                                    Button(action: {
+                                        showTimeSelectionSheet = true
+                                    }) {
+                                        HStack {
+                                            Text("title.timeSelection")
+                                            Spacer()
+                                            Text(selectedTimes.isEmpty ? "none.times.selected" : "\(selectedTimes.count) x.times.selected")
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    .sheet(isPresented: $showTimeSelectionSheet) {
+                                        TimeSelectionView(selectedTimes: $selectedTimes)
+                                    }
+                                }
+                            }
+                        }
+                        Spacer()
                         Button(
                             action: {
                                 //  create a new medication with schedule
@@ -129,13 +149,17 @@ struct ModifyMedsSheetView: View {
                                     .multilineTextAlignment(.center)
                             }
                         )
+                        .buttonStyle(.borderedProminent)
+                        .padding()
+                        .opacity(currentPage == 1 ? 1 : 0)
+                        .disabled(medName.isEmpty || medAmount.isEmpty)
                     }
+                    .tag(1)
                 }
-                .listRowBackground(Color.accentColor.opacity(0.3))
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
             .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
-            //  just a fancy dismiss button
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
