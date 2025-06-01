@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="LogTimeMeds" representedClassName="LogTimeMeds" syncable="YES" codeGenerationType="class">
         <attribute name="logTimes" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="medication" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meds" inverseName="logTimes" inverseEntity="Meds"/>
@@ -19,8 +19,8 @@
         <attribute name="moodName" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Schedules" representedClassName="Schedules" syncable="YES" codeGenerationType="class">
-        <attribute name="dates" optional="YES" attributeType="Transformable" customClassName="NSSet"/>
-        <attribute name="times" optional="YES" attributeType="Transformable" customClassName="NSSet"/>
+        <attribute name="dates" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="NSSet"/>
+        <attribute name="times" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="NSSet"/>
         <relationship name="medication" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meds" inverseName="schedule" inverseEntity="Meds"/>
     </entity>
 </model>
