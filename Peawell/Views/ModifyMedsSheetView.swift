@@ -30,12 +30,13 @@ struct ModifyMedsSheetView: View {
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     
     //  used for creating the schedule
-    @State var medRemind: Bool = true
+    @State var medRemind: Bool = false
     @State private var selectedDays: Set<Int> = []
     @State private var selectedTimes: Set<Date> = []
     @State private var showDaySelectionSheet = false
     @State private var showTimeSelectionSheet = false
     @State private var currentPage = 0
+    @Namespace private var medKindHighlightNamespace
     
     var body: some View {
         NavigationStack {
@@ -44,6 +45,49 @@ struct ModifyMedsSheetView: View {
                     // Page 1: Med details
                     VStack {
                         Form {
+                            // Visual medKind picker section
+                            Section {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    ZStack(alignment: .leading) {
+                                        // Animated highlight
+                                        HStack(spacing: 24) {
+                                            ForEach(availableKinds, id: \.self) { kind in
+                                                if medKind == kind {
+                                                    Capsule()
+                                                        .fill(Color("\(kind)Color"))
+                                                        .frame(width: 56, height: 56)
+                                                        .matchedGeometryEffect(id: "medKindHighlight", in: medKindHighlightNamespace)
+                                                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: medKind)
+                                                } else {
+                                                    Spacer().frame(width: 56)
+                                                }
+                                            }
+                                        }
+                                        .frame(height: 56)
+                                        // Icon row
+                                        HStack(spacing: 24) {
+                                            ForEach(availableKinds, id: \.self) { kind in
+                                                Button(action: {
+                                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                                        medKind = kind
+                                                    }
+                                                }) {
+                                                    Image(kind)
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 42, height: 42)
+                                                        .padding(7)
+                                                        .frame(width: 56, height: 56)
+                                                }
+                                                .buttonStyle(.plain)
+                                            }
+                                        }
+                                        .frame(height: 56)
+                                    }
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 4)
+                                }
+                            }
                             Section(header: Text("section.header.meds")) {
                                 TextField(
                                     "prompt.meds.name",
@@ -66,14 +110,6 @@ struct ModifyMedsSheetView: View {
                                         }
                                     }
                                     .labelsHidden()
-                                }
-                                Picker(
-                                    "suffix.picker.medKind",
-                                    selection: $medKind
-                                ) {
-                                    ForEach(availableKinds, id: \.self) { item in
-                                        Text(item)
-                                    }
                                 }
                             }
                         }
