@@ -13,7 +13,7 @@ struct PersistenceController {
     static let shared = PersistenceController()
     // Storage for Core Data
     let container: NSPersistentContainer
-        //  test configuration for SwiftUI previews
+    //  test configuration for SwiftUI previews
     static var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
         let viewContext = controller.container.viewContext
@@ -22,12 +22,14 @@ struct PersistenceController {
         let medDoses = ["420", "69", "360", "21"]
         let medTypes = ["Medication 1", "Daily pill", "Eyedrops", "Inhale stuff"]
         let medUnits = ["mg", "µg", "ml", "mg"]
-                for i in 0..<medKinds.count {
+        var meds: [Meds] = []
+        for i in 0..<medKinds.count {
             let newMed = Meds(context: viewContext)
             newMed.medKind = medKinds[i]
             newMed.medDose = medDoses[i]
             newMed.medType = medTypes[i]
             newMed.medUnit = medUnits[i]
+            meds.append(newMed)
         }
         let activityNames = ["Running", "Reading", "Meditating", "Cooking", "Sleeping"]
         let moodNames = ["Awesome", "Good", "Horrible", "Neutral", "Bad"]
@@ -43,6 +45,12 @@ struct PersistenceController {
             newMood.activityName = activityNames[i]
             newMood.moodName = moodNames[i]
             newMood.logDate = logDates[i]
+        }
+        // Add dummy LogTimeMeds entries for MedLogView preview
+        for (i, med) in meds.enumerated() {
+            let log = LogTimeMeds(context: viewContext)
+            log.medication = med
+            log.logTimes = Calendar.current.date(byAdding: .hour, value: -i * 3, to: Date())
         }
         do {
             try viewContext.save()
