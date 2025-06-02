@@ -30,7 +30,7 @@ struct ModifyMedsSheetView: View {
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     
     //  used for creating the schedule
-    @State var medRemind: Bool = false
+    @State var medRemind: Bool = true
     @State private var selectedDays: Set<Int> = []
     @State private var selectedTimes: Set<Date> = []
     @State private var showDaySelectionSheet = false
@@ -53,7 +53,7 @@ struct ModifyMedsSheetView: View {
                                         HStack(spacing: 24) {
                                             ForEach(availableKinds, id: \.self) { kind in
                                                 if medKind == kind {
-                                                    Capsule()
+                                                    RoundedRectangle(cornerRadius: 12)
                                                         .fill(Color("\(kind)Color"))
                                                         .frame(width: 56, height: 56)
                                                         .matchedGeometryEffect(id: "medKindHighlight", in: medKindHighlightNamespace)
