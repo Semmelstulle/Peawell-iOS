@@ -86,6 +86,7 @@ struct MedLogView: View {
                             Text(item.medType ?? ""))
                         .sheet(item: $editingMed) { med in
                             ModifyMedsSheetView(med: med)
+                                .presentationDetents([.medium, .large])
                         }
                     } label: {
                         HStack() {
@@ -146,6 +147,7 @@ struct MedLogView: View {
         .navigationTitle("title.med")
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
+                .presentationDetents([.medium, .large])
         }
     }
 }
