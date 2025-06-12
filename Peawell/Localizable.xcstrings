@@ -15,38 +15,6 @@
     "%lld" : {
       "shouldTranslate" : false
     },
-    "%lld x.days.selected" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld Tage"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld days"
-          }
-        }
-      }
-    },
-    "%lld x.times.selected" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld Zeiten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld times"
-          }
-        }
-      }
-    },
     "button.addTime" : {
       "localizations" : {
         "de" : {
@@ -91,22 +59,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm"
-          }
-        }
-      }
-    },
-    "button.done" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fertig"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
           }
         }
       }
@@ -347,38 +299,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What made you feel that way?"
-          }
-        }
-      }
-    },
-    "none.days.selected" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "keine Tage ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "select days"
-          }
-        }
-      }
-    },
-    "none.times.selected" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "keine Zeiten ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "select times"
           }
         }
       }

@@ -38,11 +38,18 @@ struct ModifyMedsSheetView: View {
     @State private var currentPage = 0
     @Namespace private var medKindHighlightNamespace
     
-    // Helper for localized weekday symbols (single letter)
+    //  Edit mode for time selection
+    @State private var timeEditMode: EditMode = .inactive
+    @State private var isAddingTime = false
+    @State private var isEditingTime = false
+    @State private var editingTime: Date?
+    @State private var editingTimeValue = Date()
+    @State private var newTime = Date()
+    
+    //  Helper for localized weekday symbols (single letter)
     private var localizedWeekdaySymbols: [String] {
         let calendar = Calendar.current
         let symbols = calendar.veryShortStandaloneWeekdaySymbols
-        // Make sure the order starts with Monday
         let firstWeekday = calendar.firstWeekday // 1 = Sunday, 2 = Monday, ...
         let reordered = Array(symbols[firstWeekday-1..<symbols.count] + symbols[0..<firstWeekday-1])
         return reordered
@@ -145,8 +152,12 @@ struct ModifyMedsSheetView: View {
                                 Toggle(isOn: $medRemind) {
                                     Text("toggle.reminders")
                                 }
-                                if medRemind {
-                                    // Inline horizontal day picker
+                            }
+                            if medRemind {
+                                Section(
+                                    header:
+                                        Text("title.daySelection")
+                                ) {
                                     HStack(spacing: 12) {
                                         ForEach(localizedWeekdaySymbols.indices, id: \.self) { idx in
                                             let isSelected = selectedDays.contains(idx)
@@ -172,19 +183,51 @@ struct ModifyMedsSheetView: View {
                                         }
                                     }
                                     .padding(.vertical, 4)
-                                    // Time selection remains as a sheet
+                                }
+                                Section(header: HStack {
+                                    Text("title.timeSelection")
+                                    Spacer()
                                     Button(action: {
-                                        showTimeSelectionSheet = true
-                                    }) {
-                                        HStack {
-                                            Text("title.timeSelection")
-                                            Spacer()
-                                            Text(selectedTimes.isEmpty ? "none.times.selected" : "\(selectedTimes.count) x.times.selected")
-                                                .foregroundColor(.secondary)
+                                        let calendar = Calendar.current
+                                        let now = Date()
+                                        let nextHour = calendar.nextDate(after: now, matching: DateComponents(minute: 0, second: 0), matchingPolicy: .nextTime) ?? now
+                                        var candidate = nextHour
+                                        var attempts = 0
+                                        while selectedTimes.contains(candidate) && attempts < 24 {
+                                            candidate = calendar.date(byAdding: .hour, value: 1, to: candidate) ?? candidate
+                                            attempts += 1
                                         }
+                                        selectedTimes.insert(candidate)
+                                    }) {
+                                        Image(systemName: "plus.circle.fill").font(.title2)
                                     }
-                                    .sheet(isPresented: $showTimeSelectionSheet) {
-                                        TimeSelectionView(selectedTimes: $selectedTimes)
+                                    .accessibilityLabel(Text("button.addTime"))
+                                }) {
+                                    ForEach(Array(selectedTimes).sorted(by: { $0 < $1 }), id: \.self) { time in
+                                        HStack {
+                                            DatePicker("", selection: Binding(
+                                                get: { time },
+                                                set: { newValue in
+                                                    selectedTimes.remove(time)
+                                                    // Normalize to hour/minute only
+                                                    let calendar = Calendar.current
+                                                    let components = calendar.dateComponents([.hour, .minute], from: newValue)
+                                                    if let normalized = calendar.date(from: components) {
+                                                        selectedTimes.insert(normalized)
+                                                    }
+                                                }
+                                            ), displayedComponents: .hourAndMinute)
+                                            .datePickerStyle(.compact)
+                                            .labelsHidden()
+                                            Spacer()
+                                            Button(action: {
+                                                selectedTimes.remove(time)
+                                            }) {
+                                                Image(systemName: "minus.circle.fill")
+                                                    .foregroundColor(.red)
+                                                    .font(.title2)
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -252,7 +295,7 @@ struct ModifyMedsSheetView: View {
                 medUnit = med.medUnit ?? "mg"
                 medKind = med.medKind ?? "longPill"
                 medRemind = med.medRemind
-                // Populate selectedDays and selectedTimes if schedule exists
+                //  Populate selectedDays and selectedTimes if schedule exists
                 if let schedules = med.schedule as? Set<Schedules>, let schedule = schedules.first {
                     if let days = schedule.dates as? Set<Int> {
                         selectedDays = days
@@ -266,77 +309,7 @@ struct ModifyMedsSheetView: View {
     }
 }
 
-struct TimeSelectionView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Binding var selectedTimes: Set<Date>
-    @State private var newTime = Date()
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                DatePicker("", selection: $newTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(.wheel)
-                    .labelsHidden()
-                
-                Button("button.addTime") {
-                    let calendar = Calendar.current
-                    let components = calendar.dateComponents([.hour, .minute], from: newTime)
-                    if let normalizedTime = calendar.date(from: components) {
-                        selectedTimes.insert(normalizedTime)
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .padding()
-                
-                List {
-                    ForEach(Array(selectedTimes), id: \.self) { time in
-                        HStack {
-                            Text(time.formatted(date: .omitted, time: .shortened))
-                            Spacer()
-                        }
-                    }
-                    .onDelete(perform: deleteTime)
-                }
-                .toolbar {
-                    if #available(iOS 26.0, *) {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                dismiss()
-                            } label: {
-                                Image(systemName: "xmark")
-                            }
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            EditButton()
-                        }
-                    } else {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("button.done") {
-                                dismiss()
-                            }
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            EditButton()
-                        }
-                    }
-                }
-            }
-            .navigationTitle("title.timeSelection")
-        }
-    }
-    
-    func deleteTime(at offsets: IndexSet) {
-        let timesArray = Array(selectedTimes)
-        for index in offsets {
-            selectedTimes.remove(timesArray[index])
-        }
-    }
-}
-
-
-struct AddMedsSheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        ModifyMedsSheetView()
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
+#Preview {
+    ModifyMedsSheetView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
