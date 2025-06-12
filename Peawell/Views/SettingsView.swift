@@ -85,11 +85,9 @@ struct SettingsView: View {
                         )
                         .foregroundColor(.red)
                     })
-                    
-                    //  confirmation alert is designed here
-                    .alert("dialog.infoText", isPresented: $showingDeleteAlert) {
+                    .confirmationDialog("dialog.infoText", isPresented: $showingDeleteAlert) {
                         Button("button.dialog.cancelReset", role: .cancel) {
-                            //  nothing here, action is cancelled
+                            showingDeleteAlert = false
                         }
                         Button("button.dialog.confirmReset", role: .destructive) {
                             resetData()
@@ -131,6 +129,7 @@ struct SettingsView: View {
                 .listRowBackground(Color.clear)
             }
             .navigationTitle("title.settings")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if #available(iOS 26.0, *) {
                     ToolbarItem(placement: .topBarTrailing) {
