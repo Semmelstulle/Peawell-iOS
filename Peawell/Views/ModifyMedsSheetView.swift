@@ -199,14 +199,24 @@ struct ModifyMedsSheetView: View {
             .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 25))
-                            .symbolRenderingMode(.hierarchical)
+                if #available(iOS 26.0, *) {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.gray)
+                                .font(.system(size: 25))
+                                .symbolRenderingMode(.hierarchical)
+                        }
                     }
                 }
             }
@@ -263,9 +273,19 @@ struct DaySelectionView: View {
             }
             .navigationTitle("title.daySelection")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.done") {
-                        dismiss()
+                if #available(iOS 26.0, *) {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                } else {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("button.done") {
+                            dismiss()
+                        }
                     }
                 }
             }
@@ -305,13 +325,26 @@ struct TimeSelectionView: View {
                     .onDelete(perform: deleteTime)
                 }
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button("button.done") {
-                            dismiss()
+                    if #available(iOS 26.0, *) {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image(systemName: "xmark")
+                            }
                         }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            EditButton()
+                        }
+                    } else {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("button.done") {
+                                dismiss()
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            EditButton()
+                        }
                     }
                 }
             }

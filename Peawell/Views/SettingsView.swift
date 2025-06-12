@@ -132,14 +132,24 @@ struct SettingsView: View {
             }
             .navigationTitle("title.settings")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 25))
-                            .symbolRenderingMode(.hierarchical)
+                if #available(iOS 26.0, *) {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.gray)
+                                .font(.system(size: 25))
+                                .symbolRenderingMode(.hierarchical)
+                        }
                     }
                 }
             }

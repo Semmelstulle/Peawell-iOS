@@ -32,8 +32,8 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             ScrollView() {
-                CalendarView()
-                    .padding()
+                /*CalendarView()
+                    .padding()*/
                 LogSectionsView()
                     .padding()
                 //  the next sections are toggled by UserDefaults
