@@ -38,6 +38,16 @@ struct ModifyMedsSheetView: View {
     @State private var currentPage = 0
     @Namespace private var medKindHighlightNamespace
     
+    // Helper for localized weekday symbols (single letter)
+    private var localizedWeekdaySymbols: [String] {
+        let calendar = Calendar.current
+        let symbols = calendar.veryShortStandaloneWeekdaySymbols
+        // Make sure the order starts with Monday
+        let firstWeekday = calendar.firstWeekday // 1 = Sunday, 2 = Monday, ...
+        let reordered = Array(symbols[firstWeekday-1..<symbols.count] + symbols[0..<firstWeekday-1])
+        return reordered
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -136,19 +146,33 @@ struct ModifyMedsSheetView: View {
                                     Text("toggle.reminders")
                                 }
                                 if medRemind {
-                                    Button(action: {
-                                        showDaySelectionSheet = true
-                                    }) {
-                                        HStack {
-                                            Text("title.daySelection")
-                                            Spacer()
-                                            Text(selectedDays.isEmpty ? "none.days.selected" : "\(selectedDays.count) x.days.selected")
-                                                .foregroundColor(.secondary)
+                                    // Inline horizontal day picker
+                                    HStack(spacing: 12) {
+                                        ForEach(localizedWeekdaySymbols.indices, id: \.self) { idx in
+                                            let isSelected = selectedDays.contains(idx)
+                                            Button(action: {
+                                                if isSelected {
+                                                    selectedDays.remove(idx)
+                                                } else {
+                                                    selectedDays.insert(idx)
+                                                }
+                                            }) {
+                                                Text(localizedWeekdaySymbols[idx])
+                                                    .font(.headline)
+                                                    .frame(width: 36, height: 36)
+                                                    .background(isSelected ? Color.accentColor.opacity(0.2) : Color.clear)
+                                                    .clipShape(Circle())
+                                                    .overlay(
+                                                        Circle().stroke(isSelected ? Color.accentColor : Color.secondary, lineWidth: isSelected ? 2 : 1)
+                                                    )
+                                                    .foregroundColor(isSelected ? .accentColor : .primary)
+                                                    .accessibilityLabel(Text(weekdays[idx]))
+                                            }
+                                            .buttonStyle(.plain)
                                         }
                                     }
-                                    .sheet(isPresented: $showDaySelectionSheet) {
-                                        DaySelectionView(selectedDays: $selectedDays)
-                                    }
+                                    .padding(.vertical, 4)
+                                    // Time selection remains as a sheet
                                     Button(action: {
                                         showTimeSelectionSheet = true
                                     }) {
@@ -235,57 +259,6 @@ struct ModifyMedsSheetView: View {
                     }
                     if let times = schedule.times as? Set<Date> {
                         selectedTimes = times
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct DaySelectionView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Binding var selectedDays: Set<Int>
-    
-    let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(0..<weekdays.count, id: \.self) { index in
-                    Button(action: {
-                        if selectedDays.contains(index) {
-                            selectedDays.remove(index)
-                        } else {
-                            selectedDays.insert(index)
-                        }
-                    }) {
-                        HStack {
-                            Text(weekdays[index])
-                            Spacer()
-                            if selectedDays.contains(index) {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.accentColor)
-                            }
-                        }
-                    }
-                    .foregroundColor(.primary)
-                }
-            }
-            .navigationTitle("title.daySelection")
-            .toolbar {
-                if #available(iOS 26.0, *) {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                } else {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("button.done") {
-                            dismiss()
-                        }
                     }
                 }
             }
