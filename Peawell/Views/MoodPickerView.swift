@@ -24,6 +24,27 @@ struct MoodPickerView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                DatePicker(
+                    selection: $moodLogDate,
+                    displayedComponents: [.date, .hourAndMinute]
+                ) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "calendar")
+                            .foregroundColor(.accentColor)
+                        Text(moodLogDate.formatted(date: .abbreviated, time: .shortened))
+                            .font(.subheadline)
+                            .foregroundColor(.primary)
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color(.tertiarySystemGroupedBackground))
+                    )
+                }
+                .datePickerStyle(.compact)
+                .labelsHidden()
+                
                 ZStack(alignment: .topLeading) {
                     TextEditor(text: $actName)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -58,6 +79,11 @@ struct MoodPickerView: View {
                     }
                 )
                 .padding()
+            }
+            .onAppear {
+                if actName.isEmpty && (moodLogDate.timeIntervalSinceNow > 60 || moodLogDate.timeIntervalSinceNow < -60) {
+                    moodLogDate = Date()
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("title.mood")
