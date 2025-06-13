@@ -63,16 +63,28 @@ struct MoodPickerView: View {
             .navigationTitle("title.mood")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        clearInputs()
-                        dismiss()
-                        onDismiss?()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 25))
-                            .symbolRenderingMode(.hierarchical)
+                if #available(iOS 26.0, *) {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
+                    }
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.gray)
+                                .font(.system(size: 25))
+                                .symbolRenderingMode(.hierarchical)
+                        }
                     }
                 }
             }

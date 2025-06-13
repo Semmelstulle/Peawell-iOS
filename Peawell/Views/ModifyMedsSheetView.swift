@@ -141,7 +141,6 @@ struct ModifyMedsSheetView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .padding()
-                        .opacity(currentPage == 0 ? 1 : 0)
                         .disabled(medName.isEmpty || medAmount.isEmpty)
                     }
                     .tag(0)
@@ -256,7 +255,6 @@ struct ModifyMedsSheetView: View {
                         )
                         .buttonStyle(.borderedProminent)
                         .padding()
-                        .opacity(currentPage == 1 ? 1 : 0)
                         .disabled(medName.isEmpty || medAmount.isEmpty)
                     }
                     .tag(1)
@@ -271,7 +269,7 @@ struct ModifyMedsSheetView: View {
                         Button {
                             dismiss()
                         } label: {
-                            Image(systemName: "checkmark")
+                            Image(systemName: "xmark")
                         }
                     }
                 } else {
