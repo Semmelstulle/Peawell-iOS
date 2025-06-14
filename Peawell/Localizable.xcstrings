@@ -260,13 +260,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medikament bearbeiten"
+            "value" : "Bearbeiten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit medication"
+            "value" : "Edit"
           }
         }
       }
@@ -276,13 +276,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medikament entfernen"
+            "value" : "Entfernen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove medication"
+            "value" : "Delete"
           }
         }
       }

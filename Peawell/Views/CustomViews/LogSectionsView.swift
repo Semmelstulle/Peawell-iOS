@@ -60,7 +60,7 @@ struct TileButton: View {
     var body: some View {
         NavigationLink(value: value) {
             ZStack {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
                     .fill(Color(.secondarySystemGroupedBackground))
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(alignment: .top) {

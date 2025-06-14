@@ -13,6 +13,7 @@
 		9514AC5029F02555009F44D1 /* ModifyMedsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9514AC4F29F02555009F44D1 /* ModifyMedsSheetView.swift */; };
 		951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 951DCA7029E735D90072E809 /* Main.xcdatamodeld */; };
 		952B207729EF109000884166 /* MoodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952B207629EF109000884166 /* MoodLogView.swift */; };
+		952BF4E22DFD58E900A3CED8 /* GlobalValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952BF4E12DFD58DE00A3CED8 /* GlobalValues.swift */; };
 		953EDAE62DD5133E00C5EA91 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953EDAE52DD5133900C5EA91 /* CalendarView.swift */; };
 		9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6BD29E6E5C3003046FC /* MainView.swift */; };
 		9543A6C229E6E695003046FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9543A6C129E6E695003046FC /* SettingsView.swift */; };
@@ -36,6 +37,7 @@
 		9514AC4F29F02555009F44D1 /* ModifyMedsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMedsSheetView.swift; sourceTree = "<group>"; };
 		951DCA7129E735D90072E809 /* Activities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Activities.xcdatamodel; sourceTree = "<group>"; };
 		952B207629EF109000884166 /* MoodLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLogView.swift; sourceTree = "<group>"; };
+		952BF4E12DFD58DE00A3CED8 /* GlobalValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalValues.swift; sourceTree = "<group>"; };
 		953EDAE52DD5133900C5EA91 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9543A6BD29E6E5C3003046FC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9543A6C129E6E695003046FC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				9592B97829E877D800DC2487 /* PersistenceController.swift */,
 				95B7D93A2DE336EF008FFAE2 /* HapticFeedback.swift */,
 				95B7D93C2DE3377B008FFAE2 /* Utilities.swift */,
+				952BF4E12DFD58DE00A3CED8 /* GlobalValues.swift */,
 				951DCA7029E735D90072E809 /* Main.xcdatamodeld */,
 				9505432629E5CACB005D29B5 /* Assets.xcassets */,
 				95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */,
@@ -209,6 +212,7 @@
 				95A673FB2DD5BDD600CEE7D4 /* LogSectionsView.swift in Sources */,
 				9514AC5029F02555009F44D1 /* ModifyMedsSheetView.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
+				952BF4E22DFD58E900A3CED8 /* GlobalValues.swift in Sources */,
 				95943E2F29ED85EF0096CE6B /* MoodPickerView.swift in Sources */,
 				952B207729EF109000884166 /* MoodLogView.swift in Sources */,
 				951DCA7229E735D90072E809 /* Main.xcdatamodeld in Sources */,

@@ -57,12 +57,13 @@ struct SettingsView: View {
                                     Image(uiImage: getAppIconImage(named: icon.name))
                                         .resizable()
                                         .frame(width: 54, height: 54)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary))
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 12)
+                                            RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary)
                                                 .stroke(selectedAppIcon == icon.name ? Color.accentColor : Color.gray.opacity(0.3), lineWidth: selectedAppIcon == icon.name ? 2 : 1)
                                         )
-                                        .padding(2)
+                                        .padding(.horizontal, 2)
+                                        .padding(.vertical, -6)
                                         .animation(.spring(), value: selectedAppIcon)
                                 }
                                 .buttonStyle(PlainButtonStyle())

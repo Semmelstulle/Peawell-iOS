@@ -32,8 +32,8 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             ScrollView() {
-                /*CalendarView()
-                    .padding()*/
+                CalendarView()
+                    .padding()
                 LogSectionsView()
                     .padding()
                 //  the next sections are toggled by UserDefaults
@@ -57,7 +57,7 @@ struct MainView: View {
                         }
                         .padding()
                         .background(Color(.secondarySystemGroupedBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary))
                         .padding(.top, -12)
                     }
                     .listStyle(.plain)

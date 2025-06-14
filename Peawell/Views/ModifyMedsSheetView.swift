@@ -67,10 +67,10 @@ struct ModifyMedsSheetView: View {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     ZStack(alignment: .leading) {
                                         // Animated highlight
-                                        HStack(spacing: 24) {
+                                        HStack(spacing: 20) {
                                             ForEach(availableKinds, id: \.self) { kind in
                                                 if medKind == kind {
-                                                    RoundedRectangle(cornerRadius: 12)
+                                                    RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary)
                                                         .fill(Color("\(kind)Color"))
                                                         .frame(width: 56, height: 56)
                                                         .matchedGeometryEffect(id: "medKindHighlight", in: medKindHighlightNamespace)
@@ -82,7 +82,7 @@ struct ModifyMedsSheetView: View {
                                         }
                                         .frame(height: 56)
                                         // Icon row
-                                        HStack(spacing: 24) {
+                                        HStack(spacing: 20) {
                                             ForEach(availableKinds, id: \.self) { kind in
                                                 Button(action: {
                                                     withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
@@ -101,8 +101,7 @@ struct ModifyMedsSheetView: View {
                                         }
                                         .frame(height: 56)
                                     }
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 4)
+                                    .padding(.horizontal, 2)
                                 }
                             }
                             Section(header: Text("section.header.meds")) {
@@ -126,6 +125,7 @@ struct ModifyMedsSheetView: View {
                                             Text(item)
                                         }
                                     }
+                                    .pickerStyle(.menu)
                                     .labelsHidden()
                                 }
                             }

@@ -50,7 +50,7 @@ struct MoodPickerView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(8)
                         .background(
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
                                 .fill(Color(.tertiarySystemGroupedBackground))
                         )
                         .scrollContentBackground(.hidden)
@@ -137,7 +137,10 @@ struct MoodButtonView: View {
             ZStack {
                 if !anySelected || isSelected {
                     // Show colorful rounded rectangle
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    RoundedRectangle(
+                        cornerRadius: Constants.cornerRadiusSecondary,
+                        style: .continuous
+                    )
                         .foregroundColor(panelColor)
                         .aspectRatio(1, contentMode: .fit)
                         .shadow(color: panelColor.opacity(0.5), radius: isSelected ? 6 : 0)
