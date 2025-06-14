@@ -22,4 +22,11 @@ struct Constants {
             return 8
         }
     }
+    static var localizedWeekdaySymbols: [String] {
+        let calendar = Calendar.current
+        let symbols = calendar.veryShortStandaloneWeekdaySymbols
+        let firstWeekday = calendar.firstWeekday // 1 = Sunday, 2 = Monday, ...
+        let reordered = Array(symbols[firstWeekday-1..<symbols.count] + symbols[0..<firstWeekday-1])
+        return reordered
+    }
 }

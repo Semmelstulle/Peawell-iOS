@@ -46,15 +46,6 @@ struct ModifyMedsSheetView: View {
     @State private var editingTimeValue = Date()
     @State private var newTime = Date()
     
-    //  Helper for localized weekday symbols (single letter)
-    private var localizedWeekdaySymbols: [String] {
-        let calendar = Calendar.current
-        let symbols = calendar.veryShortStandaloneWeekdaySymbols
-        let firstWeekday = calendar.firstWeekday // 1 = Sunday, 2 = Monday, ...
-        let reordered = Array(symbols[firstWeekday-1..<symbols.count] + symbols[0..<firstWeekday-1])
-        return reordered
-    }
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -153,12 +144,9 @@ struct ModifyMedsSheetView: View {
                                 }
                             }
                             if medRemind {
-                                Section(
-                                    header:
-                                        Text("title.daySelection")
-                                ) {
+                                Section(header: Text("title.daySelection")) {
                                     HStack(spacing: 12) {
-                                        ForEach(localizedWeekdaySymbols.indices, id: \.self) { idx in
+                                        ForEach(Constants.localizedWeekdaySymbols.indices, id: \.self) { idx in
                                             let isSelected = selectedDays.contains(idx)
                                             Button(action: {
                                                 if isSelected {
@@ -167,7 +155,7 @@ struct ModifyMedsSheetView: View {
                                                     selectedDays.insert(idx)
                                                 }
                                             }) {
-                                                Text(localizedWeekdaySymbols[idx])
+                                                Text(Constants.localizedWeekdaySymbols[idx])
                                                     .font(.headline)
                                                     .frame(width: 36, height: 36)
                                                     .background(isSelected ? Color.accentColor.opacity(0.2) : Color.clear)

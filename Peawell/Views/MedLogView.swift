@@ -56,9 +56,23 @@ struct MedLogView: View {
                                 Section(header: Text("header.schedule")) {
                                     if let schedules = item.schedule as? Set<Schedules>, let schedule = schedules.first {
                                         if let days = schedule.dates as? Set<Int> {
-                                            ForEach(Array(days).sorted(), id: \.self) { day in
-                                                Text(weekdays[day])
+                                            let selectedDays = days
+                                            HStack(spacing: 12) {
+                                                ForEach(Constants.localizedWeekdaySymbols.indices, id: \.self) { idx in
+                                                    let isSelected = selectedDays.contains(idx)
+                                                    Text(Constants.localizedWeekdaySymbols[idx])
+                                                        .font(.headline)
+                                                        .frame(width: 36, height: 36)
+                                                        .background(isSelected ? Color.accentColor.opacity(0.2) : Color.clear)
+                                                        .clipShape(Circle())
+                                                        .overlay(
+                                                            Circle().stroke(isSelected ? Color.accentColor : Color.secondary, lineWidth: isSelected ? 2 : 1)
+                                                        )
+                                                        .foregroundColor(isSelected ? .accentColor : .primary)
+                                                        .accessibilityLabel(Text(weekdays[idx]))
+                                                }
                                             }
+                                            .padding(.vertical, 4)
                                         }
                                         
                                         if let times = schedule.times as? Set<Date> {
