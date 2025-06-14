@@ -21,7 +21,8 @@ struct MedLogView: View {
     @State var medUnit: String = ""
     
     @State private var editingMed: Meds?
-    
+    @State private var showingDeleteAlert: Bool = false
+
     //  define selectable days here
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -91,9 +92,17 @@ struct MedLogView: View {
                                 Image(systemName: "square.and.pencil")
                             }
                             Button(role: .destructive) {
-                                trashItem(objectID: item.objectID)
+                                showingDeleteAlert = true
                             } label: {
                                 Image(systemName: "trash")
+                            }
+                            .confirmationDialog("", isPresented: $showingDeleteAlert) {
+                                Button("button.dialog.cancelReset", role: .cancel) {
+                                    showingDeleteAlert = false
+                                }
+                                Button("button.dialog.confirmReset", role: .destructive) {
+                                    trashItem(objectID: item.objectID)
+                                }
                             }
                         }
                         .navigationTitle(

@@ -21,6 +21,7 @@ struct MoodLogView: View {
     var moodItems: FetchedResults<Mood>
     
     @State var isShowingEditDiarySheet = false
+    @State private var showingDeleteAlert = false
     @State var editDiaryEntry = "fixme"
     @State var moodEntry: FetchedResults<Mood>.Element?
     
@@ -52,9 +53,17 @@ struct MoodLogView: View {
                             Image(systemName: "square.and.pencil")
                         }
                         Button(role: .destructive) {
-                            trashItem(objectID: item.objectID)
+                            showingDeleteAlert = true
                         } label: {
                             Image(systemName: "trash")
+                        }
+                        .confirmationDialog("", isPresented: $showingDeleteAlert) {
+                            Button("button.dialog.cancelReset", role: .cancel) {
+                                showingDeleteAlert = false
+                            }
+                            Button("button.dialog.confirmReset", role: .destructive) {
+                                trashItem(objectID: item.objectID)
+                            }
                         }
                     }
                     .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
