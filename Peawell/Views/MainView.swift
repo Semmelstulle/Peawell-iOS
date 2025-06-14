@@ -75,10 +75,15 @@ struct MainView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Peawell")
             .toolbar {
-                Button {
-                    showingSettingsSheet = true
-                } label: {
-                    Image(systemName: "gear")
+                ToolbarItem {
+                    Button {
+                        showingSettingsSheet = true
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+                if #available(iOS 26, *) {
+                    ToolbarSpacer(.fixed)
                 }
             }
             .sheet(isPresented: $showingSettingsSheet) {
