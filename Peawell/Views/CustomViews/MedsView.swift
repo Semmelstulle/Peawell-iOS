@@ -19,6 +19,10 @@ struct MedsView: View {
     @State private var editingMed: Meds?
     @State private var showAddMedSheet = false
     
+    @State private var showMedLogSheet = false
+    @State private var medToLog: Meds?
+    @State private var selectedDate = Date()
+    
     var body: some View {
         Section(header: sectionHeader) {
             ForEach(medsItems) { item in
@@ -33,8 +37,9 @@ struct MedsView: View {
                     doseUnit: String(item.medUnit ?? ""),
                     title: LocalizedStringKey(item.medType ?? ""),
                     onPlusTap: {
-                        hapticConfirm()
-                        logMedicationIntake(for: item)
+                        medToLog = item
+                        selectedDate = Date()
+                        showMedLogSheet = true
                     }
                 )
                 .contextMenu {
@@ -60,6 +65,24 @@ struct MedsView: View {
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
         }
+        .sheet(isPresented: $showMedLogSheet) {
+            MedLogDatePickerSheet(
+                selectedDate: $selectedDate,
+                onSave: {
+                    if let med = medToLog {
+                        logMedicationIntake(for: med, at: selectedDate)
+                    }
+                    showMedLogSheet = false
+                    hapticConfirm()
+                },
+                onDismiss: {
+                    showMedLogSheet = false
+                }
+            )
+            .presentationDetents([.height(500), .large])
+            .presentationDragIndicator(.hidden)
+            .interactiveDismissDisabled()
+        }
     }
     
     private var sectionHeader: some View {
@@ -75,10 +98,10 @@ struct MedsView: View {
         .padding(.horizontal, 4)
     }
     
-    private func logMedicationIntake(for medication: Meds?) {
+    private func logMedicationIntake(for medication: Meds?, at date: Date = Date()) {
         guard let medication = medication else { return }
         let newLog = LogTimeMeds(context: viewContext)
-        newLog.logTimes = Date()
+        newLog.logTimes = date
         newLog.medication = medication
         medication.addToLogTimes(newLog)
         do {
@@ -98,8 +121,6 @@ struct PanelView<V: View>: View {
     var doseUnit: String
     var title: LocalizedStringKey
     var onPlusTap: (() -> Void)? = nil
-    
-    @State private var showTick = false
     
     var body: some View {
         HStack(alignment: .center) {
@@ -123,39 +144,53 @@ struct PanelView<V: View>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, 8)
-            ZStack {
-                if showTick {
-                    Image(systemName: "checkmark.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .symbolRenderingMode(.hierarchical)
-                        .frame(width: 30, height: 30)
-                        .frame(maxWidth: 80, alignment: .center)
-                } else {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .symbolRenderingMode(.hierarchical)
-                        .frame(width: 30, height: 30)
-                        .frame(maxWidth: 80, alignment: .center)
-                        .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                showTick = true
-                            }
-                            onPlusTap?()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    showTick = false
-                                }
-                            }
-                        }
+            Image(systemName: "plus.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .symbolRenderingMode(.hierarchical)
+                .frame(width: 30, height: 30)
+                .frame(maxWidth: 80, alignment: .center)
+                .onTapGesture {
+                    onPlusTap?()
                 }
-            }
         }
         .background(Color(.secondarySystemGroupedBackground))
         .clipShape(
             RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary)
         )
+    }
+}
+
+struct MedLogDatePickerSheet: View {
+    @Binding var selectedDate: Date
+    var onSave: () -> Void
+    var onDismiss: () -> Void
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Spacer(minLength: 24)
+                DatePicker(
+                    "",
+                    selection: $selectedDate,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+                .datePickerStyle(.graphical)
+                .frame(maxHeight: .infinity)
+                Spacer()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: onDismiss) {
+                        Image(systemName: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: onSave) {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
+        }
     }
 }
 
