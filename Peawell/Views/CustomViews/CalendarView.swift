@@ -11,6 +11,7 @@ struct CalendarView: View {
     @State private var path = NavigationPath()
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollProxy: ScrollViewProxy?
+    @State private var currentDate = Date()
     private let totalDays = 105
     
     var body: some View {
@@ -25,7 +26,8 @@ struct CalendarView: View {
                                     DayView(
                                         dayOffset: offset,
                                         containerWidth: dayWidth,
-                                        isCurrentDay: offset == 0
+                                        isCurrentDay: isCurrentDayForOffset(offset),
+                                        currentDate: currentDate
                                     )
                                 }
                                 .buttonStyle(PlainButtonStyle())
@@ -57,7 +59,10 @@ struct CalendarView: View {
                     )
                     .onAppear {
                         scrollProxy = proxy
-                        proxy.scrollTo(0, anchor: .center)
+                        scrollToCurrentDay()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        updateCurrentDate()
                     }
                 }
             }
@@ -67,9 +72,8 @@ struct CalendarView: View {
         .toolbar {
             ToolbarItem {
                 Button("button.scrollToToday") {
-                    withAnimation {
-                        scrollProxy?.scrollTo(0, anchor: .center)
-                    }
+                    updateCurrentDate()
+                    scrollToCurrentDay()
                 }
             }
         }
@@ -79,7 +83,29 @@ struct CalendarView: View {
     }
     
     private func dateForOffset(_ offset: Int) -> Date {
-        Calendar.current.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+        Calendar.current.date(byAdding: .day, value: offset, to: currentDate) ?? currentDate
+    }
+    
+    private func isCurrentDayForOffset(_ offset: Int) -> Bool {
+        let today = Date()
+        let offsetDate = Calendar.current.date(byAdding: .day, value: offset, to: currentDate) ?? currentDate
+        return Calendar.current.isDate(offsetDate, inSameDayAs: today)
+    }
+    
+    private func updateCurrentDate() {
+        let newDate = Date()
+        if !Calendar.current.isDate(currentDate, inSameDayAs: newDate) {
+            currentDate = newDate
+        }
+    }
+    
+    private func scrollToCurrentDay() {
+        let today = Date()
+        let daysDifference = Calendar.current.dateComponents([.day], from: currentDate, to: today).day ?? 0
+        
+        withAnimation {
+            scrollProxy?.scrollTo(daysDifference, anchor: .center)
+        }
     }
 }
 
@@ -89,9 +115,10 @@ private struct DayView: View {
     let dayOffset: Int
     let containerWidth: CGFloat
     let isCurrentDay: Bool
+    let currentDate: Date
     
     private var date: Date {
-        Calendar.current.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+        Calendar.current.date(byAdding: .day, value: dayOffset, to: currentDate) ?? currentDate
     }
     
     var body: some View {
