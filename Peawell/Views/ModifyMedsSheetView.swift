@@ -95,6 +95,7 @@ struct ModifyMedsSheetView: View {
                                     .padding(.horizontal, 2)
                                 }
                             }
+                            .listRowBackground(Color(.tertiarySystemGroupedBackground))
                             Section(header: Text("section.header.meds")) {
                                 TextField(
                                     "prompt.meds.name",
@@ -120,6 +121,7 @@ struct ModifyMedsSheetView: View {
                                     .labelsHidden()
                                 }
                             }
+                            .listRowBackground(Color(.tertiarySystemGroupedBackground))
                         }
                         .scrollContentBackground(.hidden)
                         Spacer()
@@ -144,6 +146,7 @@ struct ModifyMedsSheetView: View {
                                     Text("toggle.reminders")
                                 }
                             }
+                            .listRowBackground(Color(.tertiarySystemGroupedBackground))
                             if medRemind {
                                 Section(header: Text("title.daySelection")) {
                                     HStack(spacing: 12) {
@@ -172,6 +175,7 @@ struct ModifyMedsSheetView: View {
                                     }
                                     .padding(.vertical, 4)
                                 }
+                                .listRowBackground(Color(.tertiarySystemGroupedBackground))
                                 Section(header: HStack {
                                     Text("title.timeSelection")
                                     Spacer()
@@ -218,6 +222,7 @@ struct ModifyMedsSheetView: View {
                                         }
                                     }
                                 }
+                                .listRowBackground(Color(.tertiarySystemGroupedBackground))
                             }
                         }
                         .scrollContentBackground(.hidden)
@@ -251,6 +256,7 @@ struct ModifyMedsSheetView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
+            .background(Color.clear)
             .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
