@@ -15,6 +15,9 @@
     "%lld" : {
       "shouldTranslate" : false
     },
+    "Advanced settings for development and debugging" : {
+
+    },
     "button.addTime" : {
       "localizations" : {
         "de" : {
@@ -143,6 +146,9 @@
         }
       }
     },
+    "Developer" : {
+
+    },
     "dialog.infoText" : {
       "localizations" : {
         "de" : {
@@ -206,6 +212,9 @@
           }
         }
       }
+    },
+    "Hide Developer Menu" : {
+
     },
     "link.socials.github" : {
       "localizations" : {

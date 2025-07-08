@@ -28,19 +28,7 @@ struct MoodPickerView: View {
                     selection: $moodLogDate,
                     displayedComponents: [.date, .hourAndMinute]
                 ) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "calendar")
-                            .foregroundColor(.accentColor)
-                        Text(moodLogDate.formatted(date: .abbreviated, time: .shortened))
-                            .font(.subheadline)
-                            .foregroundColor(.primary)
-                    }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color(.tertiarySystemGroupedBackground))
-                    )
+                    Text("")
                 }
                 .datePickerStyle(.compact)
                 .labelsHidden()

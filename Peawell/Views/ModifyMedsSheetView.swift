@@ -121,6 +121,7 @@ struct ModifyMedsSheetView: View {
                                 }
                             }
                         }
+                        .scrollContentBackground(.hidden)
                         Spacer()
                         Button(action: {
                             withAnimation { currentPage = 1 }
@@ -219,6 +220,7 @@ struct ModifyMedsSheetView: View {
                                 }
                             }
                         }
+                        .scrollContentBackground(.hidden)
                         Spacer()
                         Button(
                             action: {

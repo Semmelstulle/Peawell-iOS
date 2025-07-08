@@ -64,6 +64,8 @@ struct MedsView: View {
         }
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.hidden)
         }
         .sheet(isPresented: $showMedLogSheet) {
             MedLogDatePickerSheet(
@@ -79,7 +81,7 @@ struct MedsView: View {
                     showMedLogSheet = false
                 }
             )
-            .presentationDetents([.height(500), .large])
+            .presentationDetents([.height(260)])
             .presentationDragIndicator(.hidden)
             .interactiveDismissDisabled()
         }
@@ -167,17 +169,20 @@ struct MedLogDatePickerSheet: View {
     var onDismiss: () -> Void
     var body: some View {
         NavigationStack {
-            VStack {
-                Spacer(minLength: 24)
-                DatePicker(
-                    "",
-                    selection: $selectedDate,
-                    displayedComponents: [.date, .hourAndMinute]
-                )
-                .datePickerStyle(.graphical)
-                .frame(maxHeight: .infinity)
-                Spacer()
+            ZStack {
+                HStack {
+                    Spacer()
+                    DatePicker(
+                        "",
+                        selection: $selectedDate,
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    Spacer()
+                }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: onDismiss) {
@@ -185,8 +190,15 @@ struct MedLogDatePickerSheet: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: onSave) {
-                        Image(systemName: "checkmark")
+                    if #available(iOS 26.0, *) {
+                        Button(action: onSave) {
+                            Image(systemName: "checkmark")
+                        }
+                        .buttonStyle(.glassProminent)
+                    } else {
+                        Button(action: onSave) {
+                            Image(systemName: "checkmark")
+                        }
                     }
                 }
             }

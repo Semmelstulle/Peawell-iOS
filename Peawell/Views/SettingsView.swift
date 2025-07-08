@@ -28,6 +28,11 @@ struct SettingsView: View {
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
     
+    //  developer menu state
+    @State private var tapCount = 0
+    @State private var showDeveloperMenu = false
+    @AppStorage("developerModeEnabled") private var developerModeEnabled = false
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -120,6 +125,30 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                     }
                 }
+                .onTapGesture {
+                    tapCount += 1
+                    if tapCount >= 5 {
+                        showDeveloperMenu = true
+                        developerModeEnabled = true
+                        hapticConfirm()
+                    }
+                }
+                
+                //  Developer menu section
+                if showDeveloperMenu || developerModeEnabled {
+                    Section(
+                        header: Text("Developer"),
+                        footer: Text("Advanced settings for development and debugging")
+                    ) {
+                        Button("Hide Developer Menu") {
+                            showDeveloperMenu = false
+                            developerModeEnabled = false
+                            tapCount = 0
+                            hapticConfirm()
+                        }
+                    }
+                }
+                
                 HStack() {
                     //  oh, hello there!
                     Spacer()

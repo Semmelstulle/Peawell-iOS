@@ -12,7 +12,6 @@ struct CalendarView: View {
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollProxy: ScrollViewProxy?
     @State private var currentDate = Date()
-    private let totalDays = 105
     
     var body: some View {
         VStack(spacing: 0) {
@@ -21,7 +20,7 @@ struct CalendarView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 0) {
-                            ForEach(-90..<15, id: \.self) { offset in
+                            ForEach(-28..<7, id: \.self) { offset in
                                 NavigationLink(value: dateForOffset(offset)) {
                                     DayView(
                                         dayOffset: offset,
