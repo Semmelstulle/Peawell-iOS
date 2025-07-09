@@ -7,5 +7,9 @@
 "Modules" = "Module";
 "Use mood module" = "Abschnitt Launen benutzen";
 "Use medication module" = "Abschnitt Medikation benutzen";
+"Set App Icon" = "App Icon auswählen";
+"AppIcon" = "Standard";
+"AppIconAlt1" = "Flach";
+"AppIconAlt2" = "Zoom";
 "Delete data" = "Daten löschen";
 "Reset data on next launch" = "Beim nächsten Start die App zurücksetzen";

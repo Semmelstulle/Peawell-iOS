@@ -36,6 +36,34 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Set App Icon</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>App Icon</string>
+			<key>Key</key>
+			<string>selectedAppIcon</string>
+			<key>DefaultValue</key>
+			<string>AppIcon</string>
+			<key>Titles</key>
+			<array>
+				<string>AppIcon</string>
+				<string>AppIconAlt1</string>
+				<string>AppIconAlt2</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>AppIcon</string>
+				<string>AppIconAlt1</string>
+				<string>AppIconAlt2</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Delete data</string>
 		</dict>
 		<dict>
