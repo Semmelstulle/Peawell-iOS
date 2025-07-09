@@ -64,7 +64,6 @@ struct JournalScheduleView: View {
     }
     
     var body: some View {
-        VStack {
             Form {
                 Toggle(
                     isOn: $journalingRemindersEnabled,
@@ -84,20 +83,6 @@ struct JournalScheduleView: View {
                         
                 }
             }
-            Spacer()
-            Button(action: saveAndApplyChanges) {
-                HStack {
-                    Spacer()
-                    Text("button.save.schedule")
-                        .padding(8)
-                    Spacer()
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            .padding()
-            .disabled(!hasUnsavedChanges)
-            .padding(.vertical, 4)
-        }
         .navigationTitle("title.journal.schedule")
         .alert("title.dialog.notifications", isPresented: $showingNotificationPermissionAlert) {
             Button("button.dialog.settings", role: .none) {
@@ -162,7 +147,6 @@ struct JournalScheduleView: View {
                 .padding(.horizontal, 4)
             }
         }
-        .listRowBackground(Color(.tertiarySystemGroupedBackground))
     }
     
     // Time selection section with multiple times
@@ -230,7 +214,6 @@ struct JournalScheduleView: View {
                 }
             }
         }
-        .listRowBackground(Color(.tertiarySystemGroupedBackground))
     }
     
     // Load selected days and times from AppStorage
@@ -281,8 +264,8 @@ struct JournalScheduleView: View {
         
         // Create the notification content
         let content = UNMutableNotificationContent()
-        content.title = "Time to Journal"
-        content.body = "Take a moment to record your thoughts and feelings today."
+        content.title = NSLocalizedString("notification.mood.title", comment: "")
+        content.body = NSLocalizedString("notification.mood.body", comment: "")
         content.sound = .default
         
         // Create and schedule a notification for each day and time combination
@@ -330,22 +313,6 @@ struct JournalScheduleView: View {
             
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
         }
-    }
-    
-    // Save changes and apply reminder schedule
-    private func saveAndApplyChanges() {
-        // Save selected days and times to AppStorage
-        saveSelectedDays()
-        saveSelectedTimes()
-        
-        // Schedule reminders with the new settings
-        if journalingRemindersEnabled {
-            scheduleJournalingReminders()
-        }
-        hapticConfirm()
-        
-        // Reset the unsaved changes flag
-        hasUnsavedChanges = false
     }
     
     // Legacy support for old methods

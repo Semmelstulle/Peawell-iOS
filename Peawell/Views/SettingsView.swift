@@ -31,14 +31,13 @@ struct SettingsView: View {
     
     //  developer menu state
     @State private var tapCount = 0
-    @State private var showDeveloperMenu = false
-    @AppStorage("developerModeEnabled") private var developerModeEnabled = false
+    @State private var showDebugMenu = false
     
     // notification settings
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("journalingRemindersEnabled") private var journalingRemindersEnabled = false
-    @AppStorage("journalingReminderDay") private var journalingReminderDay = 1 // Monday by default
-    @AppStorage("journalingReminderHour") private var journalingReminderHour = 18 // 6 PM by default
+    @AppStorage("journalingReminderDay") private var journalingReminderDay = 1
+    @AppStorage("journalingReminderHour") private var journalingReminderHour = 09
     @AppStorage("journalingReminderMinute") private var journalingReminderMinute = 0
     
     private let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -125,9 +124,7 @@ struct SettingsView: View {
                             requestNotificationPermission()
                         }
                     }
-                    NavigationLink(destination: JournalScheduleView()) {
-                        Label("title.journal.schedule", systemImage: "calendar.badge.clock")
-                    }
+                    NavigationLink("title.journal.schedule", destination: JournalScheduleView())
                     .disabled(!notificationsEnabled)
                 }
                 
@@ -164,21 +161,19 @@ struct SettingsView: View {
                     .onTapGesture {
                         tapCount += 1
                         if tapCount >= 5 {
-                            showDeveloperMenu = true
-                            developerModeEnabled = true
+                            showDebugMenu = true
                             hapticConfirm()
                         }
                     }
                 }
                 
                 //  Developer menu section
-                if showDeveloperMenu || developerModeEnabled {
+                if showDebugMenu {
                     Section(
                         header: Text("section.header.debug")
                     ) {
                         Button("button.hide.debug") {
-                            showDeveloperMenu = false
-                            developerModeEnabled = false
+                            showDebugMenu = false
                             tapCount = 0
                             hapticConfirm()
                         }
@@ -204,6 +199,7 @@ struct SettingsView: View {
                         } label: {
                             Image(systemName: "checkmark")
                         }
+                        .buttonStyle(.glassProminent)
                     }
                 } else {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -267,12 +263,6 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}
-
 // Helper to get app icon image from asset catalog
 func getAppIconImage(named name: String) -> UIImage {
     switch name {
@@ -284,5 +274,11 @@ func getAppIconImage(named name: String) -> UIImage {
         return UIImage(named: "AppIconAlt2Preview") ?? UIImage(systemName: "app") ?? UIImage()
     default:
         return UIImage(systemName: "app") ?? UIImage()
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }
