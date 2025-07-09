@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreHaptics
+import UserNotifications
 
 //  constants declared on top
 //  this only checks the app version from within itself
@@ -32,6 +33,16 @@ struct SettingsView: View {
     @State private var tapCount = 0
     @State private var showDeveloperMenu = false
     @AppStorage("developerModeEnabled") private var developerModeEnabled = false
+    
+    // notification settings
+    @AppStorage("notificationsEnabled") private var notificationsEnabled = false
+    @AppStorage("journalingRemindersEnabled") private var journalingRemindersEnabled = false
+    @AppStorage("journalingReminderDay") private var journalingReminderDay = 1 // Monday by default
+    @AppStorage("journalingReminderHour") private var journalingReminderHour = 18 // 6 PM by default
+    @AppStorage("journalingReminderMinute") private var journalingReminderMinute = 0
+    
+    private let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    @State private var showingNotificationPermissionAlert = false
     
     var body: some View {
         NavigationStack {
@@ -100,6 +111,26 @@ struct SettingsView: View {
                         }
                     }
                 }
+                
+                // Notification settings section
+                Section(
+                    header: Text("section.header.notifications")
+                ) {
+                    Toggle(
+                        isOn: $notificationsEnabled,
+                        label: {Text("toggle.allow.notifications")}
+                    )
+                    .onChange(of: notificationsEnabled) { newValue in
+                        if newValue {
+                            requestNotificationPermission()
+                        }
+                    }
+                    NavigationLink(destination: JournalScheduleView()) {
+                        Label("title.journal.schedule", systemImage: "calendar.badge.clock")
+                    }
+                    .disabled(!notificationsEnabled)
+                }
+                
                 //  links to project and dev
                 Section(
                     header: Text("section.header.about")
@@ -116,6 +147,12 @@ struct SettingsView: View {
                             Label("link.socials.github", systemImage: "link").foregroundColor(.blue)
                         }
                     )
+                    Link(
+                        destination: URL(string: "https://peawell.app/privacy/")!,
+                        label: {
+                            Label("link.legal.privacyPolicy", systemImage: "link").foregroundColor(.blue)
+                        }
+                    )
                     //  HStack so not all of it is crammed on the left side
                     HStack() {
                         Text("suffix.appVersion")
@@ -124,23 +161,22 @@ struct SettingsView: View {
                         Text(appVersion ?? String("N/A"))
                             .foregroundColor(.secondary)
                     }
-                }
-                .onTapGesture {
-                    tapCount += 1
-                    if tapCount >= 5 {
-                        showDeveloperMenu = true
-                        developerModeEnabled = true
-                        hapticConfirm()
+                    .onTapGesture {
+                        tapCount += 1
+                        if tapCount >= 5 {
+                            showDeveloperMenu = true
+                            developerModeEnabled = true
+                            hapticConfirm()
+                        }
                     }
                 }
                 
                 //  Developer menu section
                 if showDeveloperMenu || developerModeEnabled {
                     Section(
-                        header: Text("Developer"),
-                        footer: Text("Advanced settings for development and debugging")
+                        header: Text("section.header.debug")
                     ) {
-                        Button("Hide Developer Menu") {
+                        Button("button.hide.debug") {
                             showDeveloperMenu = false
                             developerModeEnabled = false
                             tapCount = 0
@@ -180,6 +216,51 @@ struct SettingsView: View {
                                 .symbolRenderingMode(.hierarchical)
                         }
                     }
+                }
+            }
+            .onAppear {
+                // Check notification status when view appears
+                if notificationsEnabled {
+                    UNUserNotificationCenter.current().getNotificationSettings { settings in
+                        DispatchQueue.main.async {
+                            self.notificationsEnabled = settings.authorizationStatus == .authorized ||
+                                                       settings.authorizationStatus == .provisional ||
+                                                       settings.authorizationStatus == .ephemeral
+                        }
+                    }
+                }
+            }
+        }
+        .alert("title.dialog.notifications", isPresented: $showingNotificationPermissionAlert) {
+            Button("button.dialog.settings", role: .none) {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("button.dialog.cancelReset", role: .cancel) { }
+        } message: {
+            Text("message.dialog.notifications")
+        }
+    }
+    
+    // Request notification permission from the user
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .notDetermined:
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, _ in
+                        DispatchQueue.main.async {
+                            self.notificationsEnabled = success
+                        }
+                    }
+                case .denied:
+                    self.showingNotificationPermissionAlert = true
+                    self.notificationsEnabled = false
+                case .authorized, .provisional, .ephemeral:
+                    break
+                @unknown default:
+                    break
                 }
             }
         }

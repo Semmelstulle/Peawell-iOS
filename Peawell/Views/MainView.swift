@@ -73,7 +73,7 @@ struct MainView: View {
                 }
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Peawell")
+            .navigationTitle("title.mainScreen")
             .toolbar {
                 ToolbarItem {
                     Button {

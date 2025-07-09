@@ -15,9 +15,6 @@
     "%lld" : {
       "shouldTranslate" : false
     },
-    "Advanced settings for development and debugging" : {
-
-    },
     "button.addTime" : {
       "localizations" : {
         "de" : {
@@ -62,6 +59,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm"
+          }
+        }
+      }
+    },
+    "button.dialog.settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "button.hide.debug" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug Einstellungen verbergen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide debug settings"
           }
         }
       }
@@ -130,6 +159,9 @@
         }
       }
     },
+    "button.save.schedule" : {
+
+    },
     "button.scrollToToday" : {
       "localizations" : {
         "de" : {
@@ -145,9 +177,6 @@
           }
         }
       }
-    },
-    "Developer" : {
-
     },
     "dialog.infoText" : {
       "localizations" : {
@@ -213,8 +242,37 @@
         }
       }
     },
-    "Hide Developer Menu" : {
-
+    "label.jounrnal.reminders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An Tagebuch erinnern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule reminders"
+          }
+        }
+      }
+    },
+    "link.legal.privacyPolicy" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzrichtlinie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy policy"
+          }
+        }
+      }
     },
     "link.socials.github" : {
       "localizations" : {
@@ -296,6 +354,22 @@
         }
       }
     },
+    "message.dialog.notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Möglichkeit, Mitteilungen zu senden, wurde in den iOS-Einstellungen der App deaktiviert. Um sie verwenden zu können, müssen Sie sie zuerst erneut aktivieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ability to send notifications has been disabled in the iOS settings of the app. To be able to use them, you need to re-enable them first."
+          }
+        }
+      }
+    },
     "mood.textEditor.whatMadeYouSmile" : {
       "localizations" : {
         "de" : {
@@ -311,9 +385,6 @@
           }
         }
       }
-    },
-    "Peawell" : {
-      "shouldTranslate" : false
     },
     "prompt.meds.amount" : {
       "localizations" : {
@@ -395,6 +466,22 @@
         }
       }
     },
+    "section.header.debug" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug"
+          }
+        }
+      }
+    },
     "section.header.medHistory" : {
       "localizations" : {
         "de" : {
@@ -459,6 +546,22 @@
         }
       }
     },
+    "section.header.notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitteilungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        }
+      }
+    },
     "section.header.reset" : {
       "localizations" : {
         "de" : {
@@ -507,6 +610,22 @@
         }
       }
     },
+    "title.dialog.notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff verweigert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permissions denied"
+          }
+        }
+      }
+    },
     "title.diary" : {
       "localizations" : {
         "de" : {
@@ -535,6 +654,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit journal"
+          }
+        }
+      }
+    },
+    "title.journal.schedule" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen für Tagebuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journaling reminders"
+          }
+        }
+      }
+    },
+    "title.mainScreen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übersicht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overview"
           }
         }
       }
@@ -587,6 +738,22 @@
         }
       }
     },
+    "title.noSelection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nichts ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no selection"
+          }
+        }
+      }
+    },
     "title.settings" : {
       "localizations" : {
         "de" : {
@@ -615,6 +782,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select times"
+          }
+        }
+      }
+    },
+    "toggle.allow.notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitteilungen senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send notifications"
           }
         }
       }

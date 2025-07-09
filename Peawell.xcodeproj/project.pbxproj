@@ -23,6 +23,7 @@
 		95A673FB2DD5BDD600CEE7D4 /* LogSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A673FA2DD5BDC400CEE7D4 /* LogSectionsView.swift */; };
 		95B7D93B2DE336EF008FFAE2 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7D93A2DE336EF008FFAE2 /* HapticFeedback.swift */; };
 		95B7D93D2DE3377B008FFAE2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B7D93C2DE3377B008FFAE2 /* Utilities.swift */; };
+		95BAD0592E1E50C9004ECA47 /* JournalScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BAD0582E1E50C9004ECA47 /* JournalScheduleView.swift */; };
 		95ECE1BD29EFE1AE001A19B6 /* MedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */; };
 		95EE54F22C1C402C00F34D53 /* MedLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EE54F12C1C402C00F34D53 /* MedLogView.swift */; };
 		95EE550B2C1C6AAE00F34D53 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */; };
@@ -47,6 +48,7 @@
 		95A673FA2DD5BDC400CEE7D4 /* LogSectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSectionsView.swift; sourceTree = "<group>"; };
 		95B7D93A2DE336EF008FFAE2 /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		95B7D93C2DE3377B008FFAE2 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		95BAD0582E1E50C9004ECA47 /* JournalScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalScheduleView.swift; sourceTree = "<group>"; };
 		95ECE1BC29EFE1AE001A19B6 /* MedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedsView.swift; sourceTree = "<group>"; };
 		95EE54F12C1C402C00F34D53 /* MedLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedLogView.swift; sourceTree = "<group>"; };
 		95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				952B207629EF109000884166 /* MoodLogView.swift */,
 				95EE54F12C1C402C00F34D53 /* MedLogView.swift */,
 				9514AC4F29F02555009F44D1 /* ModifyMedsSheetView.swift */,
+				95BAD0582E1E50C9004ECA47 /* JournalScheduleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,7 +161,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					9505431E29E5CAC8005D29B5 = {
 						CreatedOnToolsVersion = 14.2;
@@ -210,6 +213,7 @@
 				953EDAE62DD5133E00C5EA91 /* CalendarView.swift in Sources */,
 				9592B97929E877D800DC2487 /* PersistenceController.swift in Sources */,
 				95A673FB2DD5BDD600CEE7D4 /* LogSectionsView.swift in Sources */,
+				95BAD0592E1E50C9004ECA47 /* JournalScheduleView.swift in Sources */,
 				9514AC5029F02555009F44D1 /* ModifyMedsSheetView.swift in Sources */,
 				9543A6BE29E6E5C3003046FC /* MainView.swift in Sources */,
 				952BF4E22DFD58E900A3CED8 /* GlobalValues.swift in Sources */,
@@ -286,6 +290,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -346,6 +351,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
