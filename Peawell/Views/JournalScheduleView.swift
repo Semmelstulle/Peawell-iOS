@@ -202,7 +202,7 @@ struct JournalScheduleView: View {
                         ), displayedComponents: .hourAndMinute)
                         .datePickerStyle(.compact)
                         .labelsHidden()
-                        Spacer()
+                        Spacer(minLength: 8)
                         Button(action: {
                             selectedTimes.remove(time)
                             hasUnsavedChanges = true
@@ -211,6 +211,10 @@ struct JournalScheduleView: View {
                                 .foregroundColor(.red)
                                 .font(.title2)
                         }
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .contentShape(Circle())
+                        .buttonStyle(.borderless)
+                        .fixedSize()
                     }
                 }
             }
