@@ -9,14 +9,14 @@ import SwiftUI
 
 struct Constants {
     static var cornerRadiusPrimary: CGFloat {
-        if #available(iOS 26, *) {
+        if #available(iOS 26.0, *) {
             return 24
         } else {
             return 12
         }
     }
     static var cornerRadiusSecondary: CGFloat {
-        if #available(iOS 26, *) {
+        if #available(iOS 26.0, *) {
             return 16
         } else {
             return 8

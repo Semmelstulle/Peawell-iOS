@@ -82,7 +82,7 @@ struct MainView: View {
                         Image(systemName: "gear")
                     }
                 }
-                if #available(iOS 26, *) {
+                if #available(iOS 26.0, *) {
                     ToolbarSpacer(.fixed)
                 }
             }

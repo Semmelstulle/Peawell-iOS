@@ -24,13 +24,12 @@ struct MoodPickerView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                DatePicker(
+                DatePicker("",
                     selection: $moodLogDate,
                     displayedComponents: [.date, .hourAndMinute]
-                ) {
-                    Text("")
-                }
-                .datePickerStyle(.compact)
+                )
+                //.datePickerStyle(.compact)
+                .datePickerStyle(.automatic)
                 .labelsHidden()
                 
                 ZStack(alignment: .topLeading) {
@@ -50,23 +49,44 @@ struct MoodPickerView: View {
                     }
                 }
                 .padding([.top, .horizontal])
-                Button(
-                    action: {
-                        saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                        clearInputs()
-                        dismiss()
-                        onDismiss?()
-                    }, label: {
-                        Label("button.mood.save", systemImage: "square.and.pencil")
-                            .font(.headline)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.accentColor.opacity(0.3))
-                            .foregroundColor(.accentColor)
-                            .cornerRadius(10)
-                    }
-                )
-                .padding()
+                if #available(iOS 26.0, *) {
+                    Button(
+                        action: {
+                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        }, label: {
+                            Label("button.mood.save", systemImage: "square.and.pencil")
+                                .font(.headline)
+                                .padding(8)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.accentColor)
+                                .foregroundColor(.primary)
+                                .cornerRadius(10)
+                        }
+                    )
+                    .padding()
+                    .buttonStyle(.glassProminent)
+                } else {
+                    Button(
+                        action: {
+                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        }, label: {
+                            Label("button.mood.save", systemImage: "square.and.pencil")
+                                .font(.headline)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.accentColor.opacity(0.3))
+                                .foregroundColor(.accentColor)
+                                .cornerRadius(10)
+                        }
+                    )
+                    .padding()
+                }
             }
             .onAppear {
                 if actName.isEmpty && (moodLogDate.timeIntervalSinceNow > 60 || moodLogDate.timeIntervalSinceNow < -60) {
