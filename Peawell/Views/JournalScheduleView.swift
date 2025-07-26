@@ -112,6 +112,16 @@ struct JournalScheduleView: View {
                 }
             }
         }
+        .onDisappear {
+            if hasUnsavedChanges {
+                saveSelectedDays()
+                saveSelectedTimes()
+                if journalingRemindersEnabled {
+                    scheduleJournalingReminders()
+                }
+                hasUnsavedChanges = false
+            }
+        }
     }
     
     // Day selection section with circular day buttons
@@ -165,10 +175,7 @@ struct JournalScheduleView: View {
                     attempts += 1
                 }
                 selectedTimes.insert(candidate)
-                saveSelectedTimes()
-                if journalingRemindersEnabled {
-                    scheduleJournalingReminders()
-                }
+                hasUnsavedChanges = true
             }) {
                 Image(systemName: "plus.circle.fill").font(.title2)
             }
@@ -189,10 +196,7 @@ struct JournalScheduleView: View {
                                 let components = calendar.dateComponents([.hour, .minute], from: newValue)
                                 if let normalized = calendar.date(from: components) {
                                     selectedTimes.insert(normalized)
-                                    saveSelectedTimes()
-                                    if journalingRemindersEnabled {
-                                        scheduleJournalingReminders()
-                                    }
+                                    hasUnsavedChanges = true
                                 }
                             }
                         ), displayedComponents: .hourAndMinute)
@@ -201,10 +205,7 @@ struct JournalScheduleView: View {
                         Spacer()
                         Button(action: {
                             selectedTimes.remove(time)
-                            saveSelectedTimes()
-                            if journalingRemindersEnabled {
-                                scheduleJournalingReminders()
-                            }
+                            hasUnsavedChanges = true
                         }) {
                             Image(systemName: "minus.circle.fill")
                                 .foregroundColor(.red)
@@ -222,9 +223,8 @@ struct JournalScheduleView: View {
             selectedDays = try JSONDecoder().decode(Set<Int>.self, from: journalingSelectedDaysData)
             selectedTimes = try JSONDecoder().decode(Set<Date>.self, from: journalingSelectedTimesData)
         } catch {
-            print("Error loading saved data: \(error)")
             // Set defaults if there's an error
-            selectedDays = [1] // Monday
+            selectedDays = [0] // First day in the UI's ordered array (not Monday)
             if let defaultTime = Calendar.current.date(from: DateComponents(hour: 18, minute: 0)) {
                 selectedTimes = [defaultTime]
             }
@@ -238,7 +238,6 @@ struct JournalScheduleView: View {
         do {
             journalingSelectedDaysData = try JSONEncoder().encode(selectedDays)
         } catch {
-            print("Error saving selected days: \(error)")
         }
     }
     
@@ -247,7 +246,6 @@ struct JournalScheduleView: View {
         do {
             journalingSelectedTimesData = try JSONEncoder().encode(selectedTimes)
         } catch {
-            print("Error saving selected times: \(error)")
         }
     }
     
@@ -258,7 +256,6 @@ struct JournalScheduleView: View {
         
         // Ensure we have days and times selected
         guard !selectedDays.isEmpty, !selectedTimes.isEmpty else {
-            print("No days or times selected for reminders")
             return
         }
         
@@ -275,9 +272,9 @@ struct JournalScheduleView: View {
                 let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
                 var dateComponents = DateComponents()
                 
-                // Convert our UI index back to actual calendar weekday (1-7)
-                // First, determine which day this is in our ordered array
-                let weekdayIndex = (day + calendar.firstWeekday - 1) % 7 + 1
+                // day is 0-indexed in UI. Convert to Calendar weekday (1-7, firstWeekday).  
+                // weekday = ((day + calendar.firstWeekday - 1) % 7) + 1
+                let weekdayIndex = ((day + calendar.firstWeekday - 1) % 7) + 1
                 dateComponents.weekday = weekdayIndex // Calendar weekdays are 1-7 with 1=Sunday
                 dateComponents.hour = timeComponents.hour
                 dateComponents.minute = timeComponents.minute
@@ -296,8 +293,7 @@ struct JournalScheduleView: View {
                 
                 // Schedule the notification
                 UNUserNotificationCenter.current().add(request) { error in
-                    if let error = error {
-                        print("Error scheduling notification for \(identifier): \(error)")
+                    if error != nil {
                     }
                 }
             }
