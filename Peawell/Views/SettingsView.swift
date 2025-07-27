@@ -55,6 +55,23 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                
+                Section(
+                    header: Text("section.header.notifications")
+                ) {
+                    Toggle(
+                        isOn: $notificationsEnabled,
+                        label: {Text("toggle.allow.notifications")}
+                    )
+                    .onChange(of: notificationsEnabled) { newValue in
+                        if newValue {
+                            requestNotificationPermission()
+                        }
+                    }
+                    NavigationLink("title.journal.schedule", destination: JournalScheduleView())
+                        .disabled(!notificationsEnabled)
+                }
+                
                 Section(
                     header: Text("section.header.modules"),
                     footer: Text("section.footer.modules")
@@ -97,23 +114,23 @@ struct SettingsView: View {
                     }
                 }
                 Section(
-                    header: Text("section.header.reset"),
-                    footer: Text("section.footer.reset")
+                    header: Text("section.header.data"),
+                    footer: Text("section.footer.data")
                 ) {
-                Button(action: {
-                    if let url = exportUserData() {
-                        self.exportURL = url
-                        self.showingExporter = true
-                    }
-                }, label: {
-                    Label("button.exportData", systemImage: "square.and.arrow.up")
-                })
-
-                Button(action: {
-                    self.showingImporter = true
-                }, label: {
-                    Label("button.importData", systemImage: "square.and.arrow.down")
-                })
+                    Button(action: {
+                        if let url = exportUserData() {
+                            self.exportURL = url
+                            self.showingExporter = true
+                        }
+                    }, label: {
+                        Label("button.exportData", systemImage: "square.and.arrow.up")
+                    })
+                    
+                    Button(action: {
+                        self.showingImporter = true
+                    }, label: {
+                        Label("button.importData", systemImage: "square.and.arrow.down")
+                    })
                     Button(action: {
                         self.showingDeleteAlert = true
                         hapticWarning()
@@ -146,39 +163,22 @@ struct SettingsView: View {
                     allowedContentTypes: [.json]
                 ) { result in
                     switch result {
-                        case .success(let url):
-                            let accessed = url.startAccessingSecurityScopedResource()
-                            defer {
-                                if accessed { url.stopAccessingSecurityScopedResource() }
-                            }
-                            if importUserData(from: url) {
-                                showImportSuccess = true
-                            } else {
-                                showImportFailed = true
-                            }
-                        case .failure(_):
+                    case .success(let url):
+                        let accessed = url.startAccessingSecurityScopedResource()
+                        defer {
+                            if accessed { url.stopAccessingSecurityScopedResource() }
+                        }
+                        if importUserData(from: url) {
+                            showImportSuccess = true
+                        } else {
                             showImportFailed = true
                         }
+                    case .failure(_):
+                        showImportFailed = true
+                    }
                 }
                 .alert("alert.importSuccessful", isPresented: $showImportSuccess) { Button("OK", role: .cancel) { } }
                 .alert("alert.importFailed", isPresented: $showImportFailed) { Button("OK", role: .cancel) { } }
-                
-                // Notification settings section
-                Section(
-                    header: Text("section.header.notifications")
-                ) {
-                    Toggle(
-                        isOn: $notificationsEnabled,
-                        label: {Text("toggle.allow.notifications")}
-                    )
-                    .onChange(of: notificationsEnabled) { newValue in
-                        if newValue {
-                            requestNotificationPermission()
-                        }
-                    }
-                    NavigationLink("title.journal.schedule", destination: JournalScheduleView())
-                    .disabled(!notificationsEnabled)
-                }
                 
                 //  links to project and dev
                 Section(
@@ -272,8 +272,8 @@ struct SettingsView: View {
                     UNUserNotificationCenter.current().getNotificationSettings { settings in
                         DispatchQueue.main.async {
                             self.notificationsEnabled = settings.authorizationStatus == .authorized ||
-                                                       settings.authorizationStatus == .provisional ||
-                                                       settings.authorizationStatus == .ephemeral
+                            settings.authorizationStatus == .provisional ||
+                            settings.authorizationStatus == .ephemeral
                         }
                     }
                 }

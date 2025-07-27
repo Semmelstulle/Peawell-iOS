@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -53,6 +53,10 @@
 		95EE54F12C1C402C00F34D53 /* MedLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedLogView.swift; sourceTree = "<group>"; };
 		95EE550A2C1C6AAE00F34D53 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		95CEA4382E3615A400C9C621 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9505431C29E5CAC8005D29B5 /* Frameworks */ = {
@@ -111,6 +115,7 @@
 		951DCA7329E735E60072E809 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				95CEA4382E3615A400C9C621 /* Shared */,
 				95943E2D29ED85D10096CE6B /* CustomViews */,
 				9543A6BD29E6E5C3003046FC /* MainView.swift */,
 				95943E2E29ED85EF0096CE6B /* MoodPickerView.swift */,
@@ -147,6 +152,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				95CEA4382E3615A400C9C621 /* Shared */,
 			);
 			name = Peawell;
 			productName = Peawell;

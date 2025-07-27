@@ -16,10 +16,36 @@
       "shouldTranslate" : false
     },
     "alert.importFailed" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import has failed"
+          }
+        }
+      }
     },
     "alert.importSuccessful" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import erfolgreich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import successful"
+          }
+        }
+      }
     },
     "button.addTime" : {
       "localizations" : {
@@ -86,7 +112,20 @@
       }
     },
     "button.exportData" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten exportieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export data"
+          }
+        }
+      }
     },
     "button.hide.debug" : {
       "localizations" : {
@@ -105,7 +144,20 @@
       }
     },
     "button.importData" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten importieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import data"
+          }
+        }
+      }
     },
     "button.mood.save" : {
       "localizations" : {
@@ -235,6 +287,38 @@
         }
       }
     },
+    "header.journal.days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select days"
+          }
+        }
+      }
+    },
+    "header.journal.times" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeiten auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select times"
+          }
+        }
+      }
+    },
     "header.schedule" : {
       "localizations" : {
         "de" : {
@@ -251,18 +335,34 @@
         }
       }
     },
-    "label.jounrnal.reminders" : {
+    "label.addTime" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An Tagebuch erinnern"
+            "value" : "Zeit hinzufügen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schedule reminders"
+            "value" : "Add time"
+          }
+        }
+      }
+    },
+    "label.time" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
           }
         }
       }
@@ -428,7 +528,7 @@
       }
     },
     "OK" : {
-
+      "shouldTranslate" : false
     },
     "prompt.meds.amount" : {
       "localizations" : {
@@ -462,6 +562,22 @@
         }
       }
     },
+    "section.footer.data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorsicht, diese Aktionen sind nicht rückgängig zu machen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Be careful, these actions are not revertible"
+          }
+        }
+      }
+    },
     "section.footer.modules" : {
       "localizations" : {
         "de" : {
@@ -478,22 +594,6 @@
         }
       }
     },
-    "section.footer.reset" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diese Aktion löscht alle Daten und stellt die Standardeinstellungen wieder her."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This will delete all data and reset to default settings. This action can not be undone."
-          }
-        }
-      }
-    },
     "section.header.about" : {
       "localizations" : {
         "de" : {
@@ -506,6 +606,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "About this app"
+          }
+        }
+      }
+    },
+    "section.header.data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten verwalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage data"
           }
         }
       }
@@ -602,22 +718,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications"
-          }
-        }
-      }
-    },
-    "section.header.reset" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zurücksetzen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reset"
           }
         }
       }
@@ -782,22 +882,6 @@
         }
       }
     },
-    "title.noSelection" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nichts ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "no selection"
-          }
-        }
-      }
-    },
     "title.settings" : {
       "localizations" : {
         "de" : {
@@ -830,7 +914,39 @@
         }
       }
     },
+    "Toggle %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schalte %@ um"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle %@"
+          }
+        }
+      }
+    },
     "toggle.allow.notifications" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitteilungen senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send notifications"
+          }
+        }
+      }
+    },
+    "toggle.journal.notifications" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {

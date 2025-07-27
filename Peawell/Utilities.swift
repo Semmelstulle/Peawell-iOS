@@ -84,10 +84,11 @@ func saveMood(actName: String, moodName: String, moodLogDate: Date) {
 
 //  resets all data to empty and settings to their default
 func resetData() {
-    
-    //  sets UserData to default values (NOT a real reset by deletion!)
-    UserDefaults.standard.set(true, forKey: "settingShowMoodSection")
-    UserDefaults.standard.set(true, forKey: "settingShowMedicationSection")
+    // Clear all UserDefaults keys for your app
+    if let appDomain = Bundle.main.bundleIdentifier {
+        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+        UserDefaults.standard.synchronize()
+    }
     //  add CoreData to scope
     let viewContext = PersistenceController.shared.container.viewContext
     //  runs fetch functions to gather all data and delete them
@@ -171,7 +172,7 @@ struct LogTimeMedStruct: Codable {
 
 // Export user data as JSON
 func exportUserData() -> URL? {
-    let viewContext = PersistenceController.shared.container.viewContext
+    _ = PersistenceController.shared.container.viewContext
 
     // Existing mood fetch
     let moods = fetchMood().compactMap { mood -> MoodStruct? in
