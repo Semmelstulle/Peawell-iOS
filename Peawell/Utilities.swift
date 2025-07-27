@@ -101,6 +101,46 @@ func resetData() {
     try? viewContext.save()
 }
 
+func createDummyData(context: NSManagedObjectContext, amount: Int) throws {
+    // Predefined sample data for moods and meds
+    let medKinds = ["longPill", "roundPill", "drops", "inhaler", "drops"]
+    let medTypes = ["Medication 1", "Daily pill", "Eyedrops", "Inhale stuff", "Insanely long name for a medication to test edge cases"]
+    let medUnits = ["mg", "µg", "ml", "mg", "ml"]
+    
+    let activityNames = ["Running", "Reading", "Meditating", "Cooking", "Sleeping", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.","Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."]
+    let moodNames = ["Awesome", "Good", "Horrible", "Neutral", "Bad", "Good", "Good"]
+
+    // Helper function to generate a random date within the last year
+    func randomDateWithinLastYear() -> Date {
+        let secondsInYear: TimeInterval = 365 * 24 * 60 * 60
+        let randomTimeAgo = TimeInterval.random(in: 0...secondsInYear)
+        return Date().addingTimeInterval(-randomTimeAgo)
+    }
+
+    // Create 100 Mood entities
+    for _ in 0..<amount {
+        let mood = Mood(context: context)
+        mood.moodName = moodNames.randomElement()
+        mood.activityName = activityNames.randomElement()
+        mood.logDate = randomDateWithinLastYear()
+    }
+
+    // Create 100 Meds entities
+    for _ in 0..<amount {
+        let med = Meds(context: context)
+        med.medKind = medKinds.randomElement()
+        med.medType = medTypes.randomElement()
+        med.medDose = String(format: "%.1f", Double.random(in: 1...500))
+        med.medUnit = medUnits.randomElement()
+        med.medRemind = Bool.random()
+    }
+
+    // Save the context to persist data
+    if context.hasChanges {
+        try context.save()
+    }
+}
+
 // functions to get data
 func fetchMood() -> [NSManagedObject] {
     //  add CoreData to scope

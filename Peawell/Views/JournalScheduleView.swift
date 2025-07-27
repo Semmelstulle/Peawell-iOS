@@ -39,17 +39,20 @@ struct JournalScheduleView: View {
             ) {
                 ForEach(times.indices, id: \.self) { index in
                     HStack {
-                        DatePicker("label.time", selection: Binding(
+                        DatePicker("", selection: Binding(
                             get: { times[index] },
                             set: { times[index] = $0 }),
                                    displayedComponents: [.hourAndMinute]
                         )
+                        .labelsHidden()
+                        Spacer()
                         if times.count > 1 {
                             Button(role: .destructive) {
                                 times.remove(at: index)
                             } label: {
                                 Image(systemName: "minus.circle")
                             }
+                            .buttonStyle(.borderless)
                         }
                     }
                 }

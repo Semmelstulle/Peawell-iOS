@@ -15,6 +15,22 @@
     "%lld" : {
       "shouldTranslate" : false
     },
+    "alert.dismiss" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
     "alert.importFailed" : {
       "localizations" : {
         "de" : {
@@ -59,6 +75,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add time"
+          }
+        }
+      }
+    },
+    "button.createDummyData" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstelle je 100 Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create 100 entries each"
           }
         }
       }
@@ -239,6 +272,9 @@
         }
       }
     },
+    "Create %lld dummy entries" : {
+
+    },
     "dialog.infoText" : {
       "localizations" : {
         "de" : {
@@ -347,22 +383,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add time"
-          }
-        }
-      }
-    },
-    "label.time" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeit"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time"
           }
         }
       }
@@ -527,9 +547,6 @@
         }
       }
     },
-    "OK" : {
-      "shouldTranslate" : false
-    },
     "prompt.meds.amount" : {
       "localizations" : {
         "de" : {
@@ -567,7 +584,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vorsicht, diese Aktionen sind nicht rückgängig zu machen"
+            "value" : "Vorsicht, diese Aktionen können nicht rückgängig gemacht werden"
           }
         },
         "en" : {

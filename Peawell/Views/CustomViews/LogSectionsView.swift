@@ -76,12 +76,12 @@ struct TileButton: View {
                                 .opacity(0.8)
                         }
                     }
-                    .padding(12)
+                    .padding()
                     Text(title)
                         .font(.body.bold())
                         .opacity(0.6)
                         .lineLimit(1)
-                        .padding([.trailing, .leading, .bottom], 12)
+                        .padding([.trailing, .leading, .bottom])
                 }
             }
         }

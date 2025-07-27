@@ -42,6 +42,9 @@ struct SettingsView: View {
     @State private var showImportSuccess = false
     @State private var showImportFailed = false
     
+    //  debug settings state
+    @State private var amount: Double = 100
+    
     // notification settings
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("journalingRemindersEnabled") private var journalingRemindersEnabled = false
@@ -100,7 +103,7 @@ struct SettingsView: View {
                                         .frame(width: 54, height: 54)
                                         .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary))
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary)
+                                            RoundedRectangle(cornerRadius: 16)
                                                 .stroke(selectedAppIcon == icon.name ? Color.accentColor : Color.gray.opacity(0.3), lineWidth: selectedAppIcon == icon.name ? 2 : 1)
                                         )
                                         .padding(.horizontal, 2)
@@ -131,24 +134,6 @@ struct SettingsView: View {
                     }, label: {
                         Label("button.importData", systemImage: "square.and.arrow.down")
                     })
-                    Button(action: {
-                        self.showingDeleteAlert = true
-                        hapticWarning()
-                    }, label: {
-                        Label(
-                            "button.reset",
-                            systemImage: "trash"
-                        )
-                        .foregroundColor(.red)
-                    })
-                    .confirmationDialog("dialog.infoText", isPresented: $showingDeleteAlert) {
-                        Button("button.dialog.cancelReset", role: .cancel) {
-                            showingDeleteAlert = false
-                        }
-                        Button("button.dialog.confirmReset", role: .destructive) {
-                            resetData()
-                        }
-                    }
                 }
                 .fileExporter(
                     isPresented: $showingExporter,
@@ -177,8 +162,8 @@ struct SettingsView: View {
                         showImportFailed = true
                     }
                 }
-                .alert("alert.importSuccessful", isPresented: $showImportSuccess) { Button("OK", role: .cancel) { } }
-                .alert("alert.importFailed", isPresented: $showImportFailed) { Button("OK", role: .cancel) { } }
+                .alert("alert.importSuccessful", isPresented: $showImportSuccess) { Button("alert.dismiss", role: .cancel) { } }
+                .alert("alert.importFailed", isPresented: $showImportFailed) { Button("alert.dismiss", role: .cancel) { } }
                 
                 //  links to project and dev
                 Section(
@@ -224,6 +209,36 @@ struct SettingsView: View {
                     Section(
                         header: Text("section.header.debug")
                     ) {
+                        Button(action: {
+                            self.showingDeleteAlert = true
+                            hapticWarning()
+                        }, label: {
+                            Label(
+                                "button.reset",
+                                systemImage: "trash"
+                            )
+                            .foregroundColor(.red)
+                        })
+                        .confirmationDialog("dialog.infoText", isPresented: $showingDeleteAlert) {
+                            Button("button.dialog.cancelReset", role: .cancel) {
+                                showingDeleteAlert = false
+                            }
+                            Button("button.dialog.confirmReset", role: .destructive) {
+                                resetData()
+                            }
+                        }
+                        Button("Create \(Int(amount)) dummy entries") {
+                            do {
+                                try createDummyData(context: PersistenceController.shared.container.viewContext, amount: Int(amount))
+                                print("Dummy data created")
+                            } catch {
+                                print("Failed to create dummy data: \(error)")
+                            }
+                            hapticConfirm()
+                        }
+                        Slider(value: $amount, in: 1...1_000) {
+                            Text("\(Int(amount))")
+                        }
                         Button("button.hide.debug") {
                             showDebugMenu = false
                             tapCount = 0
