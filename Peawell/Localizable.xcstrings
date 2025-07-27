@@ -15,6 +15,12 @@
     "%lld" : {
       "shouldTranslate" : false
     },
+    "alert.importFailed" : {
+
+    },
+    "alert.importSuccessful" : {
+
+    },
     "button.addTime" : {
       "localizations" : {
         "de" : {
@@ -79,6 +85,9 @@
         }
       }
     },
+    "button.exportData" : {
+
+    },
     "button.hide.debug" : {
       "localizations" : {
         "de" : {
@@ -94,6 +103,9 @@
           }
         }
       }
+    },
+    "button.importData" : {
+
     },
     "button.mood.save" : {
       "localizations" : {
@@ -414,6 +426,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "prompt.meds.amount" : {
       "localizations" : {

@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreHaptics
 import UserNotifications
+import UniformTypeIdentifiers
 
 //  constants declared on top
 //  this only checks the app version from within itself
@@ -32,6 +33,14 @@ struct SettingsView: View {
     //  developer menu state
     @State private var tapCount = 0
     @State private var showDebugMenu = false
+    
+    //  export function state
+    @State private var showingExporter = false
+    @State private var exportURL: URL?
+    @State private var showingImporter = false
+    @State private var importResult: Result<URL, Error>?
+    @State private var showImportSuccess = false
+    @State private var showImportFailed = false
     
     // notification settings
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
@@ -91,6 +100,20 @@ struct SettingsView: View {
                     header: Text("section.header.reset"),
                     footer: Text("section.footer.reset")
                 ) {
+                Button(action: {
+                    if let url = exportUserData() {
+                        self.exportURL = url
+                        self.showingExporter = true
+                    }
+                }, label: {
+                    Label("button.exportData", systemImage: "square.and.arrow.up")
+                })
+
+                Button(action: {
+                    self.showingImporter = true
+                }, label: {
+                    Label("button.importData", systemImage: "square.and.arrow.down")
+                })
                     Button(action: {
                         self.showingDeleteAlert = true
                         hapticWarning()
@@ -110,6 +133,35 @@ struct SettingsView: View {
                         }
                     }
                 }
+                .fileExporter(
+                    isPresented: $showingExporter,
+                    document: exportURL.map { URLDocument(url: $0) },
+                    contentType: .json,
+                    defaultFilename: "Peawell_Export"
+                ) { result in
+                    // Handle provider result if needed
+                }
+                .fileImporter(
+                    isPresented: $showingImporter,
+                    allowedContentTypes: [.json]
+                ) { result in
+                    switch result {
+                        case .success(let url):
+                            let accessed = url.startAccessingSecurityScopedResource()
+                            defer {
+                                if accessed { url.stopAccessingSecurityScopedResource() }
+                            }
+                            if importUserData(from: url) {
+                                showImportSuccess = true
+                            } else {
+                                showImportFailed = true
+                            }
+                        case .failure(_):
+                            showImportFailed = true
+                        }
+                }
+                .alert("alert.importSuccessful", isPresented: $showImportSuccess) { Button("OK", role: .cancel) { } }
+                .alert("alert.importFailed", isPresented: $showImportFailed) { Button("OK", role: .cancel) { } }
                 
                 // Notification settings section
                 Section(

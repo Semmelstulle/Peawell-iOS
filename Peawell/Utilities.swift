@@ -5,7 +5,10 @@
 //  Created by Dennis on 25.05.25.
 //
 
+import Foundation
+import SwiftUI
 import CoreData
+import UniformTypeIdentifiers
 
 // Utility function to delete an item by its NSManagedObjectID
 func trashItem(objectID: NSManagedObjectID) {
@@ -130,5 +133,183 @@ func fetchMeds() -> [NSManagedObject] {
         NSLog(error.localizedDescription)
     }
     return fetchedArray
+}
+
+// MARK: - Import Export logic
+
+struct ExportData: Codable {
+    let appVersion: String
+    let moods: [MoodStruct]
+    let meds: [MedStruct]
+}
+
+struct MoodStruct: Codable {
+    let activityName: String
+    let moodName: String
+    let logDate: Date
+}
+
+struct MedStruct: Codable {
+    let medType: String
+    let medDose: String
+    let medUnit: String
+    let medKind: String
+    let medRemind: Bool
+    let schedules: [ScheduleStruct]
+    let logTimes: [LogTimeMedStruct]
+}
+
+struct ScheduleStruct: Codable {
+    let dates: [Date]
+    let times: [Date]
+}
+
+struct LogTimeMedStruct: Codable {
+    let logTime: Date
+}
+
+
+// Export user data as JSON
+func exportUserData() -> URL? {
+    let viewContext = PersistenceController.shared.container.viewContext
+
+    // Existing mood fetch
+    let moods = fetchMood().compactMap { mood -> MoodStruct? in
+        guard let m = mood as? Mood,
+              let actName = m.activityName,
+              let moodName = m.moodName,
+              let logDate = m.logDate else { return nil }
+        return MoodStruct(activityName: actName, moodName: moodName, logDate: logDate)
+    }
+
+    // Fetch meds with schedules and log times
+    let meds = fetchMeds().compactMap { med -> MedStruct? in
+        guard let m = med as? Meds else { return nil }
+
+        // Map schedules
+        let schedules = (m.schedule as? Set<Schedules>)?.compactMap { sched -> ScheduleStruct? in
+            // Convert NSSet -> [Date]
+            let dateArray = (sched.dates as? Set<Date>)?.sorted() ?? []
+            let timeArray = (sched.times as? Set<Date>)?.sorted() ?? []
+            return ScheduleStruct(dates: dateArray, times: timeArray)
+        } ?? []
+
+        // Map logTimes
+        let logTimes = (m.logTimes as? Set<LogTimeMeds>)?.compactMap { logTimeMed -> LogTimeMedStruct? in
+            guard let time = logTimeMed.logTimes else { return nil }
+            return LogTimeMedStruct(logTime: time)
+        } ?? []
+
+        return MedStruct(
+            medType: m.medType ?? "",
+            medDose: m.medDose ?? "",
+            medUnit: m.medUnit ?? "",
+            medKind: m.medKind ?? "",
+            medRemind: m.medRemind,
+            schedules: schedules,
+            logTimes: logTimes
+        )
+    }
+
+    let appVer = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "N/A"
+
+    let exportData = ExportData(appVersion: appVer, moods: moods, meds: meds)
+
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
+    do {
+        let data = try encoder.encode(exportData)
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("PeawellExport.json")
+        try data.write(to: tempURL)
+        return tempURL
+    } catch {
+        NSLog("Failed to encode/export user data: \(error.localizedDescription)")
+        return nil
+    }
+}
+
+// Import user data from JSON
+func importUserData(from url: URL) -> Bool {
+    let viewContext = PersistenceController.shared.container.viewContext
+
+    do {
+        let data = try Data(contentsOf: url)
+        let decoder = JSONDecoder()
+        let importData = try decoder.decode(ExportData.self, from: data)
+
+        // Optional: Clear existing data (adjust as needed)
+        let fetchMedsRequest: NSFetchRequest<NSFetchRequestResult> = Meds.fetchRequest()
+        let batchDeleteMeds = NSBatchDeleteRequest(fetchRequest: fetchMedsRequest)
+        try viewContext.execute(batchDeleteMeds)
+        
+        let fetchSchedulesRequest: NSFetchRequest<NSFetchRequestResult> = Schedules.fetchRequest()
+        let batchDeleteSchedules = NSBatchDeleteRequest(fetchRequest: fetchSchedulesRequest)
+        try viewContext.execute(batchDeleteSchedules)
+        
+        let fetchLogTimesRequest: NSFetchRequest<NSFetchRequestResult> = LogTimeMeds.fetchRequest()
+        let batchDeleteLogTimes = NSBatchDeleteRequest(fetchRequest: fetchLogTimesRequest)
+        try viewContext.execute(batchDeleteLogTimes)
+
+        let fetchMoodsRequest: NSFetchRequest<NSFetchRequestResult> = Mood.fetchRequest()
+        let batchDeleteMoods = NSBatchDeleteRequest(fetchRequest: fetchMoodsRequest)
+        try viewContext.execute(batchDeleteMoods)
+
+        // Import moods
+        for moodStruct in importData.moods {
+            let mood = Mood(context: viewContext)
+            mood.activityName = moodStruct.activityName
+            mood.moodName = moodStruct.moodName
+            mood.logDate = moodStruct.logDate
+        }
+
+        // Import meds with schedules and log times
+        for medStruct in importData.meds {
+            let med = Meds(context: viewContext)
+            med.medType = medStruct.medType
+            med.medDose = medStruct.medDose
+            med.medUnit = medStruct.medUnit
+            med.medKind = medStruct.medKind
+            med.medRemind = medStruct.medRemind
+
+            // Schedules
+            for scheduleStruct in medStruct.schedules {
+                let schedule = Schedules(context: viewContext)
+                // Assign NSSet from arrays
+                schedule.dates = NSSet(array: scheduleStruct.dates)
+                schedule.times = NSSet(array: scheduleStruct.times)
+                schedule.medication = med
+            }
+
+            // Log Times
+            for logTimeStruct in medStruct.logTimes {
+                let logTimeMed = LogTimeMeds(context: viewContext)
+                logTimeMed.logTimes = logTimeStruct.logTime
+                logTimeMed.medication = med
+            }
+        }
+
+        try viewContext.save()
+        return true
+    } catch {
+        NSLog("Failed to import user data: \(error)")
+        return false
+    }
+}
+
+struct URLDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.json] }
+    var url: URL
+
+    init(url: URL) {
+        self.url = url
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        fatalError("Not implemented")
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        return try FileWrapper(url: url, options: .withoutMapping)
+    }
 }
 
