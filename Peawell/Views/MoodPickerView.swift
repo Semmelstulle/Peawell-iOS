@@ -21,113 +21,132 @@ struct MoodPickerView: View {
     @State var actName: String = ""
     @State var moodLogDate: Date = Date()
     
+    @State private var currentPage = 0
+    
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                DatePicker("",
-                    selection: $moodLogDate,
-                    displayedComponents: [.date, .hourAndMinute]
-                )
-                //.datePickerStyle(.compact)
-                .datePickerStyle(.automatic)
-                .labelsHidden()
-                
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $actName)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(8)
-                        .background(
-                            RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
-                                .fill(Color(.tertiarySystemGroupedBackground))
-                        )
-                        .scrollContentBackground(.hidden)
-                        .foregroundColor(.primary)
-                    if actName.isEmpty {
-                        Text("mood.textEditor.whatMadeYouSmile")
-                            .foregroundColor(.secondary)
-                            .padding([.horizontal, .vertical], 16)
-                    }
-                }
-                .padding([.top, .horizontal])
-                if #available(iOS 26.0, *) {
-                    Button(
-                        action: {
-                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                            clearInputs()
-                            dismiss()
-                            onDismiss?()
-                        }, label: {
-                            Label("button.mood.save", systemImage: "square.and.pencil")
-                                .font(.headline)
-                                .padding(8)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor)
-                                .foregroundColor(.primary)
-                                .cornerRadius(10)
-                        }
-                    )
-                    .padding()
-                    .buttonStyle(.glassProminent)
-                } else {
-                    Button(
-                        action: {
-                            saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
-                            clearInputs()
-                            dismiss()
-                            onDismiss?()
-                        }, label: {
-                            Label("button.mood.save", systemImage: "square.and.pencil")
-                                .font(.headline)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor.opacity(0.3))
-                                .foregroundColor(.accentColor)
-                                .cornerRadius(10)
-                        }
-                    )
-                    .padding()
-                }
+            TabView(selection: $currentPage) {
+                chipsTab()
+                    .tag(0)
+                textboxTab()
+                    .tag(1)
             }
-            .onAppear {
-                if actName.isEmpty && (moodLogDate.timeIntervalSinceNow > 60 || moodLogDate.timeIntervalSinceNow < -60) {
-                    moodLogDate = Date()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .tabViewStyle(.page(indexDisplayMode: .never))
             .navigationTitle("title.mood")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if #available(iOS 26.0, *) {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            clearInputs()
-                            dismiss()
-                            onDismiss?()
-                        } label: {
-                            Image(systemName: "xmark")
-                        }
-                    }
-                } else {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            clearInputs()
-                            dismiss()
-                            onDismiss?()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.gray)
-                                .font(.system(size: 25))
-                                .symbolRenderingMode(.hierarchical)
-                        }
-                    }
-                }
+                dismissButton()
             }
+            bottomButton()
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.hidden)
     }
     private func clearInputs() {
         actName = ""
+    }
+    @ViewBuilder
+    func chipsTab() -> some View {
+        Text("")
+    }
+    @ViewBuilder
+    func textboxTab() -> some View {
+        VStack(spacing: 0) {
+            DatePicker("",
+                       selection: $moodLogDate,
+                       displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.compact)
+            .labelsHidden()
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $actName)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
+                            .fill(Color(.tertiarySystemGroupedBackground))
+                    )
+                    .scrollContentBackground(.hidden)
+                    .foregroundColor(.primary)
+                if actName.isEmpty {
+                    Text("mood.textEditor.whatMadeYouSmile")
+                        .foregroundColor(.secondary)
+                        .padding([.horizontal, .vertical], 16)
+                }
+            }
+            .padding([.top, .horizontal])
+        }
+        .onAppear {
+            if actName.isEmpty && (moodLogDate.timeIntervalSinceNow > 60 || moodLogDate.timeIntervalSinceNow < -60) {
+                moodLogDate = Date()
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    @ViewBuilder
+    func bottomButton() -> some View {
+        if #available(iOS 26.0, *) {
+            Button(
+                action: {
+                    saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
+                    clearInputs()
+                    dismiss()
+                    onDismiss?()
+                }, label: {
+                    Label("button.mood.save", systemImage: "square.and.pencil")
+                        .font(.headline)
+                        .padding(8)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor)
+                        .foregroundColor(.primary)
+                        .cornerRadius(10)
+                }
+            )
+            .padding()
+            .buttonStyle(.glassProminent)
+        } else {
+            Button(
+                action: {
+                    saveMood(actName: actName, moodName: moodName, moodLogDate: moodLogDate)
+                    clearInputs()
+                    dismiss()
+                    onDismiss?()
+                }, label: {
+                    Label("button.mood.save", systemImage: "square.and.pencil")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor.opacity(0.3))
+                        .foregroundColor(.accentColor)
+                        .cornerRadius(10)
+                }
+            )
+            .padding()
+        }
+    }
+    private func dismissButton() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            if #available(iOS 26.0, *) {
+                Button {
+                    clearInputs()
+                    dismiss()
+                    onDismiss?()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            } else {
+                Button {
+                    clearInputs()
+                    dismiss()
+                    onDismiss?()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.gray)
+                        .font(.system(size: 25))
+                        .symbolRenderingMode(.hierarchical)
+                }
+            }
+        }
     }
 }
 
@@ -149,9 +168,9 @@ struct MoodButtonView: View {
                         cornerRadius: Constants.cornerRadiusSecondary,
                         style: .continuous
                     )
-                        .foregroundColor(panelColor)
-                        .aspectRatio(1, contentMode: .fit)
-                        .shadow(color: panelColor.opacity(0.5), radius: isSelected ? 6 : 0)
+                    .foregroundColor(panelColor)
+                    .aspectRatio(1, contentMode: .fit)
+                    .shadow(color: panelColor.opacity(0.5), radius: isSelected ? 6 : 0)
                 } else {
                     // Show grayed out circle
                     Circle()

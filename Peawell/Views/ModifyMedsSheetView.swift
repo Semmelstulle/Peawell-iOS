@@ -98,7 +98,7 @@ struct ModifyMedsSheetView: View {
         }
     }
     
-    func dismissButton() -> some ToolbarContent {
+    private func dismissButton() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             if #available(iOS 26.0, *) {
                 Button {
