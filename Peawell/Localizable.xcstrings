@@ -804,6 +804,7 @@
       }
     },
     "title.editDiary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
