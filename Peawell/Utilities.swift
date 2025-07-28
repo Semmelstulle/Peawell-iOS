@@ -65,14 +65,36 @@ func saveMedsWithSchedule(
 }
 
 //  saves the mood and diary entry
-func saveMood(actName: String, moodName: String, moodLogDate: Date) {
-    //  needed to add CoreData into scope
+func saveMood(actName: String, moodName: String, moodLogDate: Date, selectedCategories: [MoodCategory]) {
     let viewContext = PersistenceController.shared.container.viewContext
     let mood = Mood(context: viewContext)
-    //  maps CoreData values to variables
+    
     mood.activityName = actName
     mood.moodName = moodName
     mood.logDate = moodLogDate
+
+    // Remove existing categories if any (optional)
+    if let existingCategories = mood.childCategories as? Set<MoodCategories> {
+        for category in existingCategories {
+            mood.removeFromChildCategories(category)
+        }
+    }
+
+    for category in selectedCategories {
+        // Fetch or create MoodCategories by name
+        let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", category.name)
+        
+        if let existingCategory = try? viewContext.fetch(fetchRequest).first {
+            mood.addToChildCategories(existingCategory)
+        } else {
+            let newCategory = MoodCategories(context: viewContext)
+            newCategory.name = category.name
+            newCategory.sfsymbol = category.sfsymbol
+            mood.addToChildCategories(newCategory)
+        }
+    }
+    
     do {
         try viewContext.save()
         hapticConfirm()
@@ -81,6 +103,7 @@ func saveMood(actName: String, moodName: String, moodLogDate: Date) {
         fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo) while saving")
     }
 }
+
 
 //  resets all data to empty and settings to their default
 func resetData() {
@@ -102,11 +125,11 @@ func resetData() {
 }
 
 func createDummyData(context: NSManagedObjectContext, amount: Int) throws {
-    // Predefined sample data for moods and meds
+    // Predefined sample data for meds
     let medKinds = ["longPill", "roundPill", "drops", "inhaler", "drops"]
     let medTypes = ["Medication 1", "Daily pill", "Eyedrops", "Inhale stuff", "Insanely long name for a medication to test edge cases"]
     let medUnits = ["mg", "µg", "ml", "mg", "ml"]
-    
+    // Predefined sample data for meds
     let activityNames = ["Running", "Reading", "Meditating", "Cooking", "Sleeping", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.","Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."]
     let moodNames = ["Awesome", "Good", "Horrible", "Neutral", "Bad", "Good", "Good"]
 
