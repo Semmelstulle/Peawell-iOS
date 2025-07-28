@@ -34,51 +34,46 @@ struct MoodLogView: View {
             }
         }
         .navigationTitle("title.diary")
-        // Sheet for editing
-        .sheet(isPresented: $isEditingSheetPresented, onDismiss: {
-            editingMood = nil
-        }) {
-            if let moodToEdit = editingMood {
-                MoodPickerView(
-                    moodName: moodToEdit.moodName ?? "",
-                    actName: moodToEdit.activityName ?? "",
-                    moodLogDate: moodToEdit.logDate ?? Date(),
-                    selectedCategories: Set(Array(moodToEdit.childCategories as? Set<MoodCategories> ?? []).map {
-                        MoodCategory(name: $0.name ?? "", sfsymbol: $0.sfsymbol)
-                    }),
-                    onSave: { newActName, newMoodName, newLogDate, newCategories in
-                        // Update fields in CoreData, similar to saveMood edit logic
-                        moodToEdit.activityName = newActName
-                        moodToEdit.moodName = newMoodName
-                        moodToEdit.logDate = newLogDate
-                        // Remove old categories
-                        if let existingCategories = moodToEdit.childCategories as? Set<MoodCategories> {
-                            for category in existingCategories {
-                                moodToEdit.removeFromChildCategories(category)
-                            }
+        .sheet(item: $editingMood) { moodToEdit in
+            MoodPickerView(
+                moodName: moodToEdit.moodName ?? "",
+                actName: moodToEdit.activityName ?? "",
+                moodLogDate: moodToEdit.logDate ?? Date(),
+                selectedCategories: Set(Array(moodToEdit.childCategories as? Set<MoodCategories> ?? []).map {
+                    MoodCategory(name: $0.name ?? "", sfsymbol: $0.sfsymbol)
+                }),
+                onSave: { newActName, newMoodName, newLogDate, newCategories in
+                    // Update fields in CoreData, similar to saveMood edit logic
+                    moodToEdit.activityName = newActName
+                    moodToEdit.moodName = newMoodName
+                    moodToEdit.logDate = newLogDate
+                    // Remove old categories
+                    if let existingCategories = moodToEdit.childCategories as? Set<MoodCategories> {
+                        for category in existingCategories {
+                            moodToEdit.removeFromChildCategories(category)
                         }
-                        // Add new categories
-                        let context = PersistenceController.shared.container.viewContext
-                        for category in newCategories {
-                            let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
-                            fetchRequest.predicate = NSPredicate(format: "name == %@", category.name)
-                            if let existingCategory = try? context.fetch(fetchRequest).first {
-                                moodToEdit.addToChildCategories(existingCategory)
-                            } else {
-                                let newCategory = MoodCategories(context: context)
-                                newCategory.name = category.name
-                                newCategory.sfsymbol = category.sfsymbol
-                                moodToEdit.addToChildCategories(newCategory)
-                            }
-                        }
-                        try? context.save()
-                        isEditingSheetPresented = false
-                    },
-                    onDismiss: {
-                        isEditingSheetPresented = false
                     }
-                )
-            }
+                    // Add new categories
+                    let context = PersistenceController.shared.container.viewContext
+                    for category in newCategories {
+                        let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
+                        fetchRequest.predicate = NSPredicate(format: "name == %@", category.name)
+                        if let existingCategory = try? context.fetch(fetchRequest).first {
+                            moodToEdit.addToChildCategories(existingCategory)
+                        } else {
+                            let newCategory = MoodCategories(context: context)
+                            newCategory.name = category.name
+                            newCategory.sfsymbol = category.sfsymbol
+                            moodToEdit.addToChildCategories(newCategory)
+                        }
+                    }
+                    try? context.save()
+                    isEditingSheetPresented = false
+                },
+                onDismiss: {
+                    isEditingSheetPresented = false
+                }
+            )
         }
     }
     
