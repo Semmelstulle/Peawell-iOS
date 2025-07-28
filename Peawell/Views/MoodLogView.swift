@@ -6,27 +6,19 @@
 //
 
 import SwiftUI
-
-//  prepares colors
-var bgColorHorrible: Color = Color.red
-var bgColorBad: Color = Color.orange
-var bgColorNeutral: Color = Color.yellow
-var bgColorGood: Color = Color.green
-var bgColorAwesome: Color = Color.mint
+import CoreData
 
 struct MoodLogView: View {
-    
-    // adds fetched data to scope
+    // fetched data
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
     var moodItems: FetchedResults<Mood>
-    
-    @State var editingEntry: Mood? = nil
-    @State var isShowingEditDiarySheet = false
-    
+
     @State private var showingDeleteAlert = false
-    @State var editDiaryEntry = "fixme"
-    @State var moodEntry: FetchedResults<Mood>.Element?
     
+    // NEW: editing state
+    @State private var editingMood: Mood?
+    @State private var isEditingSheetPresented = false
+
     var body: some View {
         List {
             ForEach(moodItems) { item in
@@ -36,25 +28,58 @@ struct MoodLogView: View {
                     allJournals(for: item)
                 }
                 .swipeActions(allowsFullSwipe: true) {
-                    Button(role: .destructive) {
-                        trashItem(objectID: item.objectID)
-                    } label: {
-                        Image(systemName: "trash")
-                    }
-                    Button {
-                        self.editDiaryEntry = item.activityName ?? "error.hint"
-                        moodEntry = item
-                        isShowingEditDiarySheet = true
-                    } label: {
-                        Image(systemName: "square.and.pencil")
-                    }
-                }
-                .sheet(isPresented: $isShowingEditDiarySheet) {
-                    
+                    deleteButton(for: item)
+                    editButton(for: item)
                 }
             }
         }
         .navigationTitle("title.diary")
+        // Sheet for editing
+        .sheet(isPresented: $isEditingSheetPresented, onDismiss: {
+            editingMood = nil
+        }) {
+            if let moodToEdit = editingMood {
+                MoodPickerView(
+                    moodName: moodToEdit.moodName ?? "",
+                    actName: moodToEdit.activityName ?? "",
+                    moodLogDate: moodToEdit.logDate ?? Date(),
+                    selectedCategories: Set(Array(moodToEdit.childCategories as? Set<MoodCategories> ?? []).map {
+                        MoodCategory(name: $0.name ?? "", sfsymbol: $0.sfsymbol)
+                    }),
+                    onSave: { newActName, newMoodName, newLogDate, newCategories in
+                        // Update fields in CoreData, similar to saveMood edit logic
+                        moodToEdit.activityName = newActName
+                        moodToEdit.moodName = newMoodName
+                        moodToEdit.logDate = newLogDate
+                        // Remove old categories
+                        if let existingCategories = moodToEdit.childCategories as? Set<MoodCategories> {
+                            for category in existingCategories {
+                                moodToEdit.removeFromChildCategories(category)
+                            }
+                        }
+                        // Add new categories
+                        let context = PersistenceController.shared.container.viewContext
+                        for category in newCategories {
+                            let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
+                            fetchRequest.predicate = NSPredicate(format: "name == %@", category.name)
+                            if let existingCategory = try? context.fetch(fetchRequest).first {
+                                moodToEdit.addToChildCategories(existingCategory)
+                            } else {
+                                let newCategory = MoodCategories(context: context)
+                                newCategory.name = category.name
+                                newCategory.sfsymbol = category.sfsymbol
+                                moodToEdit.addToChildCategories(newCategory)
+                            }
+                        }
+                        try? context.save()
+                        isEditingSheetPresented = false
+                    },
+                    onDismiss: {
+                        isEditingSheetPresented = false
+                    }
+                )
+            }
+        }
     }
     
     @ViewBuilder
@@ -72,7 +97,7 @@ struct MoodLogView: View {
     
     @ViewBuilder
     func detailedJournal(for item: Mood) -> some View {
-        List () {
+        List {
             Section {
                 HStack {
                     Spacer()
@@ -81,22 +106,24 @@ struct MoodLogView: View {
                 }
             }
             .listRowBackground(getMoodColor(item.moodName))
-            Section {
-                FlowLayout {
-                    ForEach(Array(item.childCategories as? Set<MoodCategories> ?? [])) { category in
-                        ChipView(
-                            category: MoodCategory(
-                                name: category.name ?? "",
-                                sfsymbol: category.sfsymbol,
-                                isBuiltIn: true // or retrieve actual value if stored
-                            ),
-                            isSelected: true,
-                            onTap: {}
-                        )
+            if (item.childCategories != []) {
+                Section {
+                    FlowLayout {
+                        ForEach(Array(item.childCategories as? Set<MoodCategories> ?? [])) { category in
+                            ChipView(
+                                category: MoodCategory(
+                                    name: category.name ?? "",
+                                    sfsymbol: category.sfsymbol
+                                ),
+                                isSelected: false,
+                                onTap: {}
+                            )
+                        }
                     }
+                    .padding(-16)
                 }
+                .listRowBackground(Color.clear)
             }
-            .listRowBackground(Color.clear)
             Section {
                 Text(item.activityName ?? "Text missing")
                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -104,13 +131,7 @@ struct MoodLogView: View {
             }
         }
         .toolbar {
-            Button {
-                self.editDiaryEntry = item.activityName ?? "error"
-                moodEntry = item
-                isShowingEditDiarySheet = true
-            } label: {
-                Image(systemName: "square.and.pencil")
-            }
+            editButton(for: item)
             Button(role: .destructive) {
                 showingDeleteAlert = true
             } label: {
@@ -127,45 +148,26 @@ struct MoodLogView: View {
         }
         .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
     }
-}
-
-//  prepares the color variables for the diary entries in the list view
-func getMoodColor(_ moodName: String?) -> Color {
-    switch moodName {
-    case "Horrible":
-        return bgColorHorrible
-    case "Bad":
-        return bgColorBad
-    case "Neutral":
-        return bgColorNeutral
-    case "Good":
-        return bgColorGood
-    case "Awesome":
-        return bgColorAwesome
-    default:
-        return bgColorNeutral
-    }
-}
-
-func deleteMood() {
-    let viewContext = PersistenceController.shared.container.viewContext
     
-    // runs fetch functions to gather all data and delete them
-    for object in fetchMood() {
-        viewContext.delete(object)
+    private func editButton(for item: Mood) -> some View {
+        Button {
+            editingMood = item
+            isEditingSheetPresented = true
+        } label: {
+            Image(systemName: "square.and.pencil")
+        }
     }
-    try? viewContext.save()
-}
-
-func saveEdits() {
-    let viewContext = PersistenceController.shared.container.viewContext
     
-    // saves the context it recieves
-    try? viewContext.save()
+    private func deleteButton(for item: Mood) -> some View {
+        Button(role: .destructive) {
+            trashItem(objectID: item.objectID)
+        } label: {
+            Image(systemName: "trash")
+        }
+    }
 }
 
 #Preview {
     MoodLogView()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    
 }

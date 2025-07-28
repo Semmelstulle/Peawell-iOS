@@ -104,7 +104,6 @@ func saveMood(actName: String, moodName: String, moodLogDate: Date, selectedCate
     }
 }
 
-
 //  resets all data to empty and settings to their default
 func resetData() {
     // Clear all UserDefaults keys for your app
@@ -123,6 +122,22 @@ func resetData() {
     }
     try? viewContext.save()
 }
+
+//  resets all data to empty and settings to their default
+func resetUserData() {
+    //  add CoreData to scope
+    let viewContext = PersistenceController.shared.container.viewContext
+    //  runs fetch functions to gather all data and delete them
+    for object in fetchMood() {
+        viewContext.delete(object)
+    }
+    for object in fetchMeds() {
+        viewContext.delete(object)
+    }
+    try? viewContext.save()
+}
+
+
 
 func createDummyData(context: NSManagedObjectContext, amount: Int) throws {
     // Predefined sample data for meds
@@ -199,6 +214,48 @@ func fetchMeds() -> [NSManagedObject] {
     return fetchedArray
 }
 
+func deleteMood() {
+    let viewContext = PersistenceController.shared.container.viewContext
+    
+    // runs fetch functions to gather all data and delete them
+    for object in fetchMood() {
+        viewContext.delete(object)
+    }
+    try? viewContext.save()
+}
+
+func saveEdits() {
+    let viewContext = PersistenceController.shared.container.viewContext
+    
+    // saves the context it recieves
+    try? viewContext.save()
+}
+
+//  prepares colors
+var bgColorHorrible: Color = Color.red
+var bgColorBad: Color = Color.orange
+var bgColorNeutral: Color = Color.yellow
+var bgColorGood: Color = Color.green
+var bgColorAwesome: Color = Color.mint
+
+//  prepares the color variables for the diary entries in the list view
+func getMoodColor(_ moodName: String?) -> Color {
+    switch moodName {
+    case "Horrible":
+        return bgColorHorrible
+    case "Bad":
+        return bgColorBad
+    case "Neutral":
+        return bgColorNeutral
+    case "Good":
+        return bgColorGood
+    case "Awesome":
+        return bgColorAwesome
+    default:
+        return bgColorNeutral
+    }
+}
+
 // MARK: - Import Export logic
 
 struct ExportData: Codable {
@@ -211,6 +268,12 @@ struct MoodStruct: Codable {
     let activityName: String
     let moodName: String
     let logDate: Date
+    let categories: [MoodCategoryStruct]  // New field
+}
+
+struct MoodCategoryStruct: Codable {
+    let name: String
+    let sfsymbol: String?
 }
 
 struct MedStruct: Codable {
@@ -232,7 +295,6 @@ struct LogTimeMedStruct: Codable {
     let logTime: Date
 }
 
-
 // Export user data as JSON
 func exportUserData() -> URL? {
     _ = PersistenceController.shared.container.viewContext
@@ -243,7 +305,13 @@ func exportUserData() -> URL? {
               let actName = m.activityName,
               let moodName = m.moodName,
               let logDate = m.logDate else { return nil }
-        return MoodStruct(activityName: actName, moodName: moodName, logDate: logDate)
+
+        // Export all associated categories for this mood
+        let categories: [MoodCategoryStruct] = (m.childCategories as? Set<MoodCategories>)?.map { cat in
+            MoodCategoryStruct(name: cat.name ?? "", sfsymbol: cat.sfsymbol)
+        } ?? []
+
+        return MoodStruct(activityName: actName, moodName: moodName, logDate: logDate, categories: categories)
     }
 
     // Fetch meds with schedules and log times
@@ -324,6 +392,21 @@ func importUserData(from url: URL) -> Bool {
             mood.activityName = moodStruct.activityName
             mood.moodName = moodStruct.moodName
             mood.logDate = moodStruct.logDate
+
+            for categoryStruct in moodStruct.categories {
+                // Try fetching existing category to avoid duplicates
+                let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "name == %@", categoryStruct.name)
+
+                if let existingCategory = try? viewContext.fetch(fetchRequest).first {
+                    mood.addToChildCategories(existingCategory)
+                } else {
+                    let newCategory = MoodCategories(context: viewContext)
+                    newCategory.name = categoryStruct.name
+                    newCategory.sfsymbol = categoryStruct.sfsymbol
+                    mood.addToChildCategories(newCategory)
+                }
+            }
         }
 
         // Import meds with schedules and log times

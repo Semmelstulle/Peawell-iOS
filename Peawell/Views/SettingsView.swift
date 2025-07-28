@@ -227,6 +227,24 @@ struct SettingsView: View {
                                 resetData()
                             }
                         }
+                        Button(action: {
+                            self.showingDeleteAlert = true
+                            hapticWarning()
+                        }, label: {
+                            Label(
+                                "button.resetUserdata",
+                                systemImage: "trash"
+                            )
+                            .foregroundColor(.red)
+                        })
+                        .confirmationDialog("dialog.infoText", isPresented: $showingDeleteAlert) {
+                            Button("button.dialog.cancelReset", role: .cancel) {
+                                showingDeleteAlert = false
+                            }
+                            Button("button.dialog.confirmReset", role: .destructive) {
+                                resetUserData()
+                            }
+                        }
                         Button("Create \(Int(amount)) dummy entries") {
                             do {
                                 try createDummyData(context: PersistenceController.shared.container.viewContext, amount: Int(amount))

@@ -91,13 +91,10 @@ struct MainView: View {
             }
             .sheet(isPresented: $showingMoodPickerSheet) {
                 if let moodName = selectedMoodName {
-                    MoodPickerView(moodName: moodName) {
+                    MoodPickerView(moodName: moodName, onDismiss:  {
                         // On dismiss, clear selected mood
                         selectedMoodName = nil
-                    }
-                    .onDisappear {
-                        selectedMoodName = nil
-                    }
+                    })
                 }
             }
         }

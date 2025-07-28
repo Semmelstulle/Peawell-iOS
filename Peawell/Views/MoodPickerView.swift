@@ -16,36 +16,56 @@ struct MoodPickerView: View {
     
     // receive moodName from parent
     var moodName: String
+    var actName: String = ""
+    var moodLogDate: Date = Date()
+    var selectedCategories: Set<MoodCategory> = []
+    var onSave: ((_ actName: String, _ moodName: String, _ moodLogDate: Date, _ selectedCategories: [MoodCategory]) -> Void)? = nil
     var onDismiss: (() -> Void)? = nil
-    
-    @State var actName: String = ""
-    @State var moodLogDate: Date = Date()
-        
-    // remembers selected chips
-    @State private var selectedCategories = Set<MoodCategory>()
 
-    // sets default page
+    // Use states for edit/copy/new
+    @State private var editingActName: String = ""
+    @State private var editingMoodLogDate: Date = Date()
+    @State private var editingSelectedCategories: Set<MoodCategory> = []
     @State private var currentPage = 0
-    
-    // ADDED: Hardcoded demo chips array
+
+    // Demo chips (could be dynamic)
     let demoCategories: [MoodCategory] = [
-        MoodCategory(name: "Happy", sfsymbol: "smiley", isBuiltIn: true),
-        MoodCategory(name: "Sad", sfsymbol: "cloud.rain", isBuiltIn: true),
-        MoodCategory(name: "Energetic", sfsymbol: "bolt.fill", isBuiltIn: true),
-        MoodCategory(name: "Running", sfsymbol: "figure.run", isBuiltIn: true),
-        MoodCategory(name: "Gaming", sfsymbol: "gamecontroller.fill", isBuiltIn: true),
-        MoodCategory(name: "Interaction", sfsymbol: "person.2.fill", isBuiltIn: true),
-        MoodCategory(name: "Sunset", sfsymbol: "sun.haze.fill", isBuiltIn: true),
-        MoodCategory(name: "Movie/Show", sfsymbol: "play.rectangle.fill", isBuiltIn: true),
-        MoodCategory(name: "Code", sfsymbol: "command.square.fill", isBuiltIn: true)
+        MoodCategory(name: "Happy", sfsymbol: "smiley"),
+        MoodCategory(name: "Sad", sfsymbol: "cloud.rain"),
+        MoodCategory(name: "Energetic", sfsymbol: "bolt.fill"),
+        MoodCategory(name: "Running", sfsymbol: "figure.run"),
+        MoodCategory(name: "Gaming", sfsymbol: "gamecontroller.fill"),
+        MoodCategory(name: "Interaction", sfsymbol: "person.2.fill"),
+        MoodCategory(name: "Sunset", sfsymbol: "sun.haze.fill"),
+        MoodCategory(name: "Movie/Show", sfsymbol: "play.rectangle.fill"),
+        MoodCategory(name: "Code", sfsymbol: "command.square.fill")
     ]
-    
+
+    // Fill initial values from parent
+    init(
+        moodName: String,
+        actName: String = "",
+        moodLogDate: Date = Date(),
+        selectedCategories: Set<MoodCategory> = [],
+        onSave: ((_ actName: String, _ moodName: String, _ moodLogDate: Date, _ selectedCategories: [MoodCategory]) -> Void)? = nil,
+        onDismiss: (() -> Void)? = nil
+    ) {
+        self.moodName = moodName
+        self.actName = actName
+        self.moodLogDate = moodLogDate
+        self.selectedCategories = selectedCategories
+        self.onSave = onSave
+        self.onDismiss = onDismiss
+        // Note: SwiftUI will not auto-assign @State from this init directly!
+        // So we will push these values in .onAppear below.
+    }
+
     var body: some View {
         NavigationStack {
             TabView(selection: $currentPage) {
-                chipsTab()
-                    .tag(0)
                 textboxTab()
+                    .tag(0)
+                chipsTab()
                     .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -54,50 +74,68 @@ struct MoodPickerView: View {
             .toolbar {
                 dismissButton()
             }
-            bottomButton()
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.hidden)
+        .onAppear {
+            // Only assign once for editing, to avoid overwriting user data on tab switch
+            if editingActName.isEmpty && !actName.isEmpty {
+                editingActName = actName
+            }
+            if abs(editingMoodLogDate.timeIntervalSince1970 - moodLogDate.timeIntervalSince1970) > 10 {
+                editingMoodLogDate = moodLogDate
+            }
+            if editingSelectedCategories.isEmpty && !selectedCategories.isEmpty {
+                editingSelectedCategories = selectedCategories
+            }
+        }
+        .onDisappear {
+            clearInputs()
+            onDismiss?()
+        }
     }
-    
+
     private func clearInputs() {
-        actName = ""
+        editingActName = ""
+        editingSelectedCategories = []
     }
-    
+
     @ViewBuilder
     func chipsTab() -> some View {
-        ScrollView {
+        VStack {
             FlowLayout {
                 ForEach(demoCategories) { category in
                     ChipView(
                         category: category,
-                        isSelected: selectedCategories.contains(category),
+                        isSelected: editingSelectedCategories.contains(category),
                         onTap: {
-                            if selectedCategories.contains(category) {
-                                selectedCategories.remove(category)
+                            if editingSelectedCategories.contains(category) {
+                                editingSelectedCategories.remove(category)
                             } else {
-                                selectedCategories.insert(category)
+                                editingSelectedCategories.insert(category)
                             }
                         }
                     )
                 }
             }
             .padding()
+            Spacer()
+            saveButton()
         }
+        .frame(maxHeight: .infinity)
     }
 
-    
     @ViewBuilder
     func textboxTab() -> some View {
         VStack(spacing: 0) {
             DatePicker("",
-                       selection: $moodLogDate,
+                       selection: $editingMoodLogDate,
                        displayedComponents: [.date, .hourAndMinute]
             )
             .datePickerStyle(.compact)
             .labelsHidden()
             ZStack(alignment: .topLeading) {
-                TextEditor(text: $actName)
+                TextEditor(text: $editingActName)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(8)
                     .background(
@@ -106,33 +144,66 @@ struct MoodPickerView: View {
                     )
                     .scrollContentBackground(.hidden)
                     .foregroundColor(.primary)
-                if actName.isEmpty {
+                if editingActName.isEmpty {
                     Text("mood.textEditor.whatMadeYouSmile")
                         .foregroundColor(.secondary)
                         .padding([.horizontal, .vertical], 16)
                 }
             }
             .padding([.top, .horizontal])
-        }
-        .onAppear {
-            if actName.isEmpty && (moodLogDate.timeIntervalSinceNow > 60 || moodLogDate.timeIntervalSinceNow < -60) {
-                moodLogDate = Date()
-            }
+            nextButton()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     @ViewBuilder
-    func bottomButton() -> some View {
+    func nextButton() -> some View {
         if #available(iOS 26.0, *) {
             Button(
                 action: {
-                    saveMood(
-                        actName: actName,
-                        moodName: moodName,
-                        moodLogDate: moodLogDate,
-                        selectedCategories: Array(selectedCategories)
-                    )
+                    withAnimation {
+                        currentPage = 1
+                    }
+                }, label: {
+                    Label("button.next", systemImage: "arrow.right")
+                        .font(.headline)
+                        .padding(8)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor)
+                        .foregroundColor(.primary)
+                        .cornerRadius(10)
+                }
+            )
+            .padding()
+            .buttonStyle(.glassProminent)
+        } else {
+            Button(
+                action: {
+                    currentPage = 1
+                }, label: {
+                    Label("button.next", systemImage: "arrow.right")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor.opacity(0.3))
+                        .foregroundColor(.accentColor)
+                        .cornerRadius(10)
+                }
+            )
+            .padding()
+        }
+    }
+    
+    @ViewBuilder
+    func saveButton() -> some View {
+        if #available(iOS 26.0, *) {
+            Button(
+                action: {
+                    if let onSave = onSave {
+                        onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
+                    } else {
+                        saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
+                    }
                     clearInputs()
                     dismiss()
                     onDismiss?()
@@ -151,12 +222,11 @@ struct MoodPickerView: View {
         } else {
             Button(
                 action: {
-                    saveMood(
-                        actName: actName,
-                        moodName: moodName,
-                        moodLogDate: moodLogDate,
-                        selectedCategories: Array(selectedCategories)
-                    )
+                    if let onSave = onSave {
+                        onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
+                    } else {
+                        saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
+                    }
                     clearInputs()
                     dismiss()
                     onDismiss?()
@@ -173,7 +243,7 @@ struct MoodPickerView: View {
             .padding()
         }
     }
-    
+
     private func dismissButton() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             if #available(iOS 26.0, *) {

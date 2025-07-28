@@ -79,23 +79,6 @@
         }
       }
     },
-    "button.createDummyData" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erstelle je 100 Einträge"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create 100 entries each"
-          }
-        }
-      }
-    },
     "button.dialog.cancelReset" : {
       "localizations" : {
         "de" : {
@@ -229,13 +212,29 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alle Daten löschen"
+            "value" : "Alle Daten zurücksetzen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset all data"
+          }
+        }
+      }
+    },
+    "button.resetUserdata" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzerdaten löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete user data"
           }
         }
       }
@@ -273,7 +272,20 @@
       }
     },
     "Create %lld dummy entries" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generiere %lld dummy Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create %lld dummy entries"
+          }
+        }
+      }
     },
     "dialog.infoText" : {
       "localizations" : {
@@ -799,23 +811,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Journal"
-          }
-        }
-      }
-    },
-    "title.editDiary" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eintrag bearbeiten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit journal"
           }
         }
       }

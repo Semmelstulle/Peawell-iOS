@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct MoodCategory: Identifiable, Hashable {
-    var id: UUID = UUID()
+    var id: String { name + (sfsymbol ?? "") }
     var name: String
     var sfsymbol: String?
-    var isBuiltIn: Bool = false
 }
 
 struct ChipView: View {
