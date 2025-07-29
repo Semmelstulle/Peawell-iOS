@@ -15,10 +15,12 @@ struct PeawellApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .tint(Color(UIColor(named: selectedAccentColor) ?? .green))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
     //  adds UserData to local scope
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
     @AppStorage("resetOnLaunch") var resetOnLaunch = false
     init() {
         if self.resetOnLaunch == true {

@@ -26,6 +26,15 @@ struct SettingsView: View {
         ("AppIconAlt1", "Flat"),
         ("AppIconAlt2", "Zoom")
     ]
+    private let accentColors: [(name: String, label: String)] = [
+        ("AccentColor", "Green"),
+        ("AccentColor 1", "Orange"),
+        ("AccentColor 2", "Rose"),
+        ("AccentColor 3", "Teal"),
+        ("AccentColor 4", "Purple")
+    ]
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
+    @State private var showAccentPicker = false
     
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
@@ -116,6 +125,25 @@ struct SettingsView: View {
                         .padding(.vertical, 8)
                     }
                 }
+                
+                Section(
+                    header: Text("section.header.accentColor")
+                ) {
+                    Picker("picker.chooseAccentColor", selection: $selectedAccentColor) {
+                        ForEach(accentColors, id: \.name) { color in
+                            HStack {
+                                Text(color.label)
+                                Spacer()
+                                Color(uiColor: UIColor(named: color.name) ?? .systemBlue)
+                                    .frame(width: 24, height: 24)
+                                    .clipShape(Circle())
+                            }
+                            .tag(color.name)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
+
                 Section(
                     header: Text("section.header.data"),
                     footer: Text("section.footer.data")
