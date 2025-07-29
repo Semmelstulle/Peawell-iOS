@@ -185,21 +185,10 @@ struct MedLogDatePickerSheet: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: onDismiss) {
-                        Image(systemName: "xmark")
-                    }
+                    DismissToolbarButton(action: onDismiss)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if #available(iOS 26.0, *) {
-                        Button(action: onSave) {
-                            Image(systemName: "checkmark")
-                        }
-                        .buttonStyle(.glassProminent)
-                    } else {
-                        Button(action: onSave) {
-                            Image(systemName: "checkmark")
-                        }
-                    }
+                    DoneToolbarButton(action: onSave)
                 }
             }
         }

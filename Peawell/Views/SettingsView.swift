@@ -306,27 +306,7 @@ struct SettingsView: View {
             .navigationTitle("title.settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if #available(iOS 26.0, *) {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "checkmark")
-                        }
-                        .buttonStyle(.glassProminent)
-                    }
-                } else {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.gray)
-                                .font(.system(size: 25))
-                                .symbolRenderingMode(.hierarchical)
-                        }
-                    }
-                }
+                DismissToolbarButton(action: {dismiss()})
             }
             .onAppear {
                 // Check notification status when view appears

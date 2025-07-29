@@ -23,13 +23,13 @@ struct MoodPickerView: View {
     var onDismiss: (() -> Void)? = nil
     
     @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
-
+    
     // Use states for edit/copy/new
     @State private var editingActName: String = ""
     @State private var editingMoodLogDate: Date = Date()
     @State private var editingSelectedCategories: Set<MoodCategory> = []
     @State private var currentPage = 0
-
+    
     // Demo chips (could be dynamic)
     let demoCategories: [MoodCategory] = [
         MoodCategory(name: "Happy", sfsymbol: "smiley"),
@@ -42,7 +42,7 @@ struct MoodPickerView: View {
         MoodCategory(name: "Movie/Show", sfsymbol: "play.rectangle.fill"),
         MoodCategory(name: "Code", sfsymbol: "command.square.fill")
     ]
-
+    
     // Fill initial values from parent
     init(
         moodName: String,
@@ -61,7 +61,7 @@ struct MoodPickerView: View {
         // Note: SwiftUI will not auto-assign @State from this init directly!
         // So we will push these values in .onAppear below.
     }
-
+    
     var body: some View {
         NavigationStack {
             TabView(selection: $currentPage) {
@@ -71,10 +71,36 @@ struct MoodPickerView: View {
                     .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            AccessoryProminentButtonBig(
+                title: currentPage == 0 ? NSLocalizedString("button.next", comment: "") : NSLocalizedString("button.mood.save", comment: ""),
+                systemImage: "square.and.pencil",
+                action: {
+                    if currentPage == 0 {
+                        withAnimation {
+                            currentPage = 1
+                        }
+                    } else {
+                        if let onSave = onSave {
+                            onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
+                        } else {
+                            saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
+                        }
+                        clearInputs()
+                        dismiss()
+                        onDismiss?()
+                    }
+                }
+            )
             .navigationTitle("title.mood")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                dismissButton()
+                DismissToolbarButton(
+                    action: {
+                        clearInputs()
+                        dismiss()
+                        onDismiss?()
+                    }
+                )
             }
         }
         .presentationDetents([.medium, .large])
@@ -97,12 +123,12 @@ struct MoodPickerView: View {
             onDismiss?()
         }
     }
-
+    
     private func clearInputs() {
         editingActName = ""
         editingSelectedCategories = []
     }
-
+    
     @ViewBuilder
     func chipsTab() -> some View {
         VStack {
@@ -123,11 +149,10 @@ struct MoodPickerView: View {
             }
             .padding()
             Spacer()
-            saveButton()
         }
         .frame(maxHeight: .infinity)
     }
-
+    
     @ViewBuilder
     func textboxTab() -> some View {
         VStack(spacing: 0) {
@@ -154,118 +179,8 @@ struct MoodPickerView: View {
                 }
             }
             .padding([.top, .horizontal])
-            nextButton()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    @ViewBuilder
-    func nextButton() -> some View {
-        if #available(iOS 26.0, *) {
-            Button(
-                action: {
-                    withAnimation {
-                        currentPage = 1
-                    }
-                }, label: {
-                    Label("button.next", systemImage: "arrow.right")
-                        .font(.headline)
-                        .padding(8)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                }
-            )
-            .padding()
-            .buttonStyle(.glassProminent)
-        } else {
-            Button(
-                action: {
-                    currentPage = 1
-                }, label: {
-                    Label("button.next", systemImage: "arrow.right")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.accentColor.opacity(0.3))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            )
-            .padding()
-        }
-    }
-    
-    @ViewBuilder
-    func saveButton() -> some View {
-        if #available(iOS 26.0, *) {
-            Button(
-                action: {
-                    if let onSave = onSave {
-                        onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
-                    } else {
-                        saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
-                    }
-                    clearInputs()
-                    dismiss()
-                    onDismiss?()
-                }, label: {
-                    Label("button.mood.save", systemImage: "square.and.pencil")
-                        .font(.headline)
-                        .padding(8)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                }
-            )
-            .padding()
-            .buttonStyle(.glassProminent)
-        } else {
-            Button(
-                action: {
-                    if let onSave = onSave {
-                        onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
-                    } else {
-                        saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
-                    }
-                    clearInputs()
-                    dismiss()
-                    onDismiss?()
-                }, label: {
-                    Label("button.mood.save", systemImage: "square.and.pencil")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.accentColor.opacity(0.3))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            )
-            .padding()
-        }
-    }
-
-    private func dismissButton() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            if #available(iOS 26.0, *) {
-                Button {
-                    clearInputs()
-                    dismiss()
-                    onDismiss?()
-                } label: {
-                    Image(systemName: "xmark")
-                }
-            } else {
-                Button {
-                    clearInputs()
-                    dismiss()
-                    onDismiss?()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.gray)
-                        .font(.system(size: 25))
-                        .symbolRenderingMode(.hierarchical)
-                }
-            }
-        }
     }
 }
 

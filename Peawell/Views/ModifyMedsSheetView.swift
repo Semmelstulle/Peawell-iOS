@@ -62,7 +62,7 @@ struct ModifyMedsSheetView: View {
             .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                dismissButton()
+                DismissToolbarButton(action: {dismiss()})
             }
         }
         .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
@@ -97,27 +97,6 @@ struct ModifyMedsSheetView: View {
             .scrollContentBackground(.hidden)
             Spacer()
             saveButton
-        }
-    }
-    
-    private func dismissButton() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            if #available(iOS 26.0, *) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                }
-            } else {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.gray)
-                        .font(.system(size: 25))
-                        .symbolRenderingMode(.hierarchical)
-                }
-            }
         }
     }
     
