@@ -21,6 +21,8 @@ struct MoodPickerView: View {
     var selectedCategories: Set<MoodCategory> = []
     var onSave: ((_ actName: String, _ moodName: String, _ moodLogDate: Date, _ selectedCategories: [MoodCategory]) -> Void)? = nil
     var onDismiss: (() -> Void)? = nil
+    
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
 
     // Use states for edit/copy/new
     @State private var editingActName: String = ""
@@ -89,6 +91,7 @@ struct MoodPickerView: View {
                 editingSelectedCategories = selectedCategories
             }
         }
+        .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
         .onDisappear {
             clearInputs()
             onDismiss?()
@@ -169,9 +172,7 @@ struct MoodPickerView: View {
                         .font(.headline)
                         .padding(8)
                         .frame(maxWidth: .infinity)
-                        .background(Color.accentColor)
-                        .foregroundColor(.primary)
-                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
             )
             .padding()
@@ -186,7 +187,7 @@ struct MoodPickerView: View {
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.accentColor.opacity(0.3))
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
             )
@@ -212,9 +213,7 @@ struct MoodPickerView: View {
                         .font(.headline)
                         .padding(8)
                         .frame(maxWidth: .infinity)
-                        .background(Color.accentColor)
-                        .foregroundColor(.primary)
-                        .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
             )
             .padding()
@@ -236,7 +235,7 @@ struct MoodPickerView: View {
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.accentColor.opacity(0.3))
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.white)
                         .cornerRadius(10)
                 }
             )

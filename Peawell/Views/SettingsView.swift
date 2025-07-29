@@ -21,11 +21,14 @@ struct SettingsView: View {
     @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
     @AppStorage("selectedAppIcon") private var selectedAppIcon: String = "AppIcon"
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
+
     private let appIcons: [(name: String, label: String)] = [
         ("AppIcon", "Default"),
         ("AppIconAlt1", "Flat"),
         ("AppIconAlt2", "Zoom")
     ]
+    
     private let accentColors: [(name: String, label: String)] = [
         ("AccentColor", "Green"),
         ("AccentColor 1", "Orange"),
@@ -33,9 +36,7 @@ struct SettingsView: View {
         ("AccentColor 3", "Teal"),
         ("AccentColor 4", "Purple")
     ]
-    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
-    @State private var showAccentPicker = false
-    
+        
     //  needs to make delete alert invisible until it is needed
     @State private var showingDeleteAlert: Bool = false
     
@@ -340,6 +341,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
         .alert("title.dialog.notifications", isPresented: $showingNotificationPermissionAlert) {
             Button("button.dialog.settings", role: .none) {
                 if let url = URL(string: UIApplication.openSettingsURLString) {

@@ -12,6 +12,7 @@ struct ModifyMedsSheetView: View {
     //  env variables
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
     
     //  adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
@@ -64,6 +65,7 @@ struct ModifyMedsSheetView: View {
                 dismissButton()
             }
         }
+        .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
         .onAppear {
             populateFields()
         }

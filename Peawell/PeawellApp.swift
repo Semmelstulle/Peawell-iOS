@@ -15,7 +15,7 @@ struct PeawellApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .tint(Color(UIColor(named: selectedAccentColor) ?? .green))
+                .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

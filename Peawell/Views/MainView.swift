@@ -13,6 +13,7 @@ struct MainView: View {
     //  adds UserDefaults to scope
     @AppStorage("settingShowMoodSection") private var settingShowMoodSection = true
     @AppStorage("settingShowMedicationSection") private var settingShowMedicationSection = true
+    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
     
     // variables for showing sheets
     @State private var showingSettingsSheet = false
@@ -98,6 +99,7 @@ struct MainView: View {
                 }
             }
         }
+        .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
     }
 }
 

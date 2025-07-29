@@ -30,11 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9505431F29E5CAC8005D29B5 /* Peawell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Peawell.app; path = "/Users/dennis/Developer/Peawell-iOS/build/Debug/Peawell.app"; sourceTree = "<absolute>"; };
 		9505432229E5CAC8005D29B5 /* PeawellApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeawellApp.swift; sourceTree = "<group>"; };
 		9505432629E5CACB005D29B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9505432829E5CACB005D29B5 /* Peawell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Peawell.entitlements; sourceTree = "<group>"; };
 		9505432A29E5CACB005D29B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9505EF6C2E39186800AAE486 /* Peawell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peawell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9514AC4F29F02555009F44D1 /* ModifyMedsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyMedsSheetView.swift; sourceTree = "<group>"; };
 		951DCA7129E735D90072E809 /* Activities.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Activities.xcdatamodel; sourceTree = "<group>"; };
 		952B207629EF109000884166 /* MoodLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodLogView.swift; sourceTree = "<group>"; };
@@ -73,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				9505432129E5CAC8005D29B5 /* Peawell */,
+				9505EF6C2E39186800AAE486 /* Peawell.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,7 +150,7 @@
 			);
 			name = Peawell;
 			productName = Peawell;
-			productReference = 9505431F29E5CAC8005D29B5 /* Peawell.app */;
+			productReference = 9505EF6C2E39186800AAE486 /* Peawell.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
