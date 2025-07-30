@@ -64,6 +64,56 @@ func saveMedsWithSchedule(
     }
 }
 
+struct MedSchedule {
+    let days: Set<Int>
+    let times: Set<Date>
+}
+
+func saveMedsWithSchedules(
+    med: Meds?,
+    medName: String,
+    medAmount: String,
+    medUnit: String,
+    medKind: String,
+    medRemind: Bool,
+    schedules: [MedSchedule]
+) {
+    let viewContext = PersistenceController.shared.container.viewContext
+
+    // use existing med or create new
+    let medObject = med ?? Meds(context: viewContext)
+
+    medObject.medType = medName
+    medObject.medDose = medAmount
+    medObject.medUnit = medUnit
+    medObject.medKind = medKind
+    medObject.medRemind = medRemind
+
+    // clear existing schedules
+    if let existingSchedules = medObject.schedule as? Set<Schedules> {
+        existingSchedules.forEach { viewContext.delete($0) }
+    }
+
+    // only add schedules if reminders are enabled
+    if medRemind {
+        for scheduleData in schedules {
+            guard !scheduleData.days.isEmpty, !scheduleData.times.isEmpty else { continue }
+            let schedule = Schedules(context: viewContext)
+            schedule.dates = scheduleData.days as NSSet
+            schedule.times = scheduleData.times as NSSet
+            medObject.addToSchedule(schedule)
+        }
+    }
+
+    do {
+        try viewContext.save()
+        hapticConfirm()
+    } catch {
+        let saveMedError = error as NSError
+        fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo)")
+    }
+}
+
 //  saves the mood and diary entry
 func saveMood(actName: String, moodName: String, moodLogDate: Date, selectedCategories: [MoodCategory]) {
     let viewContext = PersistenceController.shared.container.viewContext

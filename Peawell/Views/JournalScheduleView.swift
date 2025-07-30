@@ -37,30 +37,7 @@ struct JournalScheduleView: View {
             Section(
                 header: Text("header.journal.times")
             ) {
-                ForEach(times.indices, id: \.self) { index in
-                    HStack {
-                        DatePicker("", selection: Binding(
-                            get: { times[index] },
-                            set: { times[index] = $0 }),
-                                   displayedComponents: [.hourAndMinute]
-                        )
-                        .labelsHidden()
-                        Spacer()
-                        if times.count > 1 {
-                            Button(role: .destructive) {
-                                times.remove(at: index)
-                            } label: {
-                                Image(systemName: "minus.circle")
-                            }
-                            .buttonStyle(.borderless)
-                        }
-                    }
-                }
-                Button {
-                    times.append(Self.defaultTime)
-                } label: {
-                    Label("label.addTime", systemImage: "plus.circle")
-                }
+                TimePicker(times: $times)
             }
         }
         .navigationTitle("title.journal.schedule")
@@ -80,8 +57,6 @@ struct JournalScheduleView: View {
             cancelJournalReminders()
         }
     }
-
-    // MARK: - Persistence
 
     private func saveSettings() {
         UserDefaults.standard.set(notificationsEnabled, forKey: JournalSettingsKeys.notificationsEnabled)
@@ -110,7 +85,7 @@ struct JournalScheduleView: View {
         updateNotifications()
     }
 
-    // MARK: - Notifications
+    // MARK: - Notification Scheduling
 
     func scheduleReminders(for days: Set<Int>, at times: [Date]) {
         let center = UNUserNotificationCenter.current()
@@ -119,9 +94,7 @@ struct JournalScheduleView: View {
                 center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
                     if granted {
                         self.scheduleNotifications(center: center, days: days, times: times)
-                    }/* else {
-                        print("Notification permission denied.")
-                    }*/
+                    }
                 }
                 return
             }
@@ -135,7 +108,7 @@ struct JournalScheduleView: View {
         for day in days {
             for time in times {
                 var dateComponents = DateComponents()
-                dateComponents.weekday = day // 1 = Sunday ... 7 = Saturday
+                dateComponents.weekday = day // Apple weekday index
 
                 let calendar = Calendar.current
                 let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
@@ -150,7 +123,6 @@ struct JournalScheduleView: View {
                 content.sound = .default
 
                 let identifier = "journal-\(day)-\(dateComponents.hour ?? 0)-\(dateComponents.minute ?? 0)"
-
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
 
                 center.add(request) { error in
@@ -160,7 +132,6 @@ struct JournalScheduleView: View {
                 }
             }
         }
-        //print("Scheduled \(days.count * times.count) notifications.")
     }
 
     func cancelJournalReminders() {
@@ -169,7 +140,6 @@ struct JournalScheduleView: View {
             let journalNotifications = requests.filter { $0.identifier.hasPrefix("journal-") }
             let identifiers = journalNotifications.map { $0.identifier }
             center.removePendingNotificationRequests(withIdentifiers: identifiers)
-            //print("Cancelled \(identifiers.count) journal notifications.")
         }
     }
 }

@@ -63,22 +63,6 @@
         }
       }
     },
-    "button.addTime" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeit hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add time"
-          }
-        }
-      }
-    },
     "button.dialog.cancelReset" : {
       "localizations" : {
         "de" : {
@@ -175,6 +159,22 @@
         }
       }
     },
+    "button.meds.save" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medikation speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save medication"
+          }
+        }
+      }
+    },
     "button.mood.save" : {
       "localizations" : {
         "de" : {
@@ -235,22 +235,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete user data"
-          }
-        }
-      }
-    },
-    "button.save.meds" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medikament speichern"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save medication"
           }
         }
       }
@@ -799,22 +783,6 @@
         }
       }
     },
-    "title.daySelection" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tage auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select days"
-          }
-        }
-      }
-    },
     "title.dialog.notifications" : {
       "localizations" : {
         "de" : {
@@ -939,22 +907,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
-          }
-        }
-      }
-    },
-    "title.timeSelection" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeiten auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select times"
           }
         }
       }
