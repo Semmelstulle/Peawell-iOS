@@ -80,6 +80,7 @@ struct WeekdayPicker_Previews: PreviewProvider {
 
 struct TimePicker: View {
     @Binding var times: [Date]
+    let isUsedToEdit: Bool
     
     var body: some View {
         ForEach(times.indices, id: \.self) { index in
@@ -89,8 +90,9 @@ struct TimePicker: View {
                     set: { times[index] = $0; sortTimes() }
                 ), displayedComponents: [.hourAndMinute])
                 .labelsHidden()
+                .disabled(!isUsedToEdit)
                 Spacer()
-                if times.count > 1 {
+                if times.count > 1 && isUsedToEdit {
                     Button(role: .destructive) {
                         withAnimation {
                             times.remove(at: index)
@@ -103,12 +105,14 @@ struct TimePicker: View {
                 }
             }
         }
-        Button {
-            withAnimation {
-                addNextHour()
+        if isUsedToEdit {
+            Button {
+                withAnimation {
+                    addNextHour()
+                }
+            } label: {
+                Label("label.addTime", systemImage: "plus.circle")
             }
-        } label: {
-            Label("label.addTime", systemImage: "plus.circle")
         }
     }
     

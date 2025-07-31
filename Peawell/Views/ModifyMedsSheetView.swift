@@ -1,5 +1,5 @@
 //
-//  AddMedsSheetView.swift
+//  ModifyMedsSheetView.swift
 //  Peawell
 //
 //  Created by Dennis on 19.04.23.
@@ -7,52 +7,49 @@
 
 import SwiftUI
 
+struct MedSchedule: Identifiable, Equatable {
+    let id = UUID()
+    var days: Set<Int>
+    var times: Set<Date>
+}
+
 struct ModifyMedsSheetView: View {
-    
-    //  env variables
+    // env variables
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
-    
-    //  adds fetched data to scope
+
+    // adds fetched data to scope
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Meds.medType, ascending: true)], animation: .default)
     var medsItems: FetchedResults<Meds>
-    
-    //  these define the user input field's default state
+
+    // these define the user input field's default state
     @State var medName: String = ""
     @State var medAmount: String = ""
     @State var medUnit = "mg"
     @State var medKind = "longPill"
     var med: Meds?
-    
-    //  define possible selections
+
+    // define possible selections
     @State var availableUnits = ["mg", "µg", "ml", "%"]
     @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler"]
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    
-    //  used for creating the schedule
-    @State var medRemind: Bool = true
-    @State private var selectedDays: Set<Int> = []
-    @State private var times: Set<Date> = [Self.defaultTime]
-    
+
+    // Multiple schedules
+    @State private var schedules: [MedSchedule] = [MedSchedule(days: [], times: [Self.defaultTime])]
+
     static var defaultTime: Date {
         var components = DateComponents()
         components.hour = 6
         components.minute = 0
         return Calendar.current.date(from: components) ?? Date()
     }
-    
+
     @State private var currentPage = 0
     @Namespace private var medKindHighlightNamespace
-    
-    //  Edit mode for time selection
-    @State private var timeEditMode: EditMode = .inactive
-    @State private var isAddingTime = false
-    @State private var isEditingTime = false
-    @State private var editingTime: Date?
-    @State private var editingTimeValue = Date()
-    @State private var newTime = Date()
-    
+
+    @State var medRemind: Bool = true
+
     var body: some View {
         NavigationStack {
             TabView(selection: $currentPage) {
@@ -71,24 +68,24 @@ struct ModifyMedsSheetView: View {
                         withAnimation {
                             currentPage = 1
                         }
-                    } else {saveMedsWithSchedule(
-                        med: med,
-                        medName: medName,
-                        medAmount: medAmount,
-                        medUnit: medUnit,
-                        medKind: medKind,
-                        medRemind: medRemind,
-                        selectedDays: selectedDays,
-                        selectedTimes: times
-                    )
-                    dismiss()
+                    } else {
+                        saveMedsWithSchedules(
+                            med: med,
+                            medName: medName,
+                            medAmount: medAmount,
+                            medUnit: medUnit,
+                            medKind: medKind,
+                            medRemind: medRemind,
+                            schedules: schedules.filter { !$0.days.isEmpty && !$0.times.isEmpty }
+                        )
+                        dismiss()
                     }
                 }
             )
             .navigationTitle("title.modify.meds")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                DismissToolbarButton(action: {dismiss()})
+                DismissToolbarButton(action: { dismiss() })
             }
         }
         .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
@@ -96,7 +93,7 @@ struct ModifyMedsSheetView: View {
             populateFields()
         }
     }
-    
+
     @ViewBuilder
     func medDetailsPage() -> some View {
         VStack {
@@ -108,35 +105,56 @@ struct ModifyMedsSheetView: View {
             Spacer()
         }
     }
-    
+
     @ViewBuilder
     func remindersPage() -> some View {
-        //VStack {
-            Form {
-                remindersToggle
-                Section { // this is what i want to be able to swipe to delete schedule if there is more than one
-                    WeekdayPicker(selectedDays: $selectedDays)
+        Form {
+            remindersToggle
+
+            ForEach(schedules.indices, id: \.self) { index in
+                Section {
+                    WeekdayPicker(selectedDays: $schedules[index].days)
                     TimePicker(times: Binding<[Date]>(
-                        get: { Array(times).sorted() },
-                        set: { newArray in
-                            times = Set(newArray)
+                        get: { Array(schedules[index].times).sorted() },
+                        set: { newArray in schedules[index].times = Set(newArray) }
+                    ), isUsedToEdit: true)
+                    if index > 0 {
+                        Button(role: .destructive) {
+                            withAnimation {
+                                deleteSchedule(at: index)
+                            }
+                        } label: {
+                            Label("button.removeSchedule", systemImage: "minus.circle")
                         }
-                    ))
+                    }
                 }
                 .listRowBackground(Color(.secondarySystemBackground))
             }
-            .scrollContentBackground(.hidden)
-            Spacer()
-        //}
+            
+            Button {
+                withAnimation {
+                    schedules.append(MedSchedule(days: [], times: [Self.defaultTime]))
+                }
+            } label: {
+                Label("button.addSchedule", systemImage: "plus.circle")
+            }
+        }
+        .scrollContentBackground(.hidden)
+        Spacer()
     }
-    
+
+    func deleteSchedule(at index: Int) {
+        schedules.remove(at: index)
+        if schedules.isEmpty {
+            schedules = [MedSchedule(days: [], times: [Self.defaultTime])]
+        }
+    }
+
     var medKindPicker: some View {
         Section {
             ScrollView(.horizontal, showsIndicators: false) {
                 ZStack(alignment: .leading) {
-                    // Animated highlight
                     highlightRow
-                    // Icon row
                     iconRow
                 }
                 .padding(.horizontal, 2)
@@ -144,7 +162,7 @@ struct ModifyMedsSheetView: View {
         }
         .listRowBackground(Color(.secondarySystemBackground))
     }
-    
+
     var highlightRow: some View {
         HStack(spacing: 20) {
             ForEach(availableKinds, id: \.self) { kind in
@@ -161,7 +179,7 @@ struct ModifyMedsSheetView: View {
         }
         .frame(height: 56)
     }
-    
+
     var iconRow: some View {
         HStack(spacing: 20) {
             ForEach(availableKinds, id: \.self) { kind in
@@ -182,7 +200,7 @@ struct ModifyMedsSheetView: View {
         }
         .frame(height: 56)
     }
-    
+
     var medDetailsSection: some View {
         Section(header: Text("section.header.meds")) {
             TextField(
@@ -211,21 +229,7 @@ struct ModifyMedsSheetView: View {
         }
         .listRowBackground(Color(.secondarySystemBackground))
     }
-    
-    var nextButton: some View {
-        Button(action: {
-            withAnimation { currentPage = 1 }
-        }) {
-            Label("button.next", systemImage: "arrow.right")
-                .padding(8)
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
-        }
-        .buttonStyle(.borderedProminent)
-        .padding()
-        .disabled(medName.isEmpty || medAmount.isEmpty)
-    }
-    
+
     var remindersToggle: some View {
         Section {
             Toggle(isOn: $medRemind) {
@@ -234,7 +238,7 @@ struct ModifyMedsSheetView: View {
         }
         .listRowBackground(Color(.secondarySystemBackground))
     }
-    
+
     private func populateFields() {
         if let med = med {
             medName = med.medType ?? ""
@@ -242,15 +246,23 @@ struct ModifyMedsSheetView: View {
             medUnit = med.medUnit ?? "mg"
             medKind = med.medKind ?? "longPill"
             medRemind = med.medRemind
-            //  Populate selectedDays and selectedTimes if schedule exists
-            if let schedules = med.schedule as? Set<Schedules>, let schedule = schedules.first {
-                if let days = schedule.dates as? Set<Int> {
-                    selectedDays = days
+            if let scheduleSet = med.schedule as? Set<Schedules> {
+                self.schedules = scheduleSet.compactMap { schedule in
+                    guard
+                        let days = schedule.dates as? Set<Int>,
+                        let timesSet = schedule.times as? Set<Date>
+                    else { return nil }
+                    return MedSchedule(days: days, times: timesSet)
                 }
-                if let timesSet = schedule.times as? Set<Date> {
-                    times = timesSet
+                .sorted { $0.id.uuidString < $1.id.uuidString }
+                if self.schedules.isEmpty {
+                    self.schedules = [MedSchedule(days: [], times: [Self.defaultTime])]
                 }
+            } else {
+                self.schedules = [MedSchedule(days: [], times: [Self.defaultTime])]
             }
+        } else {
+            self.schedules = [MedSchedule(days: [], times: [Self.defaultTime])]
         }
     }
 }

@@ -37,7 +37,7 @@ struct JournalScheduleView: View {
             Section(
                 header: Text("header.journal.times")
             ) {
-                TimePicker(times: $times)
+                TimePicker(times: $times, isUsedToEdit: true)
             }
         }
         .navigationTitle("title.journal.schedule")

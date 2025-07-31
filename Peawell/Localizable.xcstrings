@@ -63,6 +63,22 @@
         }
       }
     },
+    "button.addSchedule" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplan hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add schedule"
+          }
+        }
+      }
+    },
     "button.dialog.cancelReset" : {
       "localizations" : {
         "de" : {
@@ -203,6 +219,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next"
+          }
+        }
+      }
+    },
+    "button.removeSchedule" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplan entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove schedule"
           }
         }
       }
@@ -352,6 +384,7 @@
       }
     },
     "header.schedule" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -510,6 +543,9 @@
           }
         }
       }
+    },
+    "No log entries available." : {
+
     },
     "notification.mood.body" : {
       "localizations" : {
