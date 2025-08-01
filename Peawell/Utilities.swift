@@ -330,15 +330,43 @@ func cancelMedReminders(medName: String) {
 
 struct ExportData: Codable {
     let appVersion: String
-    let moods: [MoodStruct]
     let meds: [MedStruct]
+    let moods: [MoodStruct]
+
+    enum CodingKeys: String, CodingKey {
+        case appVersion
+        case meds
+        case moods
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(appVersion, forKey: .appVersion)
+        try container.encode(meds, forKey: .meds)
+        try container.encode(moods, forKey: .moods)
+    }
 }
 
 struct MoodStruct: Codable {
     let activityName: String
     let moodName: String
     let logDate: Date
-    let categories: [MoodCategoryStruct]  // New field
+    let categories: [MoodCategoryStruct]
+    
+    enum CodingKeys: String, CodingKey {
+        case moodName
+        case categories
+        case logDate
+        case activityName
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(moodName, forKey: .moodName)
+        try container.encode(categories, forKey: .categories)
+        try container.encode(logDate, forKey: .logDate)
+        try container.encode(activityName, forKey: .activityName)
+    }
 }
 
 struct MoodCategoryStruct: Codable {
@@ -354,12 +382,40 @@ struct MedStruct: Codable {
     let medRemind: Bool
     let schedules: [ScheduleStruct]
     let logTimes: [LogTimeMedStruct]
+
+    enum CodingKeys: String, CodingKey {
+        case medType
+        case medKind
+        case medDose
+        case medUnit
+        case medRemind
+        case schedules
+        case logTimes
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(medType, forKey: .medType)
+        try container.encode(medKind, forKey: .medKind)
+        try container.encode(medDose, forKey: .medDose)
+        try container.encode(medUnit, forKey: .medUnit)
+        try container.encode(medRemind, forKey: .medRemind)
+        try container.encode(schedules, forKey: .schedules)
+        try container.encode(logTimes, forKey: .logTimes)
+    }
 }
 
+
 struct ScheduleStruct: Codable {
-    let dates: [Date]
-    let times: [Date]
+    let weekdays: [Int]
+    let times: [TimeStruct]
 }
+
+struct TimeStruct: Codable {
+    let hour: Int
+    let minute: Int
+}
+
 
 struct LogTimeMedStruct: Codable {
     let logTime: Date
@@ -389,11 +445,22 @@ func exportUserData() -> URL? {
         guard let m = med as? Meds else { return nil }
 
         // Map schedules
+        _ = Calendar.current.firstWeekday
+
         let schedules = (m.schedule as? Set<Schedules>)?.compactMap { sched -> ScheduleStruct? in
-            // Convert NSSet -> [Date]
-            let dateArray = (sched.dates as? Set<Date>)?.sorted() ?? []
-            let timeArray = (sched.times as? Set<Date>)?.sorted() ?? []
-            return ScheduleStruct(dates: dateArray, times: timeArray)
+            // 'dates' store weekdays as Int or NSNumber
+            let weekdaySet = sched.dates as? Set<Int> ?? []
+            let weekdays = weekdaySet.sorted()
+
+            // For 'times', get hour and minute components
+            let timesSet = sched.times as? Set<Date> ?? []
+            let times = timesSet.compactMap { date -> TimeStruct? in
+                let comps = Calendar.current.dateComponents([.hour, .minute], from: date)
+                guard let hour = comps.hour, let minute = comps.minute else { return nil }
+                return TimeStruct(hour: hour, minute: minute)
+            }
+
+            return ScheduleStruct(weekdays: weekdays, times: times)
         } ?? []
 
         // Map logTimes
@@ -415,7 +482,7 @@ func exportUserData() -> URL? {
 
     let appVer = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "N/A"
 
-    let exportData = ExportData(appVersion: appVer, moods: moods, meds: meds)
+    let exportData = ExportData(appVersion: appVer, meds: meds, moods: moods)
 
     let encoder = JSONEncoder()
     encoder.outputFormatting = .prettyPrinted
@@ -491,9 +558,23 @@ func importUserData(from url: URL) -> Bool {
             // Schedules
             for scheduleStruct in medStruct.schedules {
                 let schedule = Schedules(context: viewContext)
-                // Assign NSSet from arrays
-                schedule.dates = NSSet(array: scheduleStruct.dates)
-                schedule.times = NSSet(array: scheduleStruct.times)
+                
+                // If schedule.dates is Transformable for NSSet of Int:
+                schedule.dates = NSSet(array: scheduleStruct.weekdays)
+                
+                // Convert TimeStruct to Date (today at time)
+                var timeDates: [Date] = []
+                let calendar = Calendar.current
+                for time in scheduleStruct.times {
+                    var comps = DateComponents()
+                    comps.hour = time.hour
+                    comps.minute = time.minute
+                    if let date = calendar.date(from: comps) {
+                        timeDates.append(date)
+                    }
+                }
+                schedule.times = NSSet(array: timeDates)
+                
                 schedule.medication = med
             }
 
@@ -529,4 +610,3 @@ struct URLDocument: FileDocument {
         return try FileWrapper(url: url, options: .withoutMapping)
     }
 }
-
