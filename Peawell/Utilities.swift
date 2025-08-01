@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 import UniformTypeIdentifiers
+import UserNotifications
 
 // Utility function to delete an item by its NSManagedObjectID
 func trashItem(objectID: NSManagedObjectID) {
@@ -20,47 +21,6 @@ func trashItem(objectID: NSManagedObjectID) {
         } catch {
             NSLog("Error deleting object: \(error.localizedDescription)")
         }
-    }
-}
-
-//  function to safe added content to CoreData
-func saveMedsWithSchedule(
-    med: Meds?,
-    medName: String,
-    medAmount: String,
-    medUnit: String,
-    medKind: String,
-    medRemind: Bool,
-    selectedDays: Set<Int>,
-    selectedTimes: Set<Date>
-) {
-    let viewContext = PersistenceController.shared.container.viewContext
-    
-    //  use existing med or create new
-    let medObject = med ?? Meds(context: viewContext)
-    
-    medObject.medType = medName
-    medObject.medDose = medAmount
-    medObject.medUnit = medUnit
-    medObject.medKind = medKind
-    medObject.medRemind = medRemind
-    
-    //  clear existing schedules
-    if let existingSchedules = medObject.schedule as? Set<Schedules> {
-        existingSchedules.forEach { viewContext.delete($0) }
-    }
-    if medRemind && !selectedDays.isEmpty && !selectedTimes.isEmpty {
-        let schedule = Schedules(context: viewContext)
-        schedule.dates = selectedDays as NSSet
-        schedule.times = selectedTimes as NSSet
-        medObject.addToSchedule(schedule)
-    }
-    do {
-        try viewContext.save()
-        hapticConfirm()
-    } catch {
-        let saveMedError = error as NSError
-        fatalError("Fatal error \(saveMedError), \(saveMedError.userInfo)")
     }
 }
 
@@ -302,6 +262,69 @@ func getMoodColor(_ moodName: String?) -> Color {
         return bgColorNeutral
     }
 }
+
+// MARK: - Medication Notification Utilities
+
+func updateMedNotifications(enabled: Bool, schedules: [MedSchedule], medName: String) {
+    if enabled, schedules.contains(where: { !$0.days.isEmpty && !$0.times.isEmpty }) {
+        scheduleMedReminders(for: schedules, medName: medName)
+    } else {
+        cancelMedReminders(medName: medName)
+    }
+}
+
+func scheduleMedReminders(for schedules: [MedSchedule], medName: String) {
+    let center = UNUserNotificationCenter.current()
+    center.getNotificationSettings { settings in
+        guard settings.authorizationStatus == .authorized else {
+            center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                if granted {
+                    scheduleMedNotifications(center: center, schedules: schedules, medName: medName)
+                }
+            }
+            return
+        }
+        scheduleMedNotifications(center: center, schedules: schedules, medName: medName)
+    }
+}
+
+private func scheduleMedNotifications(center: UNUserNotificationCenter, schedules: [MedSchedule], medName: String) {
+    cancelMedReminders(medName: medName)
+    for schedule in schedules {
+        for day in schedule.days {
+            for time in schedule.times {
+                var dateComponents = DateComponents()
+                dateComponents.weekday = day // Apple weekday index (1 = Sunday, 2 = Monday, ...)
+                let calendar = Calendar.current
+                let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+                dateComponents.hour = timeComponents.hour
+                dateComponents.minute = timeComponents.minute
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                let content = UNMutableNotificationContent()
+                content.title = NSLocalizedString("notification.med.title", comment: "")
+                content.body = String(format: NSLocalizedString("notification.med.body%@", comment: ""), medName)
+                content.sound = .default
+                let identifier = "med-\(medName)-\(day)-\(dateComponents.hour ?? 0)-\(dateComponents.minute ?? 0)"
+                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                center.add(request) { error in
+                    if let error = error {
+                        print("Failed to schedule med notification: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+}
+
+func cancelMedReminders(medName: String) {
+    let center = UNUserNotificationCenter.current()
+    center.getPendingNotificationRequests { requests in
+        let medNotifications = requests.filter { $0.identifier.hasPrefix("med-\(medName)-") }
+        let identifiers = medNotifications.map { $0.identifier }
+        center.removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
+}
+
 
 // MARK: - Import Export logic
 

@@ -235,6 +235,12 @@ struct ModifyMedsSheetView: View {
             Toggle(isOn: $medRemind) {
                 Text("toggle.reminders")
             }
+            .onChange(of: medRemind) { _ in
+                updateMedNotifications(enabled: medRemind, schedules: schedules, medName: medName)
+            }
+            .onChange(of: schedules) { _ in
+                updateMedNotifications(enabled: medRemind, schedules: schedules, medName: medName)
+            }
         }
         .listRowBackground(Color(.secondarySystemBackground))
     }

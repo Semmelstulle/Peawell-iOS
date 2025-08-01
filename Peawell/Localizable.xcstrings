@@ -383,23 +383,6 @@
         }
       }
     },
-    "header.schedule" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zeitplan"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schedule"
-          }
-        }
-      }
-    },
     "label.addTime" : {
       "localizations" : {
         "de" : {
@@ -545,7 +528,46 @@
       }
     },
     "No log entries available." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Einträge vorhanden"
+          }
+        }
+      }
+    },
+    "notification.med.body%@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Es ist Zeit, deine Medikamente zu nehmen: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's time to take your medication: %@"
+          }
+        }
+      }
+    },
+    "notification.med.title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerung an Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication reminder"
+          }
+        }
+      }
     },
     "notification.mood.body" : {
       "localizations" : {
