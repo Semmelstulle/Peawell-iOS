@@ -30,11 +30,8 @@ struct ChipView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
-        .background(isSelected ? Color.accentColor : Color(.systemGray6))
+        .background(isSelected ? Color.accentColor : Color(.secondarySystemGroupedBackground))
         .clipShape(Capsule())
-        .overlay(
-            Capsule().stroke(isSelected ? Color.accentColor : Color(.systemGray3), lineWidth: 1)
-        )
         .padding(4)
         .onTapGesture { onTap() }
         .animation(.easeInOut(duration: 0.2), value: isSelected)

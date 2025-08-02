@@ -32,15 +32,45 @@ struct MoodPickerView: View {
     
     // Demo chips (could be dynamic)
     let demoCategories: [MoodCategory] = [
+        //  initial categories, removal causes issues
         MoodCategory(name: "Happy", sfsymbol: "smiley"),
         MoodCategory(name: "Sad", sfsymbol: "cloud.rain"),
-        MoodCategory(name: "Energetic", sfsymbol: "bolt.fill"),
+        MoodCategory(name: "Energetic", sfsymbol: "bolt"),
         MoodCategory(name: "Running", sfsymbol: "figure.run"),
-        MoodCategory(name: "Gaming", sfsymbol: "gamecontroller.fill"),
-        MoodCategory(name: "Interaction", sfsymbol: "person.2.fill"),
-        MoodCategory(name: "Sunset", sfsymbol: "sun.haze.fill"),
-        MoodCategory(name: "Movie/Show", sfsymbol: "play.rectangle.fill"),
-        MoodCategory(name: "Code", sfsymbol: "command.square.fill")
+        MoodCategory(name: "Gaming", sfsymbol: "gamecontroller"),
+        MoodCategory(name: "Interaction", sfsymbol: "person.2"),
+        MoodCategory(name: "Sunset", sfsymbol: "sun.haze"),
+        MoodCategory(name: "Movie/Show", sfsymbol: "play.rectangle"),
+        MoodCategory(name: "Code", sfsymbol: "command.square"),
+        //  new additions
+        MoodCategory(name: "Food", sfsymbol: "fork.knife"),
+        MoodCategory(name: "Home", sfsymbol: "house"),
+        MoodCategory(name: "Work", sfsymbol: "calendar"),
+        MoodCategory(name: "Sun", sfsymbol: "sun.max"),
+        MoodCategory(name: "Rain", sfsymbol: "cloud.drizzle"),
+        MoodCategory(name: "Snow", sfsymbol: "snowflake"),
+        MoodCategory(name: "Hot", sfsymbol: "thermometer.sun"),
+        MoodCategory(name: "Freezing", sfsymbol: "thermometer.snowflake"),
+        MoodCategory(name: "Rainbow", sfsymbol: "rainbow"),
+        MoodCategory(name: "Travel", sfsymbol: "map"),
+        MoodCategory(name: "Bike", sfsymbol: "bicycle"),
+        MoodCategory(name: "Exploration", sfsymbol: "binoculars"),
+        MoodCategory(name: "Shower", sfsymbol: "shower.handheld"),
+        MoodCategory(name: "Bath", sfsymbol: "bathtub"),
+        MoodCategory(name: "Car", sfsymbol: "car"),
+        MoodCategory(name: "Vacation", sfsymbol: "airplane"),
+        MoodCategory(name: "Selfcare", sfsymbol: "person"),
+        MoodCategory(name: "Cardio", sfsymbol: "figure.walk.treadmill"),
+        MoodCategory(name: "Strength", sfsymbol: "figure.strengthtraining.traditional"),
+        MoodCategory(name: "Core", sfsymbol: "figure.core.training"),
+        MoodCategory(name: "Mindfulness", sfsymbol: "eye"),
+        MoodCategory(name: "Allergens", sfsymbol: "allergens"),
+        MoodCategory(name: "Dog", sfsymbol: "dog"),
+        MoodCategory(name: "Cat", sfsymbol: "cat"),
+        MoodCategory(name: "Bird", sfsymbol: "bird"),
+        MoodCategory(name: "Animal", sfsymbol: "pawprint"),
+        MoodCategory(name: "Romance", sfsymbol: "heart"),
+        MoodCategory(name: "Sick", sfsymbol: "facemask")
     ]
     
     // Fill initial values from parent
@@ -131,7 +161,7 @@ struct MoodPickerView: View {
     
     @ViewBuilder
     func chipsTab() -> some View {
-        VStack {
+        ScrollView {
             FlowLayout {
                 ForEach(demoCategories) { category in
                     ChipView(

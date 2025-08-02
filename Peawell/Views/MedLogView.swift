@@ -67,11 +67,12 @@ private extension MedLogView {
     
     func medListRowView(item: Meds) -> some View {
         HStack {
+            let medColorName = "\(item.medKind ?? "longPill")Color"
             Image(item.medKind ?? "")
                 .resizable()
                 .frame(width: 20, height: 20)
                 .padding(6)
-                .background(Color.accentColor)
+                .background(Color(medColorName))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             
             Text(item.medType ?? "")
@@ -85,6 +86,7 @@ private extension MedLogView {
     
     @ViewBuilder
     func medDetailView(item: Meds) -> some View {
+        let medColorName = "\(item.medKind ?? "longPill")Color"
         List {
             Section {
                 HStack {
@@ -96,7 +98,7 @@ private extension MedLogView {
                         .padding()
                     Spacer()
                 }
-                .listRowBackground(Color.clear)
+                .listRowBackground(Color(medColorName))
             }
 
             Section {
@@ -143,7 +145,8 @@ private extension MedLogView {
     }
 
     private func medicationSpecificLogHistorySection(for med: Meds) -> some View {
-        Section(header: Text("section.header.medHistory")) {
+        let medColorName = "\(med.medKind ?? "longPill")Color"
+        return Section(header: Text("section.header.medHistory")) {
             let filteredLogs = logEntries
                 .filter { $0.medication == med }
                 .sorted { ($0.logTimes ?? Date.distantPast) > ($1.logTimes ?? Date.distantPast) }
@@ -158,7 +161,7 @@ private extension MedLogView {
                             .resizable()
                             .frame(width: 20, height: 20)
                             .padding(6)
-                            .background(Color.accentColor)
+                            .background(Color(medColorName))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
 
                         Text(logEntry.medication?.medType ?? "Unknown Medication")
@@ -214,11 +217,12 @@ private extension MedLogView {
         Section(header: Text("section.header.medHistory")) {
             ForEach(logEntries, id: \.self) { item in
                 HStack {
+                    let medColorName = "\(item.medication?.medKind ?? "longPill")Color"
                     Image(item.medication?.medKind ?? "longPill")
                         .resizable()
                         .frame(width: 20, height: 20)
                         .padding(6)
-                        .background(Color.accentColor)
+                        .background(Color(medColorName))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     
                     Text(item.medication?.medType ?? "Unknown Medication")

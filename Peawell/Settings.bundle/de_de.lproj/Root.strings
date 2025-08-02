@@ -7,9 +7,17 @@
 "Modules" = "Module";
 "Use mood module" = "Abschnitt Launen benutzen";
 "Use medication module" = "Abschnitt Medikation benutzen";
+"App Icon" = "App Icon";
 "Set App Icon" = "App Icon auswählen";
 "AppIcon" = "Standard";
 "AppIconAlt1" = "Flach";
 "AppIconAlt2" = "Zoom";
+"Accent Color" = "Akzentfarbe";
+"Set Accent Color" = "Akzentfarbe auswählen";
+"AccentColor" = "Grün";
+"AccentColor 1" = "Orange";
+"AccentColor 2" = "Rosa";
+"AccentColor 3" = "Teal";
+"AccentColor 4" = "Lila";
 "Delete data" = "Daten löschen";
 "Reset data on next launch" = "Beim nächsten Start die App zurücksetzen";

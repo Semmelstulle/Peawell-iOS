@@ -64,6 +64,38 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
+			<string>Set Accent Color</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Accent Color</string>
+			<key>Key</key>
+			<string>selectedAccentColor</string>
+			<key>DefaultValue</key>
+			<string>Green</string>
+			<key>Titles</key>
+			<array>
+				<string>AccentColor</string>
+				<string>AccentColor 1</string>
+				<string>AccentColor 2</string>
+				<string>AccentColor 3</string>
+				<string>AccentColor 4</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>AccentColor</string>
+				<string>AccentColor 1</string>
+				<string>AccentColor 2</string>
+				<string>AccentColor 3</string>
+				<string>AccentColor 4</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
 			<string>Delete data</string>
 		</dict>
 		<dict>

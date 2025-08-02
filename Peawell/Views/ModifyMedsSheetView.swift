@@ -32,7 +32,7 @@ struct ModifyMedsSheetView: View {
 
     // define possible selections
     @State var availableUnits = ["mg", "µg", "ml", "%"]
-    @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler"]
+    @State var availableKinds = ["longPill", "roundPill", "drops", "inhaler", "dissolvable"]
     let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     // Multiple schedules

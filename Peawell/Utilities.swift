@@ -144,8 +144,6 @@ func resetUserData() {
     try? viewContext.save()
 }
 
-
-
 func createDummyData(context: NSManagedObjectContext, amount: Int) throws {
     // Predefined sample data for meds
     let medKinds = ["longPill", "roundPill", "drops", "inhaler", "drops"]
