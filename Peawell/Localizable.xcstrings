@@ -383,6 +383,22 @@
         }
       }
     },
+    "hint.noData" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Einträge vorhanden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No entries available"
+          }
+        }
+      }
+    },
     "label.addTime" : {
       "localizations" : {
         "de" : {
@@ -527,21 +543,11 @@
         }
       }
     },
-    "No log entries available." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Einträge vorhanden"
-          }
-        }
-      }
-    },
     "notification.med.body%@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Es ist Zeit, deine Medikamente zu nehmen: %@"
           }
         },
@@ -645,6 +651,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Name of the medication"
+          }
+        }
+      }
+    },
+    "search.meds" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche nach Medikation, Typ oder Dosis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for medication name, type or dose"
+          }
+        }
+      }
+    },
+    "search.moods" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche nach Stimmung, Kategorien oder Text aus deinen Einträgen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for moods, categories or text from your entries"
           }
         }
       }

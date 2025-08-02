@@ -23,16 +23,63 @@ struct MedLogView: View {
     @State private var editingMed: Meds?
     @State private var showingDeleteAlert: Bool = false
     
+    @State private var searchText: String = ""
+    @State private var filteredLogEntries: [LogTimeMeds] = []
+    
     var body: some View {
         List {
             medicationListSection
             medicationHistorySection
+        }
+        .searchable(text: $searchText, prompt: "search.meds")
+        .onAppear {
+            filterLogs()
+        }
+        .onChange(of: searchText) { _ in
+            filterLogs()
         }
         .navigationTitle("title.med")
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
                 .presentationDragIndicator(.hidden)
         }
+    }
+    
+    private func filterLogs() {
+        // When no search text, show all logs
+        guard !searchText.isEmpty else {
+            filteredLogEntries = Array(logEntries)
+            return
+        }
+
+        // Try parse date from search text for date filtering
+        var datePredicate: ((Date) -> Bool)? = nil
+        if let searchDate = dateFormatter.date(from: searchText) {
+            let startOfDay = Calendar.current.startOfDay(for: searchDate)
+            let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+            datePredicate = { logDate in
+                logDate >= startOfDay && logDate < endOfDay
+            }
+        }
+
+        filteredLogEntries = logEntries.filter { log in
+            // Unwrap med properties for easier access
+            let med = log.medication
+
+            let matchesName = med?.medType?.localizedCaseInsensitiveContains(searchText) ?? false
+            let matchesKind = med?.medKind?.localizedCaseInsensitiveContains(searchText) ?? false
+            let matchesDose = med?.medDose?.localizedCaseInsensitiveContains(searchText) ?? false
+
+            let matchesDate = (log.logTimes != nil && datePredicate?(log.logTimes!) == true)
+
+            return matchesName || matchesKind || matchesDose || matchesDate
+        }
+    }
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
     }
 }
 
@@ -151,7 +198,7 @@ private extension MedLogView {
                 .sorted { ($0.logTimes ?? Date.distantPast) > ($1.logTimes ?? Date.distantPast) }
             
             if filteredLogs.isEmpty {
-                Text("No log entries available.")
+                Text("hint.noData")
                     .foregroundColor(.secondary)
             } else {
                 ForEach(filteredLogs, id: \.self) { logEntry in
@@ -214,7 +261,7 @@ private extension MedLogView {
     
     var medicationHistorySection: some View {
         Section(header: Text("section.header.medHistory")) {
-            ForEach(logEntries, id: \.self) { item in
+            ForEach(filteredLogEntries, id: \.self) { item in
                 HStack {
                     let medColorName = "\(item.medication?.medKind ?? "longPill")Color"
                     Image(item.medication?.medKind ?? "longPill")

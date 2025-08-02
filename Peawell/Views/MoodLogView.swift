@@ -10,10 +10,12 @@ import CoreData
 
 struct MoodLogView: View {
     // fetched data
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)], animation: .default)
-    var moodItems: FetchedResults<Mood>
+    @Environment(\.managedObjectContext) private var viewContext
+    @State private var moodItems: [Mood] = []
 
     @State private var showingDeleteAlert = false
+    
+    @State private var searchText: String = ""
     
     // NEW: editing state
     @State private var editingMood: Mood?
@@ -33,6 +35,13 @@ struct MoodLogView: View {
                 }
             }
         }
+        .onAppear {
+            fetchMoods()
+        }
+        .onChange(of: searchText) { _ in
+            fetchMoods()
+        }
+        .searchable(text: $searchText, prompt: "search.moods")
         .navigationTitle("title.diary")
         .sheet(item: $editingMood) { moodToEdit in
             MoodPickerView(
@@ -159,6 +168,52 @@ struct MoodLogView: View {
         } label: {
             Image(systemName: "trash")
         }
+    }
+    
+    func fetchMoods() {
+        let request: NSFetchRequest<Mood> = Mood.fetchRequest()
+        // Sorting by date descending
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)]
+        
+        if !searchText.isEmpty {
+            // Create predicates to match searchText in moodName, activityName, and categories name, or parse date string
+            // Predicate for activityName or moodName contains searchText (case-insensitive)
+            let textPredicate = NSPredicate(format: "activityName CONTAINS[cd] %@ OR moodName CONTAINS[cd] %@", searchText, searchText)
+            
+            // Predicate for categories name contains searchText - linked entity query
+            let categoryPredicate = NSPredicate(format: "ANY childCategories.name CONTAINS[cd] %@", searchText)
+            
+            // Date parsing: try to parse searchText to Date, then match logDate’s day component
+            var datePredicate: NSPredicate? = nil
+            if let searchDate = dateFormatter.date(from: searchText) {
+                // We create a date range to match the whole day (since logDate is a Date)
+                let startOfDay = Calendar.current.startOfDay(for: searchDate)
+                let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+                datePredicate = NSPredicate(format: "logDate >= %@ AND logDate < %@", startOfDay as NSDate, endOfDay as NSDate)
+            }
+            
+            // Combine predicates with OR
+            if let datePredicate = datePredicate {
+                request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [textPredicate, categoryPredicate, datePredicate])
+            } else {
+                request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [textPredicate, categoryPredicate])
+            }
+        } else {
+            request.predicate = nil
+        }
+        
+        do {
+            moodItems = try viewContext.fetch(request)
+        } catch {
+            print("Failed to fetch moods: \(error)")
+            moodItems = []
+        }
+    }
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
     }
 }
 
