@@ -59,12 +59,10 @@ struct MedsView: View {
         .listStyle(.plain)
         .sheet(isPresented: $showAddMedSheet) {
             ModifyMedsSheetView()
-                .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.hidden)
         }
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
-                .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.hidden)
         }
         .sheet(isPresented: $showMedLogSheet) {

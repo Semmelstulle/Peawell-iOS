@@ -229,13 +229,6 @@ func deleteMood() {
     try? viewContext.save()
 }
 
-func saveEdits() {
-    let viewContext = PersistenceController.shared.container.viewContext
-    
-    // saves the context it recieves
-    try? viewContext.save()
-}
-
 //  prepares colors
 var bgColorHorrible: Color = Color.red
 var bgColorBad: Color = Color.orange

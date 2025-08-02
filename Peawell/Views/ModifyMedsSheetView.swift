@@ -48,7 +48,7 @@ struct ModifyMedsSheetView: View {
     @State private var currentPage = 0
     @Namespace private var medKindHighlightNamespace
 
-    @State var medRemind: Bool = true
+    @State var medRemind: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -69,16 +69,18 @@ struct ModifyMedsSheetView: View {
                             currentPage = 1
                         }
                     } else {
-                        saveMedsWithSchedules(
-                            med: med,
-                            medName: medName,
-                            medAmount: medAmount,
-                            medUnit: medUnit,
-                            medKind: medKind,
-                            medRemind: medRemind,
-                            schedules: schedules.filter { !$0.days.isEmpty && !$0.times.isEmpty }
-                        )
-                        dismiss()
+                        if !medName.isEmpty && !medAmount.isEmpty {
+                            saveMedsWithSchedules(
+                                med: med,
+                                medName: medName,
+                                medAmount: medAmount,
+                                medUnit: medUnit,
+                                medKind: medKind,
+                                medRemind: medRemind,
+                                schedules: schedules.filter { !$0.days.isEmpty && !$0.times.isEmpty }
+                            )
+                            dismiss()
+                        }
                     }
                 }
             )
@@ -88,6 +90,7 @@ struct ModifyMedsSheetView: View {
                 DismissToolbarButton(action: { dismiss() })
             }
         }
+        .background(Color(.systemGroupedBackground))
         .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
         .onAppear {
             populateFields()
@@ -101,7 +104,6 @@ struct ModifyMedsSheetView: View {
                 medKindPicker
                 medDetailsSection
             }
-            .scrollContentBackground(.hidden)
             Spacer()
         }
     }
@@ -128,7 +130,7 @@ struct ModifyMedsSheetView: View {
                         }
                     }
                 }
-                .listRowBackground(Color(.secondarySystemBackground))
+                .listRowBackground(Color(.secondarySystemGroupedBackground))
             }
             
             Button {
@@ -138,8 +140,8 @@ struct ModifyMedsSheetView: View {
             } label: {
                 Label("button.addSchedule", systemImage: "plus.circle")
             }
+            .listRowBackground(Color(.secondarySystemGroupedBackground))
         }
-        .scrollContentBackground(.hidden)
         Spacer()
     }
 
@@ -160,7 +162,7 @@ struct ModifyMedsSheetView: View {
                 .padding(.horizontal, 2)
             }
         }
-        .listRowBackground(Color(.secondarySystemBackground))
+        .listRowBackground(Color(.secondarySystemGroupedBackground))
     }
 
     var highlightRow: some View {
@@ -223,11 +225,12 @@ struct ModifyMedsSheetView: View {
                         Text(item)
                     }
                 }
+                .padding(.vertical, -8)
                 .pickerStyle(.menu)
                 .labelsHidden()
             }
         }
-        .listRowBackground(Color(.secondarySystemBackground))
+        .listRowBackground(Color(.secondarySystemGroupedBackground))
     }
 
     var remindersToggle: some View {
@@ -242,7 +245,7 @@ struct ModifyMedsSheetView: View {
                 updateMedNotifications(enabled: medRemind, schedules: schedules, medName: medName)
             }
         }
-        .listRowBackground(Color(.secondarySystemBackground))
+        .listRowBackground(Color(.secondarySystemGroupedBackground))
     }
 
     private func populateFields() {

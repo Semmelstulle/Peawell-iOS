@@ -32,7 +32,6 @@ struct MedLogView: View {
         .sheet(item: $editingMed) { med in
             ModifyMedsSheetView(med: med)
                 .presentationDragIndicator(.hidden)
-                .presentationDetents([.medium, .large])
         }
     }
 }

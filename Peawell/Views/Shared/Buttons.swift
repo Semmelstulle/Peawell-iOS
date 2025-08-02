@@ -27,7 +27,7 @@ struct AccessoryProminentButtonBig: View {
                 Label(title, systemImage: systemImage)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.accentColor.opacity(0.3))
+                    .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

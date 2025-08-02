@@ -88,16 +88,14 @@ struct MoodPickerView: View {
         self.selectedCategories = selectedCategories
         self.onSave = onSave
         self.onDismiss = onDismiss
-        // Note: SwiftUI will not auto-assign @State from this init directly!
-        // So we will push these values in .onAppear below.
     }
     
     var body: some View {
         NavigationStack {
             TabView(selection: $currentPage) {
-                textboxTab()
-                    .tag(0)
                 chipsTab()
+                    .tag(0)
+                textboxTab()
                     .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -133,10 +131,9 @@ struct MoodPickerView: View {
                 )
             }
         }
-        .presentationDetents([.medium, .large])
+        .background(Color(.systemGroupedBackground))
         .presentationDragIndicator(.hidden)
         .onAppear {
-            // Only assign once for editing, to avoid overwriting user data on tab switch
             if editingActName.isEmpty && !actName.isEmpty {
                 editingActName = actName
             }
@@ -198,7 +195,7 @@ struct MoodPickerView: View {
                     .padding(8)
                     .background(
                         RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
-                            .fill(Color(.tertiarySystemGroupedBackground))
+                            .fill(Color(.secondarySystemGroupedBackground))
                     )
                     .scrollContentBackground(.hidden)
                     .foregroundColor(.primary)
