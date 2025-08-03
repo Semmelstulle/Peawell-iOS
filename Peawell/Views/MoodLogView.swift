@@ -9,21 +9,23 @@ import SwiftUI
 import CoreData
 
 struct MoodLogView: View {
-    // fetched data
     @Environment(\.managedObjectContext) private var viewContext
-    @State private var moodItems: [Mood] = []
 
-    @State private var showingDeleteAlert = false
-    
+    // Fetch moods sorted descending by logDate (live updating)
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)],
+        animation: .default
+    )
+    private var moods: FetchedResults<Mood>
+
     @State private var searchText: String = ""
-    
-    // NEW: editing state
+
+    // Editing state and sheet presentation
     @State private var editingMood: Mood?
-    @State private var isEditingSheetPresented = false
 
     var body: some View {
         List {
-            ForEach(moodItems) { item in
+            ForEach(filteredMoods, id: \.objectID) { item in
                 NavigationLink {
                     detailedJournal(for: item)
                 } label: {
@@ -34,12 +36,6 @@ struct MoodLogView: View {
                     editButton(for: item)
                 }
             }
-        }
-        .onAppear {
-            fetchMoods()
-        }
-        .onChange(of: searchText) { _ in
-            fetchMoods()
         }
         .searchable(text: $searchText, prompt: "search.moods")
         .navigationTitle("title.diary")
@@ -52,18 +48,16 @@ struct MoodLogView: View {
                     MoodCategory(name: $0.name ?? "", sfsymbol: $0.sfsymbol)
                 }),
                 onSave: { newActName, newMoodName, newLogDate, newCategories in
-                    // Update fields in CoreData, similar to saveMood edit logic
                     moodToEdit.activityName = newActName
                     moodToEdit.moodName = newMoodName
                     moodToEdit.logDate = newLogDate
-                    // Remove old categories
+
                     if let existingCategories = moodToEdit.childCategories as? Set<MoodCategories> {
                         for category in existingCategories {
                             moodToEdit.removeFromChildCategories(category)
                         }
                     }
-                    // Add new categories
-                    let context = PersistenceController.shared.container.viewContext
+                    let context = viewContext
                     for category in newCategories {
                         let fetchRequest: NSFetchRequest<MoodCategories> = MoodCategories.fetchRequest()
                         fetchRequest.predicate = NSPredicate(format: "name == %@", category.name)
@@ -76,16 +70,36 @@ struct MoodLogView: View {
                             moodToEdit.addToChildCategories(newCategory)
                         }
                     }
-                    try? context.save()
-                    isEditingSheetPresented = false
+                    do {
+                        try context.save()
+                    } catch {
+                        print("Failed to save edited Mood: \(error)")
+                    }
+                    editingMood = nil
                 },
                 onDismiss: {
-                    isEditingSheetPresented = false
+                    editingMood = nil
                 }
             )
         }
     }
-    
+
+    private var filteredMoods: [Mood] {
+        if searchText.isEmpty {
+            return Array(moods)
+        }
+        let lowercasedSearch = searchText.lowercased()
+
+        return moods.filter { mood in
+            let activityMatch = mood.activityName?.lowercased().contains(lowercasedSearch) ?? false
+            let moodNameMatch = mood.moodName?.lowercased().contains(lowercasedSearch) ?? false
+            let categoryMatch = (mood.childCategories as? Set<MoodCategories>)?.contains(where: {
+                $0.name?.lowercased().contains(lowercasedSearch) ?? false
+            }) ?? false
+            return activityMatch || moodNameMatch || categoryMatch
+        }
+    }
+
     @ViewBuilder
     func allJournals(for item: Mood) -> some View {
         HStack {
@@ -98,7 +112,7 @@ struct MoodLogView: View {
             Text(item.logDate ?? Date.now, style: .date)
         }
     }
-    
+
     @ViewBuilder
     func detailedJournal(for item: Mood) -> some View {
         List {
@@ -110,10 +124,11 @@ struct MoodLogView: View {
                 }
             }
             .listRowBackground(getMoodColor(item.moodName))
-            if (item.childCategories != []) {
+
+            if let categories = item.childCategories as? Set<MoodCategories>, !categories.isEmpty {
                 Section {
                     FlowLayout {
-                        ForEach(Array(item.childCategories as? Set<MoodCategories> ?? [])) { category in
+                        ForEach(Array(categories)) { category in
                             ChipView(
                                 category: MoodCategory(
                                     name: category.name ?? "",
@@ -124,10 +139,11 @@ struct MoodLogView: View {
                             )
                         }
                     }
-                    .padding(-16)
+                    .padding(-20)
                 }
                 .listRowBackground(Color.clear)
             }
+
             Section {
                 Text(item.activityName ?? "Text missing")
                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -136,86 +152,30 @@ struct MoodLogView: View {
         }
         .toolbar {
             editButton(for: item)
-            Button(role: .destructive) {
-                showingDeleteAlert = true
-            } label: {
-                Image(systemName: "trash")
-            }
-            .confirmationDialog("", isPresented: $showingDeleteAlert) {
-                Button("button.dialog.cancelReset", role: .cancel) {
-                    showingDeleteAlert = false
-                }
-                Button("button.dialog.confirmReset", role: .destructive) {
-                    trashItem(objectID: item.objectID)
-                }
-            }
+            // Note: no confirmation dialog here; delete is handled via swipe action
         }
         .navigationTitle(Text(item.logDate ?? Date.now, style: .date))
     }
-    
+
     private func editButton(for item: Mood) -> some View {
         Button {
             editingMood = item
-            isEditingSheetPresented = true
         } label: {
             Image(systemName: "square.and.pencil")
         }
     }
-    
+
     private func deleteButton(for item: Mood) -> some View {
         Button(role: .destructive) {
+            // Uses your global trashItem function, assumed to accept NSManagedObjectID
             trashItem(objectID: item.objectID)
         } label: {
             Image(systemName: "trash")
         }
-    }
-    
-    func fetchMoods() {
-        let request: NSFetchRequest<Mood> = Mood.fetchRequest()
-        // Sorting by date descending
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)]
-        
-        if !searchText.isEmpty {
-            // Create predicates to match searchText in moodName, activityName, and categories name, or parse date string
-            // Predicate for activityName or moodName contains searchText (case-insensitive)
-            let textPredicate = NSPredicate(format: "activityName CONTAINS[cd] %@ OR moodName CONTAINS[cd] %@", searchText, searchText)
-            
-            // Predicate for categories name contains searchText - linked entity query
-            let categoryPredicate = NSPredicate(format: "ANY childCategories.name CONTAINS[cd] %@", searchText)
-            
-            // Date parsing: try to parse searchText to Date, then match logDate’s day component
-            var datePredicate: NSPredicate? = nil
-            if let searchDate = dateFormatter.date(from: searchText) {
-                // We create a date range to match the whole day (since logDate is a Date)
-                let startOfDay = Calendar.current.startOfDay(for: searchDate)
-                let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
-                datePredicate = NSPredicate(format: "logDate >= %@ AND logDate < %@", startOfDay as NSDate, endOfDay as NSDate)
-            }
-            
-            // Combine predicates with OR
-            if let datePredicate = datePredicate {
-                request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [textPredicate, categoryPredicate, datePredicate])
-            } else {
-                request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [textPredicate, categoryPredicate])
-            }
-        } else {
-            request.predicate = nil
-        }
-        
-        do {
-            moodItems = try viewContext.fetch(request)
-        } catch {
-            print("Failed to fetch moods: \(error)")
-            moodItems = []
-        }
-    }
-    
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
+        .tint(.red)
     }
 }
+
 
 #Preview {
     MoodLogView()

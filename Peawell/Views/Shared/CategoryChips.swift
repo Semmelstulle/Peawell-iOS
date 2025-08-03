@@ -19,7 +19,7 @@ struct ChipView: View {
     let onTap: () -> Void
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 8) {
             if let symbol = category.sfsymbol {
                 Image(systemName: symbol)
                     .foregroundColor(isSelected ? .white : .accentColor)
@@ -28,7 +28,7 @@ struct ChipView: View {
                 .foregroundColor(isSelected ? .white : .primary)
                 .font(.subheadline.weight(.medium))
         }
-        .padding(.horizontal, 14)
+        .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(isSelected ? Color.accentColor : Color(.secondarySystemGroupedBackground))
         .clipShape(Capsule())
