@@ -151,7 +151,5 @@ struct JournalSettingsKeys {
 }
 
 #Preview {
-    NavigationStack {
-        JournalScheduleView()
-    }
+    JournalScheduleView()
 }

@@ -102,7 +102,7 @@ struct SettingsView: View {
                     header: Text("header.iconPicker")
                 ) {
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 20) {
+                        HStack(spacing: 16) {
                             ForEach(appIcons, id: \.name) { icon in
                                 Button(action: {
                                     selectedAppIcon = icon.name
@@ -111,9 +111,9 @@ struct SettingsView: View {
                                     Image(uiImage: getAppIconImage(named: icon.name))
                                         .resizable()
                                         .frame(width: 54, height: 54)
-                                        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusSecondary))
+                                        .clipShape(RoundedRectangle(cornerRadius: 14))
                                         .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
+                                            RoundedRectangle(cornerRadius: 14)
                                                 .stroke(selectedAppIcon == icon.name ? Color.accentColor : Color.gray.opacity(0.3), lineWidth: selectedAppIcon == icon.name ? 2 : 1)
                                         )
                                         .padding(.horizontal, 2)
