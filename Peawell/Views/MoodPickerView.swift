@@ -46,12 +46,12 @@ struct MoodPickerView: View {
         MoodCategory(name: "Food", sfsymbol: "fork.knife"),
         MoodCategory(name: "Home", sfsymbol: "house"),
         MoodCategory(name: "Work", sfsymbol: "calendar"),
+        MoodCategory(name: "Outside", sfsymbol: "leaf"),
         MoodCategory(name: "Sun", sfsymbol: "sun.max"),
         MoodCategory(name: "Rain", sfsymbol: "cloud.drizzle"),
         MoodCategory(name: "Snow", sfsymbol: "snowflake"),
         MoodCategory(name: "Hot", sfsymbol: "thermometer.sun"),
         MoodCategory(name: "Freezing", sfsymbol: "thermometer.snowflake"),
-        MoodCategory(name: "Rainbow", sfsymbol: "rainbow"),
         MoodCategory(name: "Travel", sfsymbol: "map"),
         MoodCategory(name: "Bike", sfsymbol: "bicycle"),
         MoodCategory(name: "Exploration", sfsymbol: "binoculars"),
@@ -60,14 +60,11 @@ struct MoodPickerView: View {
         MoodCategory(name: "Car", sfsymbol: "car"),
         MoodCategory(name: "Vacation", sfsymbol: "airplane"),
         MoodCategory(name: "Selfcare", sfsymbol: "person"),
-        MoodCategory(name: "Cardio", sfsymbol: "figure.walk.treadmill"),
-        MoodCategory(name: "Strength", sfsymbol: "figure.strengthtraining.traditional"),
+        MoodCategory(name: "Cardio", sfsymbol: "figure.mixed.cardio"),
+        MoodCategory(name: "Strength", sfsymbol: "dumbbell"),
         MoodCategory(name: "Core", sfsymbol: "figure.core.training"),
         MoodCategory(name: "Mindfulness", sfsymbol: "eye"),
         MoodCategory(name: "Allergens", sfsymbol: "allergens"),
-        MoodCategory(name: "Dog", sfsymbol: "dog"),
-        MoodCategory(name: "Cat", sfsymbol: "cat"),
-        MoodCategory(name: "Bird", sfsymbol: "bird"),
         MoodCategory(name: "Animal", sfsymbol: "pawprint"),
         MoodCategory(name: "Romance", sfsymbol: "heart"),
         MoodCategory(name: "Sick", sfsymbol: "facemask")
@@ -92,46 +89,48 @@ struct MoodPickerView: View {
     
     var body: some View {
         NavigationStack {
-            TabView(selection: $currentPage) {
-                chipsTab()
-                    .tag(0)
-                textboxTab()
-                    .tag(1)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            AccessoryProminentButtonBig(
-                title: currentPage == 0 ? NSLocalizedString("button.next", comment: "") : NSLocalizedString("button.mood.save", comment: ""),
-                systemImage: "square.and.pencil",
-                action: {
-                    if currentPage == 0 {
-                        withAnimation {
-                            currentPage = 1
-                        }
-                    } else {
-                        if let onSave = onSave {
-                            onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
-                        } else {
-                            saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
-                        }
-                        clearInputs()
-                        dismiss()
-                        onDismiss?()
-                    }
+            VStack {
+                TabView(selection: $currentPage) {
+                    chipsTab()
+                        .tag(0)
+                    textboxTab()
+                        .tag(1)
                 }
-            )
-            .navigationTitle("title.mood")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                DismissToolbarButton(
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                AccessoryProminentButtonBig(
+                    title: currentPage == 0 ? NSLocalizedString("button.next", comment: "") : NSLocalizedString("button.mood.save", comment: ""),
+                    systemImage: "square.and.pencil",
                     action: {
-                        clearInputs()
-                        dismiss()
-                        onDismiss?()
+                        if currentPage == 0 {
+                            withAnimation {
+                                currentPage = 1
+                            }
+                        } else {
+                            if let onSave = onSave {
+                                onSave(editingActName, moodName, editingMoodLogDate, Array(editingSelectedCategories))
+                            } else {
+                                saveMood(actName: editingActName, moodName: moodName, moodLogDate: editingMoodLogDate, selectedCategories: Array(editingSelectedCategories))
+                            }
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        }
                     }
                 )
+                .navigationTitle("title.mood")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    DismissToolbarButton(
+                        action: {
+                            clearInputs()
+                            dismiss()
+                            onDismiss?()
+                        }
+                    )
+                }
             }
+            .background(Color(.systemGroupedBackground))
         }
-        .background(Color(.systemGroupedBackground))
         .presentationDragIndicator(.hidden)
         .onAppear {
             if editingActName.isEmpty && !actName.isEmpty {
@@ -197,17 +196,18 @@ struct MoodPickerView: View {
                         RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
                             .fill(Color(.secondarySystemGroupedBackground))
                     )
-                    .scrollContentBackground(.hidden)
+                    //.scrollContentBackground(.hidden)
                     .foregroundColor(.primary)
                 if editingActName.isEmpty {
                     Text("mood.textEditor.whatMadeYouSmile")
                         .foregroundColor(.secondary)
-                        .padding([.horizontal, .vertical], 16)
+                        .padding(16)
                 }
             }
+            .background(Color(.systemGroupedBackground))
             .padding([.top, .horizontal])
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

@@ -52,43 +52,46 @@ struct ModifyMedsSheetView: View {
 
     var body: some View {
         NavigationStack {
-            TabView(selection: $currentPage) {
-                medDetailsPage()
-                    .tag(0)
-                remindersPage()
-                    .tag(1)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .background(Color.clear)
-            AccessoryProminentButtonBig(
-                title: currentPage == 0 ? NSLocalizedString("button.next", comment: "") : NSLocalizedString("button.meds.save", comment: ""),
-                systemImage: "square.and.pencil",
-                action: {
-                    if currentPage == 0 {
-                        withAnimation {
-                            currentPage = 1
-                        }
-                    } else {
-                        if !medName.isEmpty && !medAmount.isEmpty {
-                            saveMedsWithSchedules(
-                                med: med,
-                                medName: medName,
-                                medAmount: medAmount,
-                                medUnit: medUnit,
-                                medKind: medKind,
-                                medRemind: medRemind,
-                                schedules: schedules.filter { !$0.days.isEmpty && !$0.times.isEmpty }
-                            )
-                            dismiss()
+            VStack {
+                TabView(selection: $currentPage) {
+                    medDetailsPage()
+                        .tag(0)
+                    remindersPage()
+                        .tag(1)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .background(Color.clear)
+                AccessoryProminentButtonBig(
+                    title: currentPage == 0 ? NSLocalizedString("button.next", comment: "") : NSLocalizedString("button.meds.save", comment: ""),
+                    systemImage: "square.and.pencil",
+                    action: {
+                        if currentPage == 0 {
+                            withAnimation {
+                                currentPage = 1
+                            }
+                        } else {
+                            if !medName.isEmpty && !medAmount.isEmpty {
+                                saveMedsWithSchedules(
+                                    med: med,
+                                    medName: medName,
+                                    medAmount: medAmount,
+                                    medUnit: medUnit,
+                                    medKind: medKind,
+                                    medRemind: medRemind,
+                                    schedules: schedules.filter { !$0.days.isEmpty && !$0.times.isEmpty }
+                                )
+                                dismiss()
+                            }
                         }
                     }
+                )
+                .navigationTitle("title.modify.meds")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    DismissToolbarButton(action: { dismiss() })
                 }
-            )
-            .navigationTitle("title.modify.meds")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                DismissToolbarButton(action: { dismiss() })
             }
+            .background(Color(.systemGroupedBackground))
         }
         .background(Color(.systemGroupedBackground))
         .accentColor(Color(UIColor(named: selectedAccentColor) ?? .green))
