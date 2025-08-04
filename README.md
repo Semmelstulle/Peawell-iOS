@@ -35,22 +35,25 @@ Peawell aims to remain ad free, free of charge but with the option to donate.
 - [ ] CloudKit
 - [x] Self made icons and symbols
 - [x] No tracking
+- [x] Searchable Data
+- [ ] Spotlight integration
+- [ ] App Intents
 - [x] Moods
     - [x] Create
     - [x] Edit
     - [x] Delete
-    - [ ] Reminder
-- [ ] Medication
+    - [x] Reminder
+- [x] Medication
     - [x] Create
-    - [ ] Edit
+    - [x] Edit
     - [x] Delete
-    - [ ] Reminder
+    - [x] Reminder
 - [x] Multi-language Support
     - [x] English
     - [x] German
 - [ ] Widgets
     - [ ] Homescreen
-    - [ ] iOS 18 Control Center
+    - [ ] iOS >=18 Control Center
 
 late future or maybe never:
 - Android version

@@ -13,6 +13,7 @@ struct AccessoryProminentButtonBig: View {
     let action: () -> Void
 
     var body: some View {
+#if compiler(>=6.2)
         if #available(iOS 26.0, *) {
             Button(action: action) {
                 Label(title, systemImage: systemImage)
@@ -33,6 +34,17 @@ struct AccessoryProminentButtonBig: View {
             }
             .padding()
         }
+#else
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+        }
+        .padding()
+#endif
     }
 }
 
@@ -63,6 +75,7 @@ struct DoneToolbarButton: View {
     let action: () -> Void
     
     var body: some View {
+#if compiler(>=6.2)
         if #available(iOS 26.0, *) {
             Button {
                 action()
@@ -77,5 +90,12 @@ struct DoneToolbarButton: View {
                 Image(systemName: "checkmark")
             }
         }
+#else
+        Button {
+            action()
+        } label: {
+            Image(systemName: "checkmark")
+        }
+#endif
     }
 }

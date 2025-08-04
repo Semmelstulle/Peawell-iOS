@@ -139,7 +139,6 @@ struct MoodLogView: View {
                             )
                         }
                     }
-                    .padding(-20)
                 }
                 .listRowBackground(Color.clear)
             }

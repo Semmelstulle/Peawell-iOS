@@ -83,9 +83,11 @@ struct MainView: View {
                         Image(systemName: "gear")
                     }
                 }
+#if compiler(>=6.2)
                 if #available(iOS 26.0, *) {
                     ToolbarSpacer(.fixed)
                 }
+#endif
             }
             .sheet(isPresented: $showingSettingsSheet) {
                 SettingsView()
