@@ -213,8 +213,11 @@ private extension MedLogView {
                         Text(logEntry.medication?.medType ?? "Unknown Medication")
                         Spacer()
                         if let logTime = logEntry.logTimes {
-                            Text(logTime.formatted(date: .abbreviated, time: .shortened))
-                                .opacity(0.4)
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text(logTime.formatted(date: .abbreviated, time: .omitted))
+                                Text(logTime.formatted(date: .omitted, time: .shortened))
+                            }
+                            .opacity(0.4)
                         }
                     }
                     .swipeActions(allowsFullSwipe: true) {
@@ -274,8 +277,11 @@ private extension MedLogView {
                     Text(item.medication?.medType ?? "Unknown Medication")
                     Spacer()
                     if let logTime = item.logTimes {
-                        Text(logTime.formatted(date: .abbreviated, time: .shortened))
-                            .opacity(0.4)
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text(logTime.formatted(date: .abbreviated, time: .omitted))
+                            Text(logTime.formatted(date: .omitted, time: .shortened))
+                        }
+                        .opacity(0.4)
                     }
                 }
                 .swipeActions(allowsFullSwipe: true) {

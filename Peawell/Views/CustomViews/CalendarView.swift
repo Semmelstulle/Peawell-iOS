@@ -328,17 +328,21 @@ struct DayDetailView: View {
             Section(header: Text("section.header.medHistory")) {
                 ForEach(medLogsForDay, id: \.self) { item in
                     HStack {
+                        let medColorName = "\(item.medication?.medKind ?? "longPill")Color"
                         Image(item.medication?.medKind ?? "longPill")
                             .resizable()
                             .frame(width: 20, height: 20)
                             .padding(6)
-                            .background(Color.accentColor)
+                            .background(Color(medColorName))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                         Text(item.medication?.medType ?? "Unknown Medication")
                         Spacer()
                         if let logTime = item.logTimes {
-                            Text(logTime.formatted(date: .abbreviated, time: .shortened))
-                                .opacity(0.4)
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text(logTime.formatted(date: .abbreviated, time: .omitted))
+                                Text(logTime.formatted(date: .omitted, time: .shortened))
+                            }
+                            .opacity(0.4)
                         }
                     }
                 }
@@ -346,14 +350,22 @@ struct DayDetailView: View {
             Section(header: Text("title.diary")) {
                 ForEach(moodLogsForDay, id: \.self) { item in
                     NavigationLink(destination: MoodDetailSubView(item: item)) {
-                        HStack {
+                        HStack(spacing: 16) {
                             Image("mood\(item.moodName ?? "Neutral")")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                                 .padding(6)
                                 .background(getMoodColor(item.moodName))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Text(item.logDate ?? Date.now, style: .date)
+                            VStack(alignment: .leading) {
+                                Text(item.logDate ?? Date.now, style: .date)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                Text(item.activityName ?? "")
+                                    .font(.body)
+                                    .lineLimit(2)
+                                    .truncationMode(.tail)
+                            }
                         }
                     }
                 }
@@ -388,6 +400,27 @@ private struct MoodDetailSubView: View {
                 }
             }
             .listRowBackground(getMoodColor(item.moodName))
+
+            if let categories = item.childCategories as? Set<MoodCategories>, !categories.isEmpty {
+                Section {
+                    FlowLayout {
+                        ForEach(Array(categories)) { category in
+                            ChipView(
+                                category: MoodCategory(
+                                    name: category.name ?? "",
+                                    sfsymbol: category.sfsymbol
+                                ),
+                                isSelected: false,
+                                onTap: {}
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, -20)
+                .padding(.vertical, -16)
+                .listRowBackground(Color.clear)
+            }
+
             Section {
                 Text(item.activityName ?? "Text missing")
                     .frame(maxWidth: .infinity, alignment: .topLeading)

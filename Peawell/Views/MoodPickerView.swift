@@ -196,7 +196,7 @@ struct MoodPickerView: View {
                         RoundedRectangle(cornerRadius: Constants.cornerRadiusPrimary, style: .continuous)
                             .fill(Color(.secondarySystemGroupedBackground))
                     )
-                    //.scrollContentBackground(.hidden)
+                    .scrollContentBackground(.hidden)
                     .foregroundColor(.primary)
                 if editingActName.isEmpty {
                     Text("mood.textEditor.whatMadeYouSmile")

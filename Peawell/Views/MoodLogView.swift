@@ -102,14 +102,22 @@ struct MoodLogView: View {
 
     @ViewBuilder
     func allJournals(for item: Mood) -> some View {
-        HStack {
+        HStack(spacing: 16) {
             Image("mood\(item.moodName ?? "Neutral")")
                 .resizable()
                 .frame(width: 20, height: 20)
                 .padding(6)
                 .background(getMoodColor(item.moodName))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-            Text(item.logDate ?? Date.now, style: .date)
+            VStack(alignment: .leading) {
+                Text(item.logDate ?? Date.now, style: .date)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Text(item.activityName ?? "")
+                    .font(.body)
+                    .lineLimit(2)
+                    .truncationMode(.tail)
+            }
         }
     }
 
@@ -140,6 +148,8 @@ struct MoodLogView: View {
                         }
                     }
                 }
+                .padding(.horizontal, -20)
+                .padding(.vertical, -16)
                 .listRowBackground(Color.clear)
             }
 
