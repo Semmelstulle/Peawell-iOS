@@ -248,6 +248,7 @@ struct MoodButtonView: View {
                     .saturation((!anySelected || isSelected) ? 1 : 0)
             }
         }
+        .frame(maxWidth: 80)
         .buttonStyle(.plain)
     }
 }

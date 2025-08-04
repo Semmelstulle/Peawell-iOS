@@ -40,7 +40,7 @@ struct MainView: View {
                 //  the next sections are toggled by UserDefaults
                 if settingShowMoodSection == true {
                     Section(header: sectionHeader) {
-                        HStack {
+                        HStack(spacing: 8) {
                             ForEach(moodOptions, id: \.name) { option in
                                 MoodButtonView(
                                     panelColor: option.color,

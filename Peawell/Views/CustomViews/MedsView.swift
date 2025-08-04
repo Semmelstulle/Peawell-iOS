@@ -25,36 +25,45 @@ struct MedsView: View {
     
     var body: some View {
         Section(header: sectionHeader) {
-            ForEach(medsItems) { item in
-                let medKind = item.medKind ?? "longPill"
-                let medColorName = "\(medKind)Color"
-                PanelView(
-                    icon: Image(medKind)
-                        .resizable()
-                        .scaledToFit(),
-                    medColor: Color(medColorName),
-                    doseAmnt: String(item.medDose ?? ""),
-                    doseUnit: String(item.medUnit ?? ""),
-                    title: LocalizedStringKey(item.medType ?? ""),
-                    onPlusTap: {
-                        medToLog = item
-                        selectedDate = Date()
-                        showMedLogSheet = true
+            // Create adaptive grid with minimum 300px width for each item
+            let columns = [
+                GridItem(.adaptive(minimum: 300), spacing: 16)
+            ]
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(medsItems) { item in
+                    let medKind = item.medKind ?? "longPill"
+                    let medColorName = "\(medKind)Color"
+                    PanelView(
+                        icon: Image(medKind)
+                            .resizable()
+                            .scaledToFit(),
+                        medColor: Color(medColorName),
+                        doseAmnt: String(item.medDose ?? ""),
+                        doseUnit: String(item.medUnit ?? ""),
+                        title: LocalizedStringKey(item.medType ?? ""),
+                        onPlusTap: {
+                            medToLog = item
+                            selectedDate = Date()
+                            showMedLogSheet = true
+                        }
+                    )
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            trashItem(objectID: item.objectID)
+                        } label: {
+                            Label("med.trash.item", systemImage: "trash")
+                        }
+                        Button {
+                            editingMed = item
+                        } label: {
+                            Label("med.edit.item", systemImage: "square.and.pencil")
+                        }
                     }
-                )
-                .contextMenu {
-                    Button(role: .destructive) {
-                        trashItem(objectID: item.objectID)
-                    } label: {
-                        Label("med.trash.item", systemImage: "trash")
-                    }
-                    Button {
-                        editingMed = item
-                    } label: {
-                        Label("med.edit.item", systemImage: "square.and.pencil")
-                    }
+                    .frame(minWidth: 300)
                 }
             }
+            .padding(.vertical, 8)
+            .animation(.default, value: medsItems.count)
         }
         .listStyle(.plain)
         .sheet(isPresented: $showAddMedSheet) {
@@ -121,6 +130,7 @@ struct PanelView<V: View>: View {
     var doseUnit: String
     var title: LocalizedStringKey
     var onPlusTap: (() -> Void)? = nil
+    var iconSize: Int = 40
     
     var body: some View {
         HStack(alignment: .center) {
@@ -129,16 +139,16 @@ struct PanelView<V: View>: View {
                     .fill(medColor)
                     .scaledToFit()
                 icon
-                    .frame(width: 42, height: 42)
+                    .frame(width: CGFloat(iconSize), height: CGFloat(iconSize))
                     .shadow(radius: 4, x: 0, y: 2)
             }
-            .frame(maxWidth: 80, alignment: .center)
+            .frame(maxWidth: CGFloat(iconSize + 2 * 16), alignment: .center)
             VStack {
                 Text(title)
                     .foregroundColor(.primary)
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(doseAmnt + " " + doseUnit)
+                Text("\(doseAmnt) \(doseUnit)")
                     .foregroundColor(Color.secondary)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
