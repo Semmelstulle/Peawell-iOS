@@ -29,14 +29,9 @@ struct JournalScheduleView: View {
             }
 
             Section(
-                header: Text("header.journal.days")
+                header: Text("header.journalSchedule")
             ) {
                 WeekdayPicker(selectedDays: $selectedDays)
-            }
-
-            Section(
-                header: Text("header.journal.times")
-            ) {
                 TimePicker(times: $times, isUsedToEdit: true)
             }
         }

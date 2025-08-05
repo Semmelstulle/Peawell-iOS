@@ -17,11 +17,17 @@ let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? S
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     
-    //  settings stored in UserDefaults wrapped with AppStorage
-    @AppStorage("settingShowMoodSection") var settingShowMoodSection = true
-    @AppStorage("settingShowMedicationSection") var settingShowMedicationSection = true
-    @AppStorage("selectedAppIcon") private var selectedAppIcon: String = "AppIcon"
-    @AppStorage("selectedAccentColor") private var selectedAccentColor: String = "AccentColor"
+    //
+    @AppStorage("settingShowMoodSection") var settingShowMoodSection: Bool = true
+    @AppStorage("settingShowMedicationSection") var settingShowMedicationSection: Bool = true
+    @AppStorage("journalPreviewRows") var journalPreviewRows: Int = 2
+    @AppStorage("selectedAppIcon") var selectedAppIcon: String = "AppIcon"
+    @AppStorage("selectedAccentColor") var selectedAccentColor: String = "AccentColor"
+    @AppStorage("notificationsEnabled") var notificationsEnabled = false
+    @AppStorage("journalingRemindersEnabled") var journalingRemindersEnabled = false
+    @AppStorage("journalingReminderDay") var journalingReminderDay = 1
+    @AppStorage("journalingReminderHour") var journalingReminderHour = 09
+    @AppStorage("journalingReminderMinute") var journalingReminderMinute = 0
 
     private let appIcons: [(name: String, label: String)] = [
         ("AppIcon", "Default"),
@@ -29,12 +35,12 @@ struct SettingsView: View {
         ("AppIconAlt2", "Zoom")
     ]
     
-    private let accentColors: [(name: String, label: String)] = [
-        ("AccentColor", "Green"),
-        ("AccentColor 1", "Orange"),
-        ("AccentColor 2", "Rose"),
-        ("AccentColor 3", "Teal"),
-        ("AccentColor 4", "Purple")
+    private let accentColors: [(name: String, labelKey: String)] = [
+        ("AccentColor", "color.green"),
+        ("AccentColor 1", "color.orange"),
+        ("AccentColor 2", "color.rose"),
+        ("AccentColor 3", "color.teal"),
+        ("AccentColor 4", "color.purple")
     ]
         
     //  needs to make delete alert invisible until it is needed
@@ -55,20 +61,12 @@ struct SettingsView: View {
     //  debug settings state
     @State private var amount: Double = 100
     
-    // notification settings
-    @AppStorage("notificationsEnabled") private var notificationsEnabled = false
-    @AppStorage("journalingRemindersEnabled") private var journalingRemindersEnabled = false
-    @AppStorage("journalingReminderDay") private var journalingReminderDay = 1
-    @AppStorage("journalingReminderHour") private var journalingReminderHour = 09
-    @AppStorage("journalingReminderMinute") private var journalingReminderMinute = 0
-    
     private let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     @State private var showingNotificationPermissionAlert = false
     
     var body: some View {
         NavigationStack {
             Form {
-                
                 Section(
                     header: Text("section.header.notifications")
                 ) {
@@ -91,8 +89,13 @@ struct SettingsView: View {
                 ) {
                     Toggle(
                         isOn: $settingShowMoodSection,
-                        label: {Text("toggle.show.mood")})
-                    
+                        label: {Text("toggle.show.mood")}
+                    )
+                    Stepper(
+                        "stepper.journalPreviewRows\(journalPreviewRows)",
+                        value: $journalPreviewRows,
+                        in: 0...5
+                    )
                     Toggle(
                         isOn: $settingShowMedicationSection,
                         label: {Text("toggle.show.med")}
@@ -133,7 +136,7 @@ struct SettingsView: View {
                     Picker("picker.chooseAccentColor", selection: $selectedAccentColor) {
                         ForEach(accentColors, id: \.name) { color in
                             HStack {
-                                Text(color.label)
+                                Text(LocalizedStringKey(color.labelKey))
                                 Spacer()
                                 Color(uiColor: UIColor(named: color.name) ?? .systemBlue)
                                     .frame(width: 24, height: 24)

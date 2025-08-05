@@ -11,16 +11,15 @@ import CoreData
 struct MoodLogView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    // Fetch moods sorted descending by logDate (live updating)
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Mood.logDate, ascending: false)],
         animation: .default
     )
     private var moods: FetchedResults<Mood>
+    
+    @AppStorage("journalPreviewRows") var journalPreviewRows: Int = 2
 
     @State private var searchText: String = ""
-
-    // Editing state and sheet presentation
     @State private var editingMood: Mood?
 
     var body: some View {
@@ -109,14 +108,18 @@ struct MoodLogView: View {
                 .padding(6)
                 .background(getMoodColor(item.moodName))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-            VStack(alignment: .leading) {
+            if journalPreviewRows > 0 {
+                VStack(alignment: .leading) {
+                    Text(item.logDate ?? Date.now, style: .date)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Text(item.activityName ?? "")
+                        .font(.body)
+                        .lineLimit(journalPreviewRows)
+                        .truncationMode(.tail)
+                }
+            } else {
                 Text(item.logDate ?? Date.now, style: .date)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(item.activityName ?? "")
-                    .font(.body)
-                    .lineLimit(2)
-                    .truncationMode(.tail)
             }
         }
     }
