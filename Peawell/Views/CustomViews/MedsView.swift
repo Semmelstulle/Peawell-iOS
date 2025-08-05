@@ -62,7 +62,7 @@ struct MedsView: View {
                     .frame(minWidth: 300)
                 }
             }
-            .padding(.vertical, 8)
+            //.padding(.vertical, 8)
             .animation(.default, value: medsItems.count)
         }
         .listStyle(.plain)
@@ -130,7 +130,7 @@ struct PanelView<V: View>: View {
     var doseUnit: String
     var title: LocalizedStringKey
     var onPlusTap: (() -> Void)? = nil
-    var iconSize: Int = 40
+    var rectFrameSize: Int = 72
     
     var body: some View {
         HStack(alignment: .center) {
@@ -139,10 +139,10 @@ struct PanelView<V: View>: View {
                     .fill(medColor)
                     .scaledToFit()
                 icon
-                    .frame(width: CGFloat(iconSize), height: CGFloat(iconSize))
+                    .frame(width: CGFloat(rectFrameSize - 32), height: CGFloat(rectFrameSize - 32))
                     .shadow(radius: 4, x: 0, y: 2)
             }
-            .frame(maxWidth: CGFloat(iconSize + 2 * 16), alignment: .center)
+            .frame(maxWidth: CGFloat(rectFrameSize), alignment: .center)
             VStack {
                 Text(title)
                     .foregroundColor(.primary)
@@ -159,7 +159,7 @@ struct PanelView<V: View>: View {
                 .scaledToFit()
                 .symbolRenderingMode(.hierarchical)
                 .frame(width: 30, height: 30)
-                .frame(maxWidth: 80, alignment: .center)
+                .frame(maxWidth: CGFloat(rectFrameSize), alignment: .center)
                 .onTapGesture {
                     onPlusTap?()
                 }
@@ -177,19 +177,13 @@ struct MedLogDatePickerSheet: View {
     var onDismiss: () -> Void
     var body: some View {
         NavigationStack {
-            ZStack {
-                HStack {
-                    Spacer()
-                    DatePicker(
-                        "",
-                        selection: $selectedDate,
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                    .datePickerStyle(.wheel)
-                    .labelsHidden()
-                    Spacer()
-                }
-            }
+            DatePicker(
+                "",
+                selection: $selectedDate,
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.wheel)
+            .labelsHidden()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

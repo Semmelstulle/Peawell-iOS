@@ -15,6 +15,7 @@ struct Constants {
             return 12
         }
     }
+    
     static var cornerRadiusSecondary: CGFloat {
         if #available(iOS 26.0, *) {
             return 16
@@ -22,6 +23,15 @@ struct Constants {
             return 8
         }
     }
+    
+    static var stackSpacing: CGFloat {
+        if #available(iOS 26.0, *) {
+            return 16
+        } else {
+            return 8
+        }
+    }
+    
     static var localizedWeekdaySymbols: [String] {
         let calendar = Calendar.current
         let symbols = calendar.veryShortStandaloneWeekdaySymbols

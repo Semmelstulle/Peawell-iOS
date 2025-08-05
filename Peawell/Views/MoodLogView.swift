@@ -101,7 +101,7 @@ struct MoodLogView: View {
 
     @ViewBuilder
     func allJournals(for item: Mood) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: Constants.stackSpacing) {
             Image("mood\(item.moodName ?? "Neutral")")
                 .resizable()
                 .frame(width: 20, height: 20)

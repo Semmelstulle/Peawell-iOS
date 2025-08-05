@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct WeekdayPicker: View {
-    @Binding var selectedDays: Set<Int> // Days 1 through 7 (Sunday = 1 ... Saturday = 7)
+    @Binding var selectedDays: Set<Int>
     
     private var firstWeekday: Int {
-        Calendar.current.firstWeekday // E.g., Sunday = 1 for en_US, Monday = 2 for en_DE
+        Calendar.current.firstWeekday
     }
     
     private var orderedWeekdayIndices: [Int] {
@@ -66,15 +66,6 @@ struct WeekdayPicker: View {
         } else {
             selectedDays.insert(day)
         }
-    }
-}
-
-struct WeekdayPicker_Previews: PreviewProvider {
-    @State static var selected: Set<Int> = [2, 4]
-    
-    static var previews: some View {
-        WeekdayPicker(selectedDays: $selected)
-            .frame(width: 350)
     }
 }
 

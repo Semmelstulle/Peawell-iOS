@@ -29,7 +29,7 @@ struct MedLogView: View {
     var body: some View {
         List {
             medicationListSection
-            medicationHistorySection
+            medicationHistorySection()
         }
         .searchable(text: $searchText, prompt: "search.meds")
         .onAppear {
@@ -85,7 +85,6 @@ struct MedLogView: View {
 
 // MARK: - Components
 private extension MedLogView {
-    
     var medicationListSection: some View {
         Section(header: Text("section.header.medList")) {
             ForEach(medsItems) { item in
@@ -112,7 +111,7 @@ private extension MedLogView {
     }
     
     func medListRowView(item: Meds) -> some View {
-        HStack {
+        HStack(spacing: Constants.stackSpacing) {
             let medColorName = "\(item.medKind ?? "longPill")Color"
             Image(item.medKind ?? "")
                 .resizable()
@@ -120,12 +119,9 @@ private extension MedLogView {
                 .padding(6)
                 .background(Color(medColorName))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-            
             Text(item.medType ?? "")
             Spacer()
-            Text(item.medDose ?? "")
-                .opacity(0.4)
-            Text(item.medUnit ?? "")
+            Text("\(item.medDose ?? "") \(item.medUnit ?? "")")
                 .opacity(0.4)
         }
     }
@@ -163,7 +159,7 @@ private extension MedLogView {
             if item.medRemind, let schedulesSet = item.schedule as? Set<Schedules>, !schedulesSet.isEmpty {
                 scheduleSection(schedulesSet: schedulesSet)
             }
-            medicationSpecificLogHistorySection(for: item)
+            medicationHistorySection(for: item)
         }
         .navigationTitle(Text(item.medType ?? ""))
         .toolbar {
@@ -190,48 +186,6 @@ private extension MedLogView {
         }
     }
 
-    private func medicationSpecificLogHistorySection(for med: Meds) -> some View {
-        let medColorName = "\(med.medKind ?? "longPill")Color"
-        return Section(header: Text("section.header.medHistory")) {
-            let filteredLogs = logEntries
-                .filter { $0.medication == med }
-                .sorted { ($0.logTimes ?? Date.distantPast) > ($1.logTimes ?? Date.distantPast) }
-            
-            if filteredLogs.isEmpty {
-                Text("hint.noData")
-                    .foregroundColor(.secondary)
-            } else {
-                ForEach(filteredLogs, id: \.self) { logEntry in
-                    HStack {
-                        Image(logEntry.medication?.medKind ?? "longPill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding(6)
-                            .background(Color(medColorName))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-
-                        Text(logEntry.medication?.medType ?? "Unknown Medication")
-                        Spacer()
-                        if let logTime = logEntry.logTimes {
-                            VStack(alignment: .trailing, spacing: 2) {
-                                Text(logTime.formatted(date: .abbreviated, time: .omitted))
-                                Text(logTime.formatted(date: .omitted, time: .shortened))
-                            }
-                            .opacity(0.4)
-                        }
-                    }
-                    .swipeActions(allowsFullSwipe: true) {
-                        Button(role: .destructive) {
-                            trashItem(objectID: logEntry.objectID)
-                        } label: {
-                            Image(systemName: "trash")
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     func scheduleSection(schedulesSet: Set<Schedules>) -> some View {
         ForEach(Array(schedulesSet), id: \.self) { schedule in
             Section {
@@ -242,6 +196,52 @@ private extension MedLogView {
         }
     }
     
+    func medicationHistorySection(for med: Meds? = nil) -> some View {
+        let filteredLogs: [LogTimeMeds]
+        if let med = med {
+            filteredLogs = logEntries
+                .filter { $0.medication == med }
+                .sorted { ($0.logTimes ?? Date.distantPast) > ($1.logTimes ?? Date.distantPast) }
+        } else {
+            filteredLogs = filteredLogEntries.sorted { ($0.logTimes ?? Date.distantPast) > ($1.logTimes ?? Date.distantPast) }
+        }
+        
+        return Section(header: Text("section.header.medHistory")) {
+            if filteredLogs.isEmpty {
+                Text("hint.noData")
+                    .foregroundColor(.secondary)
+            } else {
+                ForEach(filteredLogs, id: \.self) { item in
+                    HStack(spacing: Constants.stackSpacing) {
+                        let medColorName = "\(item.medication?.medKind ?? "longPill")Color"
+                        Image(item.medication?.medKind ?? "longPill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(6)
+                            .background(Color(medColorName))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Text(item.medication?.medType ?? "Unknown Medication")
+                        Spacer()
+                        if let logTime = item.logTimes {
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text(logTime.formatted(date: .abbreviated, time: .omitted))
+                                Text(logTime.formatted(date: .omitted, time: .shortened))
+                            }
+                            .opacity(0.4)
+                        }
+                    }
+                    .swipeActions(allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            trashItem(objectID: item.objectID)
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     func extractDays(from schedule: Schedules) -> Set<Int> {
         if let days = schedule.dates as? Set<Int> {
             return days
@@ -260,39 +260,6 @@ private extension MedLogView {
             return timesNSNumber.compactMap { $0 as? Date }
         }
         return []
-    }
-    
-    var medicationHistorySection: some View {
-        Section(header: Text("section.header.medHistory")) {
-            ForEach(filteredLogEntries, id: \.self) { item in
-                HStack {
-                    let medColorName = "\(item.medication?.medKind ?? "longPill")Color"
-                    Image(item.medication?.medKind ?? "longPill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding(6)
-                        .background(Color(medColorName))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    
-                    Text(item.medication?.medType ?? "Unknown Medication")
-                    Spacer()
-                    if let logTime = item.logTimes {
-                        VStack(alignment: .trailing, spacing: 2) {
-                            Text(logTime.formatted(date: .abbreviated, time: .omitted))
-                            Text(logTime.formatted(date: .omitted, time: .shortened))
-                        }
-                        .opacity(0.4)
-                    }
-                }
-                .swipeActions(allowsFullSwipe: true) {
-                    Button(role: .destructive) {
-                        trashItem(objectID: item.objectID)
-                    } label: {
-                        Image(systemName: "trash")
-                    }
-                }
-            }
-        }
     }
 }
 
